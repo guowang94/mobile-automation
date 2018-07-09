@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [Command line suite]">
+  <test name="Command line test(failed)">
+    <classes>
+      <class name="com.scb.fmsw.mobile.test.WorkflowTest">
+        <methods>
+          <include name="delegatePNLWorkflowTest"/>
+          <include name="clarifyOverdueOMRWorkflowTest"/>
+          <include name="sendToReviewCNAWorkflowToCNAPerformerLMForClarificationTest"/>
+          <include name="recallPNLWorkflowTest"/>
+          <include name="bookmarkToReviewCNAWorkflowTest"/>
+          <include name="bookmarkOMRWorkflowTest"/>
+          <include name="delegateToReviewCNAWorkflowTest"/>
+          <include name="sendToReviewCNAWorkflowToMOForClarificationTest"/>
+          <include name="initDriver"/>
+          <include name="recallOverduePNLWorkflowTest"/>
+          <include name="sendToReviewCNAWorkflowToCNAPerformerForClarificationTest"/>
+          <include name="tearDown"/>
+          <include name="sendToReviewCNAWorkflowToAnyoneForClarificationTest"/>
+          <include name="submitOverdueOMRWorkflowTest"/>
+          <include name="sendToReviewCNAWorkflowToPCForClarificationTest"/>
+        </methods>
+      </class> <!-- com.scb.fmsw.mobile.test.WorkflowTest -->
+      <class name="com.scb.fmsw.mobile.test.AcknowledgeTest">
+        <methods>
+          <include name="acknowledgeToReviewCNAWorkflowTest"/>
+        </methods>
+      </class> <!-- com.scb.fmsw.mobile.test.AcknowledgeTest -->
+      <class name="com.scb.fmsw.mobile.test.Testing">
+        <methods>
+          <include name="acknowledgeAllCNAWorkflowTest"/>
+        </methods>
+      </class> <!-- com.scb.fmsw.mobile.test.Testing -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [Command line suite] -->

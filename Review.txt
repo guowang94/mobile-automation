@@ -1,0 +1,20 @@
+7th march 18
+naming convention for property file - done
+should remove base driver from base screen - done
+move all find element methods to base screen - done
+move teardown() to base test - done
+move common code in test method to base test - done
+waitforelement after @FindBy not required since element is already found - done
+when getting all the workflow id in the inbox, use table element to get it instead of individual element and tap on load more result button to load all the workflow - done
+for assert, need to add message in the parameter so that when the test method fail, it will be easier to know which workflow has failed - done
+instead of checking the count in SelectMultipleWorkflowScreen, check it in InboxScreen by comparing it against the bucket count - done
+
+19/3
+wait for element (TO DO) - instead will be helpful to wait for the parent container, in this case the tabs container, write it a separate method to be reused - done
+Runtime exception instead of sysout where execution needs to be stopped - done
+tapOnElement - in BaseScreen and then reuse - done
+create interface class to store all the CONSTANT - done
+for acknowledge workflow and acknowledge overdue workflow, need to combine these method - done
+CNA workflow need to get the workflow id instead of trade id (not urgent)
+Manual workflow need to get the sub workflow id instead (not urgent)
+

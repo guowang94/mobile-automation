@@ -1,0 +1,218 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Test Suite Mobile" configfailurepolicy="continue">
+
+    <test name="CNA Workflow Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <include name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+
+                <!--Clarification Option-->
+                <include name="OTHERS"/>
+                <exclude name="LM"/>
+                <exclude name="PERFORMER"/>
+                <exclude name="MO"/>
+                <exclude name="PC"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
+            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+        </classes>
+    </test>
+
+    <test name="OMR Workflow Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <include name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+
+                <!--Clarification Option-->
+                <include name="OTHERS"/>
+                <exclude name="LM"/>
+                <exclude name="PERFORMER"/>
+                <exclude name="MO"/>
+                <exclude name="PC"/>
+            </run>
+        </groups>
+        <classes>
+            <!--<class name="com.scb.fmsw.mobile.test.ClarificationTest"/>-->
+            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+        </classes>
+    </test>
+
+    <test name="PNL Workflow Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <include name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+
+                <!--Clarification Option-->
+                <include name="OTHERS"/>
+                <exclude name="LM"/>
+                <exclude name="PERFORMER"/>
+                <exclude name="MO"/>
+                <exclude name="PC"/>
+
+                <!--Workflow Option-->
+                <exclude name="ACKNOWLEDGE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
+            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+        </classes>
+    </test>
+
+    <test name="CE Workflow Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <include name="CE"/>
+
+                <!--Clarification Option-->
+                <exclude name="OTHERS"/>
+                <exclude name="LM"/>
+                <exclude name="PERFORMER"/>
+                <exclude name="MO"/>
+                <exclude name="PC"/>
+            </run>
+        </groups>
+        <classes>
+            <!--<class name="com.scb.fmsw.mobile.test.ClarificationTest"/>-->
+            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+        </classes>
+    </test>
+
+    <test name="CNA Delegation Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <include name="CNA"/>
+                <exclude name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.DelegationTest"/>
+        </classes>
+    </test>
+
+    <test name="OMR Delegation Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <include name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.DelegationTest"/>
+        </classes>
+    </test>
+
+    <test name="PNL Delegation Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <include name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.DelegationTest"/>
+        </classes>
+    </test>
+
+    <test name="CE Delegation Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <include name="CE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.DelegationTest"/>
+        </classes>
+    </test>
+
+    <test name="Multiple Delegation Regression" enabled="false">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <include name="MULTIPLE WORKFLOW"/>
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.DelegationTest"/>
+        </classes>
+    </test>
+
+    <test name="Test Regression" enabled="true">
+        <groups>
+            <run>
+                <!--Workflow Type-->
+                <exclude name="MULTIPLE WORKFLOW"/>
+                <exclude name="CNA"/>
+                <exclude name="PNL"/>
+                <exclude name="OMR"/>
+                <exclude name="IPV/FVA"/>
+                <exclude name="GT/GMR"/>
+                <exclude name="CE"/>
+                <include name="VE"/>
+
+            </run>
+        </groups>
+        <classes>
+            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+        </classes>
+    </test>
+
+</suite>

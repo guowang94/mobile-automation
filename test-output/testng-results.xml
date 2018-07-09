@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="667011" started-at="2018-03-13T02:04:32Z" finished-at="2018-03-13T02:15:39Z">
+    <groups>
+      <group name="Approve">
+        <method signature="AcknowledgeTest.acknowledgeToReviewCNAWorkflowTest()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="acknowledgeToReviewCNAWorkflowTest" class="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+      </group> <!-- Approve -->
+    </groups>
+    <test name="Default test" duration-ms="667011" started-at="2018-03-13T02:04:32Z" finished-at="2018-03-13T02:15:39Z">
+      <class name="com.scb.fmsw.mobile.test.AcknowledgeTest">
+        <test-method status="PASS" signature="initDriver()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="initDriver" is-config="true" duration-ms="26832" started-at="2018-03-13T10:04:32Z" finished-at="2018-03-13T10:04:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initDriver -->
+        <test-method status="PASS" signature="acknowledgeOverdueIPVWorkflowTest()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="acknowledgeOverdueIPVWorkflowTest" duration-ms="109341" started-at="2018-03-13T10:04:59Z" finished-at="2018-03-13T10:06:48Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- acknowledgeOverdueIPVWorkflowTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="tearDown" is-config="true" duration-ms="211" started-at="2018-03-13T10:06:48Z" finished-at="2018-03-13T10:06:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method status="PASS" signature="initDriver()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="initDriver" is-config="true" duration-ms="8058" started-at="2018-03-13T10:06:49Z" finished-at="2018-03-13T10:06:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initDriver -->
+        <test-method status="PASS" signature="acknowledgeOverdueOMRWorkflowTest()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="acknowledgeOverdueOMRWorkflowTest" duration-ms="162861" started-at="2018-03-13T10:06:57Z" finished-at="2018-03-13T10:09:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- acknowledgeOverdueOMRWorkflowTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="tearDown" is-config="true" duration-ms="203" started-at="2018-03-13T10:09:40Z" finished-at="2018-03-13T10:09:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method status="PASS" signature="initDriver()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="initDriver" is-config="true" duration-ms="7924" started-at="2018-03-13T10:09:40Z" finished-at="2018-03-13T10:09:48Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initDriver -->
+        <test-method status="PASS" signature="acknowledgeOverduePNLWorkflowTest()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="acknowledgeOverduePNLWorkflowTest" duration-ms="88993" started-at="2018-03-13T10:09:48Z" finished-at="2018-03-13T10:11:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- acknowledgeOverduePNLWorkflowTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="tearDown" is-config="true" duration-ms="282" started-at="2018-03-13T10:11:17Z" finished-at="2018-03-13T10:11:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method status="PASS" signature="initDriver()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="initDriver" is-config="true" duration-ms="7577" started-at="2018-03-13T10:11:17Z" finished-at="2018-03-13T10:11:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initDriver -->
+        <test-method status="PASS" signature="acknowledgeToReviewCNAWorkflowTest()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="acknowledgeToReviewCNAWorkflowTest" duration-ms="254489" started-at="2018-03-13T10:11:25Z" finished-at="2018-03-13T10:15:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- acknowledgeToReviewCNAWorkflowTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.scb.fmsw.mobile.test.AcknowledgeTest@6e1ec318]" name="tearDown" is-config="true" duration-ms="216" started-at="2018-03-13T10:15:39Z" finished-at="2018-03-13T10:15:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.scb.fmsw.mobile.test.AcknowledgeTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

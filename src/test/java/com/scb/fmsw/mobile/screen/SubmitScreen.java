@@ -143,7 +143,7 @@ public class SubmitScreen extends BaseScreen {
                 submitScreen.alertOkButton.click();
                 iosDriver.hideKeyboard();
                 if (workflowType.equals(WORKFLOW_CE)) {
-                    selectCELateCode(CE_LATE_CODE);
+                    selectCELateCode(CE_LATE_CODE_OTHERS);
                 } else if (workflowType.equals(WORKFLOW_VE)) {
                     //TODO this might not work as the alert message might be different
                     selectVELateCode(VE_LATE_CODE_INVESTIGATION_WITH_HR, VE_DISCIPLINARY_ACTION_COACHING_OR_COUNSELING);

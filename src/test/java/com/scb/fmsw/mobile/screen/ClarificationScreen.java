@@ -173,7 +173,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
                 clarificationScreen.alertOkButton.click();
                 iosDriver.hideKeyboard();
                 if (workflowType.equals(WORKFLOW_CE)) {
-                    clarifyCEWorkflow(CE_LATE_CODE, workflowType, workflowCount);
+                    clarifyCEWorkflow(CE_LATE_CODE_OTHERS, workflowType, workflowCount);
                 } else {
                     clarifyWorkflow(LATE_CODE_DEADLINE_MISSED, null, false, workflowType, workflowCount);
                 }

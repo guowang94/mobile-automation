@@ -80,6 +80,8 @@ public interface WorkflowConstants {
     String ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED = "The workflow status has been updated, you can no longer perform any actions on the workflow";
     String ALERT_MSG_ENTER_LATE_COMMENT = "Please write the late comments";
     String ALERT_MSG_SELECT_LATE_CODE = "Please select value of Late Code";
+    String ALERT_MSG_SELECT_LATE_RESPONSE_CODE = "Please select value of Late Response Code";
+    String ALERT_MSG_UNEXPECTED_ERROR_OCCURRED = "Unexpected error occured";
     String ALERT_MSG_SELECT_TYPE = "Please select the type";
     String ALERT_MSG_SELECT_DISCIPLINARY_ACTION_TAKEN = "Please select value of Disciplinary Action taken*";
     String ALERT_MSG_STAFF_NOT_AVAILABLE = "Selected staff is not available in the system or does not have a valid role.Please select another option";
@@ -235,6 +237,7 @@ public interface WorkflowConstants {
     //------------------ Inbox Detail View Screen ---------------------
 
     String INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL = "Prev Actor Comments";
+    String INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL = "Acknowledgement Comments";
     String INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL = "Compliance Comments";
     String INBOX_DETAIL_VDO_COMMENTS_CELL = "VDO Comments";
     String INBOX_DETAIL_MRO_OR_MTCR_UPLOADER_COMMENTS_CELL = "MRO/MTCR Uploader Comments";
@@ -305,16 +308,40 @@ public interface WorkflowConstants {
     String CE_SEVERITY_HIGH = "High";
     String CE_POTENTIAL_LOSS_YES = "Yes";
     String CE_DISCIPLINARY_ACTION_DISMISSAL = "Dismissal";
-    String CE_LATE_CODE = "OTHERS";
+    String CE_LATE_CODE_OTHERS = "OTHERS";
     String VE_DISCIPLINARY_ACTION_COACHING_OR_COUNSELING = "Coaching / Counseling";
     String VE_LATE_CODE_INVESTIGATION_WITH_HR = "Investigation with HR";
     String ACKNOWLEDGEMENT_CODE_HRR_DEAL = "HRR Deal";
-
 
     //PC Group
     String PC_GRP_PC_ALM = "PC ALM";
     String PC_GRP_PC_GBS = "PC GBS";
 
+    //Form's Label
+    String FORM_LABEL_LATE_CODE = "Late Code";
+    String FORM_LABEL_LATE_COMMENTS = "Late Comments";
+    String FORM_LABEL_LATE_RESPONSE_CODE = "Late Response Code";
+    String FORM_LABEL_VE_LATE_RESPONSE_CODE = "Late Response Code*";
+    String FORM_LABEL_LATE_RESPONSE_COMMENTS = "Late Response Comments";
+    String FORM_LABEL_ACKNOWLEDGE_CODE = "Acknowledgement Code";
+    String FORM_LABEL_ACKNOWLEDGEMENT_COMMENTS = "Acknowledgement Comments";
+    String FORM_LABEL_CE_SEVERITY = "Severity*";
+    String FORM_LABEL_CE_ISSUE_FLAGGED_BY_MTCR = "Issue Flagged By (MTCR)*";
+    String FORM_LABEL_CE_RISK_ASSESSMENT_AND_ACTIONS_TAKEN_TO_MITIGATE_RISK = "Risk Assessment and Actions Taken to Mitigate Risk*";
+    String FORM_LABEL_CE_EXPLANATION_OR_DETAILS_CONTROL_BREAK_DOWN = "Explanation / Details of Control Break Down*";
+    String FORM_LABEL_CE_TYPE_OF_CONTROL_BREAKDOWN = "Type of Control Breakdown*";
+    String FORM_LABEL_CE_ANY_POTENTIAL_LOSS = "Any Potential Loss*";
+    String FORM_LABEL_CE_OUTCOME_OF_THE_EXCESS = "Outcome of the Excess*";
+    String FORM_LABEL_CE_TCRM_GROUP_REMARKS = "TCRM Group Remarks*";
+    String FORM_LABEL_CE_DISCIPLINARY_ACTION_TAKEN = "Disciplinary Action Taken*";
+    String FORM_LABEL_CE_FRONT_OFFICE_JUSTIFICATION_FOR_THE_DISCIPLINARY = "Front Office Justification for the disciplinary*";
+    String FORM_LABEL_CE_HOW_WILL_YOU_PREVENT_RECURRENCE = "How will you prevent recurrence*";
+    String FORM_LABEL_CE_SUPERVISOR_REMARKS = "Supervisor Remarks*";
+    String FORM_LABEL_DISCIPLINARY_ACTION_TAKEN = "Disciplinary Action taken*";
+    String FORM_LABEL_JUSTIFICATION_FOR_DISCIPLINARY_ACTION = "Justification for Disciplinary action*";
+    String FORM_LABEL_HOW_TO_PREVENT_RECURRENCE = "How to prevent recurrence";
+    String FORM_LABEL_REMEDIATION_ACTION = "Remediation Action*";
+    String FORM_LABEL_SUPERVISOR_COMMENTS = "Supervisor Comments (Optional)";
 
     //------------------ Clarification Option Screen ----------------
 

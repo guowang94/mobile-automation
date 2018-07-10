@@ -43,6 +43,20 @@ public class ResponsesDetailViewScreen extends BaseScreen implements WorkflowCon
     }
 
     /**
+     * This method verify Workflow Event Status
+     *
+     * @return boolean
+     */
+    public boolean verifyWorkflowEventStatus(String workflowEventStatus) {
+        if (hasContainerLoaded()) {
+            scrollDownUntilElementIsDisplayed(responseDetailViewScreen.workflowEventStatusCell);
+            return workflowEventStatus.equalsIgnoreCase(responseDetailViewScreen.workflowEventStatusValue.getText());
+        } else {
+            throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
+        }
+    }
+
+    /**
      * This method will tap on Back Button
      *
      * @return InboxResponsesGridScreen
@@ -59,6 +73,12 @@ public class ResponsesDetailViewScreen extends BaseScreen implements WorkflowCon
 
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='Workflow Status']/ancestor::XCUIElementTypeCell")
         WebElement workflowStatusCell;
+
+        @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='Workflow Event Status']/following-sibling::XCUIElementTypeStaticText")
+        WebElement workflowEventStatusValue;
+
+        @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='Workflow Event Status']/ancestor::XCUIElementTypeCell")
+        WebElement workflowEventStatusCell;
 
         @FindBy(id = "cross")
         WebElement backButton;

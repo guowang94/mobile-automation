@@ -14,22 +14,12 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
 
     private PageObjects acknowledgeScreen;
     private String lateCode = "//XCUIElementTypeStaticText[@name='$1']";
-    private String container = "(//XCUIElementTypeImage[@name='Rectangle 4'])[2]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 
     public AcknowledgeScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
         acknowledgeScreen = new PageObjects();
         PageFactory.initElements(iosDriver, acknowledgeScreen);
-    }
-
-    /**
-     * This method will check if Container has loaded
-     *
-     * @return boolean
-     */
-    private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
     }
 
     /**
@@ -43,10 +33,9 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     public InboxScreen acknowledgeWorkflow(String lateCode, String workflowType, int count) {
         hasLoadingCompleted();
         if (lateCode != null) {
-            if (hasContainerLoaded()) {
-                enterLateComment();
-                selectAcknowledgeCode(lateCode);
-                acknowledgeScreen.acknowledgeButton.click();
+            if (hasFormContainerLoaded()) {
+                selectLateCode(lateCode);
+                tapOnFormDoneButton();
             } else {
                 throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
             }
@@ -66,12 +55,11 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
      */
     public InboxScreen acknowledgeOMRWorkflow(String lateCode, String acknowledgeCode, String workflowType, int count) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            selectOMRLateCode(lateCode);
-            selectAcknowledgeCode(acknowledgeCode);
-            enterFirstComment(MSG_ENTER_COMMENT);
-
-            acknowledgeScreen.acknowledgeButton.click();
+        if (hasFormContainerLoaded()) {
+            selectLateCode(lateCode);
+            selectPickerValue(FORM_LABEL_ACKNOWLEDGE_CODE, acknowledgeCode);
+            enterComments(FORM_LABEL_ACKNOWLEDGEMENT_COMMENTS, MSG_ENTER_COMMENT);
+            tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, count);
         } else {
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
@@ -82,31 +70,29 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will Review and Assess CE Workflow
      *
-     * @param lateCode
+     * @param lateResponseCode
      * @param severityValue
      * @param potentialLossValue
      * @param workflowType
      * @param workflowCount
      * @return InboxScreen
      */
-    public InboxScreen reviewAndAssessWorkflow(String lateCode, String severityValue,
+    public InboxScreen reviewAndAssessWorkflow(String lateResponseCode, String severityValue,
                                                String potentialLossValue, String workflowType,
                                                int workflowCount) {
-        //FIXME this method will have error as they change the ids again, now late code textbox and potential loss value is having the same ids
-
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            selectLateCode(lateCode);
-            selectSeverityValue(severityValue);
-            selectPotentialLossValue(potentialLossValue);
-            enterFirstComment(MSG_ENTER_ISSUE_FLAG_COMMENT);
-            enterSecondComment(MSG_ENTER_RISK_ASSESSMENT_COMMENT);
-            enterThirdComment(MSG_ENTER_EXPLANATION_COMMENT);
-            enterFourthComment(MSG_ENTER_CONTROL_BREAKDOWN_COMMENT);
-            enterFifthComment(MSG_ENTER_OUTCOME_COMMENT);
-            enterSixthComment(MSG_ENTER_GROUP_REMARK);
+        if (hasFormContainerLoaded()) {
+            selectPickerValue(FORM_LABEL_CE_SEVERITY, severityValue);
+            enterComments(FORM_LABEL_CE_ISSUE_FLAGGED_BY_MTCR, MSG_ENTER_ISSUE_FLAG_COMMENT);
+            enterComments(FORM_LABEL_CE_RISK_ASSESSMENT_AND_ACTIONS_TAKEN_TO_MITIGATE_RISK, MSG_ENTER_RISK_ASSESSMENT_COMMENT);
+            enterComments(FORM_LABEL_CE_EXPLANATION_OR_DETAILS_CONTROL_BREAK_DOWN, MSG_ENTER_EXPLANATION_COMMENT);
+            enterComments(FORM_LABEL_CE_TYPE_OF_CONTROL_BREAKDOWN, MSG_ENTER_CONTROL_BREAKDOWN_COMMENT);
+            selectPickerValue(FORM_LABEL_CE_ANY_POTENTIAL_LOSS, potentialLossValue);
+            enterComments(FORM_LABEL_CE_OUTCOME_OF_THE_EXCESS, MSG_ENTER_OUTCOME_COMMENT);
+            enterComments(FORM_LABEL_CE_TCRM_GROUP_REMARKS, MSG_ENTER_GROUP_REMARK);
+            selectLateResponseCode(lateResponseCode, workflowType);
 
-            acknowledgeScreen.acknowledgeButton.click();
+            tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, workflowCount);
         }
         return new InboxScreen(iosDriver);
@@ -115,23 +101,24 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will Review and Approve CE Workflow
      *
-     * @param lateCode
+     * @param lateResponseCode
      * @param disciplinaryAction
      * @param workflowType
      * @param workflowCount
      * @return InboxScreen
      */
-    public InboxScreen reviewAndApproveWorkflow(String lateCode, String disciplinaryAction,
+    public InboxScreen reviewAndApproveWorkflow(String lateResponseCode, String disciplinaryAction,
                                                 String workflowType, int workflowCount) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            selectLateCode(lateCode);
-            selectDisciplinaryActionPickerValue(disciplinaryAction);
-            enterFirstComment(MSG_ENTER_FO_JUSTIFICATION_COMMENT);
-            enterSecondComment(MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
-            enterThirdComment(MSG_ENTER_SUPERVISOR_REMARK);
+        if (hasFormContainerLoaded()) {
 
-            acknowledgeScreen.acknowledgeButton.click();
+            selectPickerValue(FORM_LABEL_CE_DISCIPLINARY_ACTION_TAKEN, disciplinaryAction);
+            enterComments(FORM_LABEL_CE_FRONT_OFFICE_JUSTIFICATION_FOR_THE_DISCIPLINARY, MSG_ENTER_FO_JUSTIFICATION_COMMENT);
+            enterComments(FORM_LABEL_CE_HOW_WILL_YOU_PREVENT_RECURRENCE, MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
+            enterComments(FORM_LABEL_CE_SUPERVISOR_REMARKS, MSG_ENTER_SUPERVISOR_REMARK);
+            selectLateResponseCode(lateResponseCode, workflowType);
+
+            tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, workflowCount);
         }
         return new InboxScreen(iosDriver);
@@ -140,24 +127,32 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will Review and Action VE Workflow
      *
-     * @param lateCode
+     * @param lateResponseCode
      * @param disciplinaryAction
      * @param workflowType
      * @param workflowCount
      * @return InboxScreen
      */
-    public InboxScreen reviewAndActionWorkflow(String lateCode, String disciplinaryAction,
+    public InboxScreen reviewAndActionWorkflow(String lateResponseCode, String disciplinaryAction,
                                                String workflowType, int workflowCount) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            selectVELateCode(lateCode, disciplinaryAction);
-            selectDisciplinaryActionPickerValue(disciplinaryAction);
+        if (hasFormContainerLoaded()) {
+            /*selectDisciplinaryActionPickerValue(disciplinaryAction);
             enterFirstComment(MSG_ENTER_FO_JUSTIFICATION_COMMENT);
             enterSecondComment(MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
             enterThirdComment(MSG_ENTER_REMEDIATION_ACTION_COMMENT);
             enterFourthComment(MSG_ENTER_VDO_COMMENT);
+            acknowledgeScreen.acknowledgeButton.click();*/
 
-            acknowledgeScreen.acknowledgeButton.click();
+            selectPickerValue(FORM_LABEL_DISCIPLINARY_ACTION_TAKEN, disciplinaryAction);
+            enterComments(FORM_LABEL_JUSTIFICATION_FOR_DISCIPLINARY_ACTION, MSG_ENTER_FO_JUSTIFICATION_COMMENT);
+            enterComments(FORM_LABEL_HOW_TO_PREVENT_RECURRENCE, MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
+            enterComments(FORM_LABEL_REMEDIATION_ACTION, MSG_ENTER_REMEDIATION_ACTION_COMMENT);
+            selectRemediationDate("13", "August", "2020");
+            enterComments(FORM_LABEL_SUPERVISOR_COMMENTS, MSG_ENTER_VDO_COMMENT);
+            selectLateResponseCode(lateResponseCode, workflowType);
+
+            tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, workflowCount);
         }
         return new InboxScreen(iosDriver);
@@ -197,20 +192,24 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
                 if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
                     throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
                 } else {
-                    if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                    if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText()) &&
+                            WORKFLOW_OMR.equals(workflowType)) {
                         acknowledgeScreen.alertOkButton.click();
                         scrollToTop();
-                        selectOMRLateCode(lateCode);
-                    } else if (ALERT_MSG_SELECT_TYPE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                        selectLateCode(LATE_CODE_DEADLINE_MISSED);
+                    } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(
+                            acknowledgeScreen.alertMessage.getText())) {
                         acknowledgeScreen.alertOkButton.click();
                         scrollToTop();
-                        selectLateCode(lateCode);
-                    } else if (ALERT_MSG_SELECT_DISCIPLINARY_ACTION_TAKEN.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                        acknowledgeScreen.alertOkButton.click();
-                        scrollToTop();
-                        selectVELateCode(VE_LATE_CODE_INVESTIGATION_WITH_HR, VE_DISCIPLINARY_ACTION_COACHING_OR_COUNSELING);
+                        selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+                    } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                        screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                        throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                    } else {
+                        screenshot("None of Alert Message are matched");
+                        throw new RuntimeException("None of Alert Message are matched");
                     }
-                    acknowledgeScreen.acknowledgeButton.click();
+                    tapOnFormDoneButton();
                     verifyAcknowledgeStatus(workflowType, workflowCount);
                 }
             }
@@ -224,218 +223,44 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
      */
     private void selectLateCode(String lateCode) {
         if (lateCode != null) {
-            selectAcknowledgeCode(lateCode);
-            enterLateComment();
+            super.selectPickerValue(FORM_LABEL_LATE_CODE, lateCode);
+            super.enterComments(FORM_LABEL_LATE_COMMENTS, MSG_ENTER_LATE_COMMENT);
         }
     }
 
     /**
-     * This method will select Late Code value and enter Late Comments for OMR Workflow
+     * This method will select Late Response Code value and enter Late Response Comments
      *
-     * @param lateCode
+     * @param lateResponseCode
+     * @param workflowType
      */
-    private void selectOMRLateCode(String lateCode) {
-        if (lateCode != null) {
-            selectOMRLateCodeValue(lateCode);
-            enterLateComment();
+    private void selectLateResponseCode(String lateResponseCode, String workflowType) {
+        if (lateResponseCode != null) {
+            if (WORKFLOW_VE.equals(workflowType)) {
+                selectPickerValue(FORM_LABEL_VE_LATE_RESPONSE_CODE, lateResponseCode);
+            } else {
+                selectPickerValue(FORM_LABEL_LATE_RESPONSE_CODE, lateResponseCode);
+            }
+            enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS, MSG_ENTER_LATE_COMMENT);
         }
     }
 
     /**
-     * This method will select Late Code value and enter Late Comments for VE Workflow
+     * This method will select Remediation Date
      *
-     * @param lateCode
-     * @param disciplinaryAction
+     * @param day
+     * @param month
+     * @param year
      */
-    private void selectVELateCode(String lateCode, String disciplinaryAction) {
-        if (lateCode != null) {
-            selectDisciplinaryActionDropDownValue(disciplinaryAction);
-            //acknowledgecode's element is the same as the late code for CE
-            selectAcknowledgeCode(lateCode);
-            enterLateComment();
-        }
-    }
-
-    /**
-     * This method will select late code from the picker
-     *
-     * @param lateCode
-     */
-    private void selectOMRLateCodeValue(String lateCode) {
-        acknowledgeScreen.lateCodePicker.click();
-        iosDriver.findElementByXPath(this.lateCode.replace("$1", lateCode)).click();
-    }
-
-    /**
-     * This method will key in late comment
-     */
-    private void enterLateComment() {
-        acknowledgeScreen.lateCommentTextbox.sendKeys(MSG_ENTER_LATE_COMMENT);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will select acknowledgement code from the picker
-     *
-     * @param acknowledgementCode
-     */
-    private void selectAcknowledgeCode(String acknowledgementCode) {
-        acknowledgeScreen.acknowledgeCodeTextBox.click();
-        acknowledgeScreen.pickerWheel.sendKeys(acknowledgementCode);
+    private void selectRemediationDate(String day, String month, String year) {
+        acknowledgeScreen.remediationDateButton.click();
+        acknowledgeScreen.dayPickerWheel.sendKeys(day);
+        acknowledgeScreen.monthPickerWheel.sendKeys(month);
+        acknowledgeScreen.yearPickerWheel.sendKeys(year);
         acknowledgeScreen.pickerDoneButton.click();
-    }
-
-    /**
-     * This method will enter Comment for the First Textbox
-     *
-     * @param comment
-     */
-    private void enterFirstComment(String comment) {
-        acknowledgeScreen.firstCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will enter Comment for the Second Textbox
-     *
-     * @param comment
-     */
-    private void enterSecondComment(String comment) {
-        acknowledgeScreen.secondCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will enter Comment for the Third Textbox
-     *
-     * @param comment
-     */
-    private void enterThirdComment(String comment) {
-        acknowledgeScreen.thirdCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will enter Comment for the Fourth Textbox
-     *
-     * @param comment
-     */
-    private void enterFourthComment(String comment) {
-        acknowledgeScreen.fourthCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will enter Comment for the Fifth Textbox
-     *
-     * @param comment
-     */
-    private void enterFifthComment(String comment) {
-        acknowledgeScreen.fifthCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will enter Comment for the Sixth Textbox
-     *
-     * @param comment
-     */
-    private void enterSixthComment(String comment) {
-        acknowledgeScreen.sixthCommentTextbox.sendKeys(comment);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * This method will select Severity Value
-     *
-     * @param severityValue
-     */
-    private void selectSeverityValue(String severityValue) {
-        acknowledgeScreen.severityButton.click();
-        waitForElementById(severityValue).click();
-    }
-
-    /**
-     * This method will select Potential Loss Value
-     *
-     * @param potentialLostValue
-     */
-    private void selectPotentialLossValue(String potentialLostValue) {
-        acknowledgeScreen.potentialLossTextBox.click();
-        acknowledgeScreen.pickerWheel.sendKeys(potentialLostValue);
-        acknowledgeScreen.pickerDoneButton.click();
-    }
-
-    /**
-     * This method will select Disciplinary Action Value from Picker
-     *
-     * @param disciplinaryAction
-     */
-    private void selectDisciplinaryActionPickerValue(String disciplinaryAction) {
-        acknowledgeScreen.disciplinaryActionTextbox.click();
-        acknowledgeScreen.pickerWheel.sendKeys(disciplinaryAction);
-        acknowledgeScreen.pickerDoneButton.click();
-    }
-
-    /**
-     * This method will select Disciplinary Action Value from Drop Down List
-     *
-     * @param disciplinaryAction
-     */
-    private void selectDisciplinaryActionDropDownValue(String disciplinaryAction) {
-        acknowledgeScreen.disciplinaryActionButton.click();
-        waitForElementById(disciplinaryAction).click();
     }
 
     class PageObjects {
-        @FindBy(id = "Late Code")
-        WebElement lateCodePicker;
-
-        @FindBy(id = "Severity*")
-        WebElement severityButton;
-
-        @FindBy(id = "Disciplinary Action taken*")
-        WebElement disciplinaryActionButton;
-
-        @FindBy(id = "SelectPicker")
-        WebElement disciplinaryActionTextbox;
-
-        @FindBy(id = "SelectPicker")
-        WebElement potentialLossTextBox;
-
-        @FindBy(id = "SelectPicker")
-        WebElement acknowledgeCodeTextBox;
-
-        @FindBy(xpath = "//XCUIElementTypePickerWheel")
-        WebElement pickerWheel;
-
-        @FindBy(id = "Done")
-        WebElement pickerDoneButton;
-
-        @FindBy(id = "lateComment")
-        WebElement lateCommentTextbox;
-
-        @FindBy(id = "comment0")
-        WebElement firstCommentTextbox;
-
-        @FindBy(id = "comment1")
-        WebElement secondCommentTextbox;
-
-        @FindBy(id = "comment2")
-        WebElement thirdCommentTextbox;
-
-        @FindBy(id = "comment3")
-        WebElement fourthCommentTextbox;
-
-        @FindBy(id = "comment4")
-        WebElement fifthCommentTextbox;
-
-        @FindBy(id = "comment5")
-        WebElement sixthCommentTextbox;
-
-        @FindBy(xpath = "//XCUIElementTypeNavigationBar[1]/XCUIElementTypeButton[2]")
-        WebElement acknowledgeButton;
-
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 
@@ -444,6 +269,21 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         WebElement alertOkButton;
+
+        @FindBy(id = "FromDate")
+        WebElement remediationDateButton;
+
+        @FindBy(xpath = "//XCUIElementTypePickerWheel[1]")
+        WebElement dayPickerWheel;
+
+        @FindBy(xpath = "//XCUIElementTypePickerWheel[2]")
+        WebElement monthPickerWheel;
+
+        @FindBy(xpath = "//XCUIElementTypePickerWheel[3]")
+        WebElement yearPickerWheel;
+
+        @FindBy(id = "Done")
+        WebElement pickerDoneButton;
     }
 
 }

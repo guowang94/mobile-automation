@@ -41,7 +41,7 @@ public class OverviewScreen extends BaseScreen {
             WebElement workflowTypeElement = waitForElementByXpath(this.workflowType.replace("$1", workflowType));
             TouchAction action = new TouchAction(iosDriver);
             while (!workflowTypeElement.isDisplayed()) {
-                action.press(180, 620).moveTo(0, -250).release().perform();
+                action.press(180, 620).moveTo(0, -200).release().perform();
             }
             waitForElementByXpath(workflowCountXpath(workflowType, workflowStatus)).click();
             System.out.println("Navigate to " + workflowType + " inbox");

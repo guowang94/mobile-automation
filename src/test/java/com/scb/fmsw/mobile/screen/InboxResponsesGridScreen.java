@@ -36,9 +36,10 @@ public class InboxResponsesGridScreen extends BaseScreen implements WorkflowCons
      * This method will return the result from verifying the workflow status
      *
      * @param workflowStatus
+     * @param workflowType
      * @return boolean
      */
-    public boolean verifyWorkflowStatus(String workflowStatus) {
+    public boolean verifyWorkflowStatus(String workflowStatus, String workflowType) {
         boolean result;
 
         if (hasTableContainerLoaded()) {
@@ -46,7 +47,13 @@ public class InboxResponsesGridScreen extends BaseScreen implements WorkflowCons
             System.out.println("Navigate to Responses Detail View");
 
             ResponsesDetailViewScreen responsesDetailViewScreen = new ResponsesDetailViewScreen(iosDriver);
-            result =  responsesDetailViewScreen.verifyWorkflowStatus(workflowStatus);
+
+            if (WORKFLOW_GMR.equals(workflowType)) {
+                result =  responsesDetailViewScreen.verifyWorkflowEventStatus(workflowStatus);
+            } else {
+                result =  responsesDetailViewScreen.verifyWorkflowStatus(workflowStatus);
+            }
+
             responsesDetailViewScreen.tapOnBackButton();
             return result;
         } else {

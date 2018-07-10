@@ -175,105 +175,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                     throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
                 }
             }
-
-            /*InboxDetailViewScreen inboxDetailViewScreen = navigateToDetailView(workflowID);
-
-            //Verify Prev Actor Comment and Workflow Status
-            if (workflowType.equals(WORKFLOW_VE)) {
-                //TODO NEED TO GET DIFFERENT TYPE OF COMMENT
-                switch (workflowStatus) {
-                    case WORKFLOW_STATUS_PENDING_MTCR_OR_MRO_UPLOADER_CLARIFICATION:
-                        if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL) &&
-                                verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                            screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                            return true;
-                        }
-                        break;
-                    case WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION:
-                        if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL) &&
-                                verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                            screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                            return true;
-                        }
-                        break;
-                    case WORKFLOW_STATUS_PENDING_COMPLIANCE_ACTION_POST_CLARIFICATION:
-                        String prevActorType = inboxDetailViewScreen.getPrevActorTypeValue();
-                        if (prevActorType.equals(PREV_ACTOR_TYPE_ROLE_MTCR_OR_MRO_UPLOADER)) {
-                            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_MRO_OR_MTCR_UPLOADER_COMMENTS_CELL) &&
-                                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                                screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                                return true;
-                            }
-                        } else if (prevActorType.equals(PREV_ACTOR_TYPE_ROLE_VOLCKER_DESK_OWNER)) {
-                            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_VDO_COMMENTS_CELL) &&
-                                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                                screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                                return true;
-                            }
-                        }
-                        break;
-                    default:
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                }
-
-            } else if (workflowType.equals(WORKFLOW_PNL)) {
-                //For PNL, I will be checking Workflow Event Status instead of Workflow Status
-                if (!workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED)) {
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                            inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
-                        screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                } else if (inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
-                    screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                    return true;
-                } else {
-                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                }
-            } else if (workflowType.equals(WORKFLOW_CE) && !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
-                    !workflowStatus.equals(WORKFLOW_STATUS_PENDING_MTCR_REVIEW_POST_CLARIFICATION)) {
-                //todo need to check for clarification as well
-                //For CE need to check for other comments fields as well
-                if (workflowStatus.equals(WORKFLOW_STATUS_PENDING_FO_REVIEW)) {
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ISSUE_FLAG_COMMENT_CELL, MSG_ENTER_ISSUE_FLAG_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_RISK_ASSESSMENT_COMMENT_CELL, MSG_ENTER_RISK_ASSESSMENT_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_EXPLANATION_COMMENT_CELL, MSG_ENTER_EXPLANATION_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_CONTROL_BREAKDOWN_COMMENT_CELL, MSG_ENTER_CONTROL_BREAKDOWN_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_OUTCOME_COMMENT_CELL, MSG_ENTER_OUTCOME_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_GROUP_REMARK_COMMENT_CELL, MSG_ENTER_GROUP_REMARK)) {
-                        screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                } else if (workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_DISCIPLINARY_ACTION_TAKEN)){
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_FO_JUSTIFICATION_COMMENT_CELL, MSG_ENTER_FO_JUSTIFICATION_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREVENT_RECURRENCE_COMMENT_CELL, MSG_ENTER_PREVENT_RECURRENCE_COMMENT) &&
-                            inboxDetailViewScreen.compareComment(INBOX_DETAIL_SUPERVISOR_REMARK_CELL, MSG_ENTER_SUPERVISOR_REMARK)) {
-                        screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                }
-
-            } else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) || workflowType.equals(WORKFLOW_OMR)) {
-                if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                        verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                    screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                    return true;
-                } else {
-                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                }
-            } else if (verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
-                return true;
-            } else {
-                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-            }*/
-
         } else {
             throw new RuntimeException(ERROR_MSG_TAB_CONTAINER_NOT_LOADED);
         }
@@ -394,7 +295,15 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 }
             }
 
-        } else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) || workflowType.equals(WORKFLOW_OMR)) {
+        } else if (workflowType.equals(WORKFLOW_OMR)) {
+            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
+                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                return true;
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+            }
+        } else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) &&
+                !workflowStatus.equals(WORKFLOW_STATUS_APPROVED)) {
             if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
                     verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                 return true;
@@ -427,7 +336,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             //Navigate to Response Grid Screen and validate Workflow Status
             InboxDetailsOptionScreen inboxDetailsOptionScreen = inboxDetailViewScreen.navigateToInboxDetailsOptionScreen();
             InboxResponsesGridScreen inboxResponsesGridScreen = inboxDetailsOptionScreen.navigateToInboxResponseScreen();
-            result = inboxResponsesGridScreen.verifyWorkflowStatus(workflowStatus);
+            result = inboxResponsesGridScreen.verifyWorkflowStatus(workflowStatus, workflowType);
             if (result) {
                 System.out.println("Verified Workflow Status");
             } else {
@@ -605,7 +514,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return SelectMultipleWorkflowScreen
      */
     public SelectMultipleWorkflowScreen navigateToSelectMultipleWorkflowScreen(int numbersOfWorkflowToBeSelected, String currentBucket, String action) {
-        hasLoadingCompleted();
         if (numbersOfWorkflowToBeSelected <= Integer.parseInt(waitForElementByXpath(bucketCount.replace("$1", currentBucket)).getText())) {
             tapOnMoreOption();
             scrollDownUntilElementIsDisplayed(waitForElementByXpath(options.replace("$1", action))).click();
@@ -725,7 +633,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return AcknowledgeScreen
      */
     public AcknowledgeScreen swipeRightAndTapOnAcknowledge(String workflowID, String workflowType) {
-        hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
             if (WORKFLOW_PNL.equalsIgnoreCase(workflowType) || WORKFLOW_CE.equalsIgnoreCase(workflowType)) {
@@ -750,7 +657,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return SubmitScreen
      */
     public SubmitScreen swipeRightAndTapOnSubmit(String workflowID) {
-        hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeSubmitButton).click();

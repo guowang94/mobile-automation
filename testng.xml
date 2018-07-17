@@ -6,9 +6,9 @@
         <groups>
             <run>
                 <!--Workflow Type-->
-                <exclude name="CNA"/>
+                <include name="CNA"/>
                 <exclude name="PNL"/>
-                <include name="OMR"/>
+                <exclude name="OMR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -23,12 +23,12 @@
         </groups>
         <classes>
             <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
-            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
-            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <!--<class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>-->
         </classes>
     </test>
 
-    <test name="OMR Workflow Regression" enabled="false">
+    <test name="OMR Workflow Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -48,9 +48,9 @@
             </run>
         </groups>
         <classes>
-            <!--<class name="com.scb.fmsw.mobile.test.ClarificationTest"/>-->
+            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
             <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
-            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+            <!--<class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>-->
         </classes>
     </test>
 
@@ -78,8 +78,8 @@
         </groups>
         <classes>
             <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
-            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
-            <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
+            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <!--<class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>-->
         </classes>
     </test>
 
@@ -103,8 +103,8 @@
             </run>
         </groups>
         <classes>
-            <!--<class name="com.scb.fmsw.mobile.test.ClarificationTest"/>-->
-            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
             <class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>
         </classes>
     </test>
@@ -195,7 +195,7 @@
         </classes>
     </test>
 
-    <test name="Test Regression" enabled="true">
+    <test name="Test Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->

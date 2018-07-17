@@ -4,16 +4,45 @@
     <list default="true" id="272a2b70-c3e1-4714-8b9b-077253353d82" name="Default" comment="FMSW-8486 - Mobile: Rework - Acknowledge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/config.properties" afterPath="$PROJECT_DIR$/config.properties" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/scb/fmsw/mobile/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/scb/fmsw/mobile/App.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/scb/fmsw/mobile/App.class" afterPath="$PROJECT_DIR$/target/classes/com/scb/fmsw/mobile/App.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/WorkflowConstants.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/WorkflowConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseDriver.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseDriver.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/DelegationWorkflowTypeScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/DelegationWorkflowTypeScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/OverviewScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/OverviewScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen$PageObjects.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/AcknowledgeTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/AcknowledgeTest.class" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ClarificationTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ClarificationTest.class" />
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Fri_Jun_08_11_22_44_SGT_2018_Sent_Volcker_RENTD_Excess_Workflow_for_Clarification.png" afterPath="" />
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Fri_Jun_08_11_24_16_SGT_2018_Verified_workflow_VE0000239096_in_IN_PROGRESS_bucket.png" afterPath="" />
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Thu_Jun_07_15_24_23_SGT_2018_Sent_Volcker_RENTD_Excess_Workflow_for_Clarification.png" afterPath="" />
@@ -47,6 +76,7 @@
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Wed_Jun_06_18_25_10_SGT_2018_Verified_workflow_VE0000239166_in_IN_PROGRESS_bucket.png" afterPath="" />
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Wed_Jun_06_18_31_58_SGT_2018_Verified_workflow_VE0000239166_in_IN_PROGRESS_bucket.png" afterPath="" />
       <change beforePath="$PROJECT_DIR$/test-output/screenshots/Wed_Jun_06_18_47_17_SGT_2018_Verified_workflow_VE0000239166_in_IN_PROGRESS_bucket.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/testng.xml" afterPath="$PROJECT_DIR$/testng.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,26 +91,70 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AcknowledgeTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
+      <file leaf-file-name="ClarificationTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="633" column="54" lean-forward="false" selection-start-line="633" selection-start-column="54" selection-end-line="633" selection-end-column="54" />
+            <state relative-caret-position="-796">
+              <caret line="1099" column="30" lean-forward="false" selection-start-line="1099" selection-start-column="30" selection-end-line="1099" selection-end-column="30" />
               <folding>
-                <element signature="e#3044#3215#0" expanded="false" />
-                <element signature="e#4607#4734#0" expanded="false" />
-                <element signature="e#8634#8805#0" expanded="false" />
-                <element signature="e#10242#10369#0" expanded="false" />
-                <element signature="e#14430#14606#0" expanded="false" />
-                <element signature="e#16036#16165#0" expanded="false" />
-                <element signature="e#18891#19011#0" expanded="false" />
-                <element signature="e#20347#20525#0" expanded="false" />
-                <element signature="e#21971#22101#0" expanded="false" />
-                <element signature="e#31293#31468#0" expanded="false" />
-                <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-                <element signature="e#32848#32975#0" expanded="false" />
-                <element signature="method#reviewAndAcceptAllPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="e#343#435#0" expanded="false" />
+                <element signature="method#sendCNAWorkflowToPCForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendCNAWorkflowToLMForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#6174#6243#0" expanded="false" />
+                <element signature="method#sendCNAWorkflowToCNAPerformerForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#8053#8122#0" expanded="false" />
+                <element signature="method#sendCNAWorkflowToMOForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendCNAWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendCNAWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#22174#22432#0" expanded="false" />
+                <element signature="method#clarifySelectedCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#25962#26126#0" expanded="false" />
+                <element signature="method#clarifyAllCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendPNLWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendPNLWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#38015#38273#0" expanded="false" />
+                <element signature="method#clarifySelectedPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#41760#41928#0" expanded="false" />
+                <element signature="method#clarifyAllPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendOMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendOMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#53542#53800#0" expanded="false" />
+                <element signature="method#clarifySelectedOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#57207#57371#0" expanded="false" />
+                <element signature="method#clarifyAllOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#clarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#71665#71784#0" expanded="false" />
+                <element signature="method#clarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#clarifyVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToClarifyVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#clarifyVEWorkflowToComplianceSelectedTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#respondVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToRespondVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#respondSelectedVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendFVAWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendFVAWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#96010#96272#0" expanded="false" />
+                <element signature="method#clarifySelectedFVAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#99710#99878#0" expanded="false" />
+                <element signature="method#clarifyAllFVAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendGMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendGMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#111332#111593#0" expanded="false" />
+                <element signature="method#clarifySelectedGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#115050#115217#0" expanded="false" />
+                <element signature="method#clarifyAllGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClarificationOptionScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -88,38 +162,28 @@
       <file leaf-file-name="WorkflowConstants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="323" column="66" lean-forward="false" selection-start-line="323" selection-start-column="66" selection-end-line="323" selection-end-column="66" />
+            <state relative-caret-position="130">
+              <caret line="323" column="51" lean-forward="false" selection-start-line="323" selection-start-column="51" selection-end-line="323" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InboxScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java">
+      <file leaf-file-name="SubmitScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="113" column="18" lean-forward="false" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
+            <state relative-caret-position="123">
+              <caret line="34" column="48" lean-forward="false" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InboxResponsesGridScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java">
+      <file leaf-file-name="InboxDetailViewScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="51" column="69" lean-forward="false" selection-start-line="51" selection-start-column="69" selection-end-line="51" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResponsesDetailViewScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+            <state relative-caret-position="240">
+              <caret line="102" column="13" lean-forward="false" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -128,8 +192,51 @@
       <file leaf-file-name="AcknowledgeScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="238" column="51" lean-forward="true" selection-start-line="238" selection-start-column="51" selection-end-line="238" selection-end-column="51" />
+            <state relative-caret-position="192">
+              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InboxScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="45" column="11" lean-forward="false" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClarificationScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="54" column="53" lean-forward="false" selection-start-line="54" selection-start-column="53" selection-end-line="54" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="123">
+              <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+              <folding>
+                <element signature="e#9689#9690#0" expanded="true" />
+                <element signature="e#9745#9746#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -146,11 +253,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>WorkflowConstants.</find>
-      <find>uat</find>
-      <find>sit</find>
-      <find>omrwor</find>
-      <find>getFirstCNAWorkflowId</find>
       <find>*/</find>
       <find>late comme</find>
       <find>late</find>
@@ -166,7 +268,6 @@
       <find>workflowstatus</find>
       <find>edit and</find>
       <find>respond</find>
-      <find>acknowledgeScreen</find>
       <find>workflowID</find>
       <find>id</find>
       <find>Submit</find>
@@ -176,6 +277,12 @@
       <find>descen</find>
       <find>verified workflow status</find>
       <find>loading</find>
+      <find>label</find>
+      <find>system</find>
+      <find>acknowledgeScreen</find>
+      <find>clarificationScreen</find>
+      <find>.trim</find>
+      <find>pending approval</find>
     </findStrings>
     <replaceStrings>
       <replace>60</replace>
@@ -197,9 +304,10 @@
       <replace>uat</replace>
       <replace>workflowIDL</replace>
       <replace>workflowCount</replace>
-      <replace>submitScreen</replace>
       <replace>workflowIDList.get(0)</replace>
       <replace>ID</replace>
+      <replace>clarificationScreen</replace>
+      <replace>submitScreen</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -218,7 +326,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DefaultDelegationScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationCountrySearchScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationPortfolioScreen.java" />
@@ -242,33 +349,34 @@
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/LoginScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/PickerWheelInpsection.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/RecallScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitOptionScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponseScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponseFilterScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponseDetailViewScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailsOptionScreen.java" />
-        <option value="$PROJECT_DIR$/testng.xml" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationWorkflowTypeScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseDriver.java" />
-        <option value="$PROJECT_DIR$/config.properties" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/scb/fmsw/mobile/App.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" />
+        <option value="$PROJECT_DIR$/testng.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java" />
+        <option value="$PROJECT_DIR$/config.properties" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
       </list>
     </option>
   </component>
@@ -307,13 +415,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="SearchEverywhereHistoryKey" value="loading&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.base.BaseScreen#hasLoadingCompleted&#10;ack&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java&#10;cl&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java&#10;bases&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java&#10;basetes&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseTest.java&#10;prop&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/config.properties&#10;clarif&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java&#10;sub&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java&#10;base&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseDriver.java&#10;delegation&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/DelegationScreen.java&#10;searc&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.DelegationDefaultCreationScreen#searchDelegateTo&#10;searchU&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.BusinessProcessScreen#searchForUser&#10;search&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.BusinessProcessScreen.PageObjects#searchButton&#10;hasload&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.test.UserLandingScreenTest#hasLoadingCompleted&#10;hasloa&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.test.UserLandingScreenTest#hasLoadingCompleted&#10;getall&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#getAllCNAWorkflowId&#10;veriwo&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#verifyWorkflowInBucket&#10;verifywor&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#verifyWorkflowInBucket&#10;verify&#9;PSI&#9;JAVA://com.google.common.base.Verify&#10;verif&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.ClarificationScreen#verifyClarificationStatus&#10;navigate&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#navigateToBucket&#10;loadMore&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen.PageObjects#loadMoreResultsButton&#10;OVer&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java&#10;screenshot&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.base.BaseScreen#screenshot&#10;loaded&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.ClarificationOptionScreen#hasTableContainerLoaded&#10;Excep&#9;PSI&#9;JAVA://java.lang.Exception" />
+    <property name="SearchEverywhereHistoryKey" value="overview&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java&#10;ACK&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java&#10;acknow&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java&#10;ac&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java&#10;prop&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/config.properties&#10;submit&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java&#10;ack&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java&#10;cla&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java&#10;base&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java&#10;loading&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.base.BaseScreen#hasLoadingCompleted&#10;cl&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java&#10;bases&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java&#10;basetes&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/base/BaseTest.java&#10;clarif&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java&#10;sub&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java&#10;delegation&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/DelegationScreen.java&#10;searc&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.DelegationDefaultCreationScreen#searchDelegateTo&#10;searchU&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.BusinessProcessScreen#searchForUser&#10;search&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.BusinessProcessScreen.PageObjects#searchButton&#10;hasload&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.test.UserLandingScreenTest#hasLoadingCompleted&#10;hasloa&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.test.UserLandingScreenTest#hasLoadingCompleted&#10;getall&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#getAllCNAWorkflowId&#10;veriwo&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#verifyWorkflowInBucket&#10;verifywor&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#verifyWorkflowInBucket&#10;verify&#9;PSI&#9;JAVA://com.google.common.base.Verify&#10;verif&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.ClarificationScreen#verifyClarificationStatus&#10;navigate&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen#navigateToBucket&#10;loadMore&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.InboxScreen.PageObjects#loadMoreResultsButton&#10;OVer&#9;FILE&#9;file:///Users/optimum/Desktop/Java practice/mobile/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java&#10;screenshot&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.base.BaseScreen#screenshot&#10;loaded&#9;PSI&#9;JAVA://com.scb.fmsw.mobile.screen.ClarificationOptionScreen#hasTableContainerLoaded&#10;Excep&#9;PSI&#9;JAVA://java.lang.Exception" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -327,7 +435,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="TestNG.AcknowledgeTest.swipeToReviewAndActionWorkflowTest">
+  <component name="RunManager" selected="TestNG.ClarificationTest.clarifyAllCEWorkflowTest">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -376,7 +484,7 @@
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
     </configuration>
-    <configuration name="AcknowledgeTest.approveGMRWorkflowDetailViewTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="ClarificationTest.clarifyAllCEWorkflowTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.scb.fmsw.mobile.test.*" />
@@ -388,8 +496,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.scb.fmsw.mobile.test" />
-      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.AcknowledgeTest" />
-      <option name="METHOD_NAME" value="approveGMRWorkflowDetailViewTest" />
+      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.ClarificationTest" />
+      <option name="METHOD_NAME" value="clarifyAllCEWorkflowTest" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -408,7 +516,7 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration name="AcknowledgeTest.reviewAndAcceptPNLWorkflowDetailViewTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="ClarificationTest.clarifyCEWorkflowDetailViewTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.scb.fmsw.mobile.test.*" />
@@ -420,8 +528,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.scb.fmsw.mobile.test" />
-      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.AcknowledgeTest" />
-      <option name="METHOD_NAME" value="reviewAndAcceptPNLWorkflowDetailViewTest" />
+      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.ClarificationTest" />
+      <option name="METHOD_NAME" value="clarifyCEWorkflowDetailViewTest" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -440,7 +548,7 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="ClarificationTest.clarifySelectedCEWorkflowTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.scb.fmsw.mobile.test.*" />
@@ -452,8 +560,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.scb.fmsw.mobile.test" />
-      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.AcknowledgeTest" />
-      <option name="METHOD_NAME" value="reviewAndActionWorkflowDetailViewTest" />
+      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.ClarificationTest" />
+      <option name="METHOD_NAME" value="clarifySelectedCEWorkflowTest" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -472,7 +580,7 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration name="AcknowledgeTest.swipeToApproveGMRWorkflowDetailViewTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="ClarificationTest.clarifyVEWorkflowToComplianceSelectedTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.scb.fmsw.mobile.test.*" />
@@ -484,8 +592,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.scb.fmsw.mobile.test" />
-      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.AcknowledgeTest" />
-      <option name="METHOD_NAME" value="swipeToApproveGMRWorkflowDetailViewTest" />
+      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.ClarificationTest" />
+      <option name="METHOD_NAME" value="clarifyVEWorkflowToComplianceSelectedTest" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -504,7 +612,7 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration name="AcknowledgeTest.swipeToReviewAndActionWorkflowTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="ClarificationTest.swipeToClarifyCEWorkflowTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.scb.fmsw.mobile.test.*" />
@@ -516,8 +624,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.scb.fmsw.mobile.test" />
-      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.AcknowledgeTest" />
-      <option name="METHOD_NAME" value="swipeToReviewAndActionWorkflowTest" />
+      <option name="MAIN_CLASS_NAME" value="com.scb.fmsw.mobile.test.ClarificationTest" />
+      <option name="METHOD_NAME" value="swipeToClarifyCEWorkflowTest" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -598,19 +706,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="TestNG./Users/optimum/Desktop/Java practice/mobile/testng.xml" />
-      <item index="1" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.reviewAndAcceptPNLWorkflowDetailViewTest" />
-      <item index="2" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.approveGMRWorkflowDetailViewTest" />
-      <item index="3" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.swipeToApproveGMRWorkflowDetailViewTest" />
-      <item index="4" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" />
-      <item index="5" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.swipeToReviewAndActionWorkflowTest" />
+      <item index="1" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyVEWorkflowToComplianceSelectedTest" />
+      <item index="2" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyCEWorkflowDetailViewTest" />
+      <item index="3" class="java.lang.String" itemvalue="TestNG.ClarificationTest.swipeToClarifyCEWorkflowTest" />
+      <item index="4" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifySelectedCEWorkflowTest" />
+      <item index="5" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyAllCEWorkflowTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.swipeToReviewAndActionWorkflowTest" />
-        <item index="1" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" />
-        <item index="2" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.swipeToApproveGMRWorkflowDetailViewTest" />
-        <item index="3" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.approveGMRWorkflowDetailViewTest" />
-        <item index="4" class="java.lang.String" itemvalue="TestNG.AcknowledgeTest.reviewAndAcceptPNLWorkflowDetailViewTest" />
+        <item index="0" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyAllCEWorkflowTest" />
+        <item index="1" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifySelectedCEWorkflowTest" />
+        <item index="2" class="java.lang.String" itemvalue="TestNG.ClarificationTest.swipeToClarifyCEWorkflowTest" />
+        <item index="3" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyCEWorkflowDetailViewTest" />
+        <item index="4" class="java.lang.String" itemvalue="TestNG.ClarificationTest.clarifyVEWorkflowToComplianceSelectedTest" />
       </list>
     </recent_temporary>
   </component>
@@ -628,38 +736,46 @@
       <option name="presentableId" value="Default" />
       <updated>1520826134481</updated>
     </task>
+    <task id="LOCAL-00001" summary="FMSW-8486 - Mobile: Rework - Acknowledge">
+      <created>1531217832945</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1531217832945</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 15m 04s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifyAllCEWorkflowTest - 2018.07.17 at 18h 06m 13s.xml">
+      <configuration name="ClarificationTest.clarifyAllCEWorkflowTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 17m 26s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifyCEWorkflowDetailViewTest - 2018.07.17 at 16h 06m 03s.xml">
+      <configuration name="ClarificationTest.clarifyCEWorkflowDetailViewTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 20m 12s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifyCEWorkflowDetailViewTest - 2018.07.17 at 16h 06m 07s.xml">
+      <configuration name="ClarificationTest.clarifyCEWorkflowDetailViewTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 24m 12s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifyCEWorkflowDetailViewTest - 2018.07.17 at 16h 23m 20s.xml">
+      <configuration name="ClarificationTest.clarifyCEWorkflowDetailViewTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 35m 48s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifySelectedCEWorkflowTest - 2018.07.17 at 17h 37m 57s.xml">
+      <configuration name="ClarificationTest.clarifySelectedCEWorkflowTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 16h 41m 04s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_clarifyVEWorkflowToComplianceSelectedTest - 2018.07.17 at 15h 26m 26s.xml">
+      <configuration name="ClarificationTest.clarifyVEWorkflowToComplianceSelectedTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 17h 33m 54s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_swipeToClarifyCEWorkflowTest - 2018.07.17 at 16h 42m 07s.xml">
+      <configuration name="ClarificationTest.swipeToClarifyCEWorkflowTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 17h 34m 59s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_swipeToClarifyCEWorkflowTest - 2018.07.17 at 17h 14m 13s.xml">
+      <configuration name="ClarificationTest.swipeToClarifyCEWorkflowTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_reviewAndActionWorkflowDetailViewTest - 2018.07.10 at 17h 45m 57s.xml">
-      <configuration name="AcknowledgeTest.reviewAndActionWorkflowDetailViewTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_swipeToClarifyVEWorkflowToComplianceTest - 2018.07.17 at 15h 09m 09s.xml">
+      <configuration name="ClarificationTest.swipeToClarifyVEWorkflowToComplianceTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="AcknowledgeTest_swipeToReviewAndActionWorkflowTest - 2018.07.10 at 17h 57m 05s.xml">
-      <configuration name="AcknowledgeTest.swipeToReviewAndActionWorkflowTest" configurationId="TestNG" />
+    <history-entry file="ClarificationTest_swipeToClarifyVEWorkflowToComplianceTest - 2018.07.17 at 15h 18m 19s.xml">
+      <configuration name="ClarificationTest.swipeToClarifyVEWorkflowToComplianceTest" configurationId="TestNG" />
     </history-entry>
   </component>
   <component name="TodoView" selected-index="4">
@@ -675,7 +791,7 @@
     <frame x="0" y="23" width="1440" height="836" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42339832" sideWeight="0.45851216" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42339832" sideWeight="0.45851216" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32451254" sideWeight="0.47138768" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -687,7 +803,7 @@
       <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4427754" sideWeight="0.50812066" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1629393" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16237482" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32451254" sideWeight="0.47997138" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20100144" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -717,16 +833,16 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5" sideWeight="0.44888178" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42339832" sideWeight="0.45851216" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42339832" sideWeight="0.45851216" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32451254" sideWeight="0.47138768" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41922006" sideWeight="0.48615548" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41922006" sideWeight="0.48615548" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4427754" sideWeight="0.50812066" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1629393" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16237482" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32451254" sideWeight="0.47997138" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -744,28 +860,64 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java</url>
-          <line>21</line>
+          <url>file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java</url>
+          <line>335</line>
           <properties />
-          <option name="timeStamp" value="256" />
+          <option name="timeStamp" value="265" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java</url>
+          <line>739</line>
+          <properties />
+          <option name="timeStamp" value="269" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="258" />
+      <option name="time" value="271" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="TestNG">
+        <watch expression="waitForElementByXpath(workflowEventStatusValue).getText()" language="JAVA" />
+        <watch expression="workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue).getText())" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>waitForElementById(&quot;FOR REVIEW &amp; ACTION&quot;).getText()</expression-string>
+        <expression-string>workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue).getText())</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
         <expression-string>waitForElementByXpath(workflowEventStatusValue).getText()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>waitForElementByXpath(&quot;//XCUIElementTypeCell[@id='1000710']&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>waitForElementById(userID).getText()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>clarificationScreen.alertMessage.getText()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>userID.substring(0, 5)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>waitForElementById(&quot;FOR REVIEW &amp; ACTION&quot;).getText()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -779,46 +931,9 @@
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>othersDelegationsScreen.delegatorIDList.get(i).getText().substring(0, 7)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>delegationScreen.delegateeIDList.get(0).getText().substring(0,7)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>waitForElementByXpath(&quot;//XCUIElementTypeButton[@name='Load More Results']/ancestor::XCUIElementTypeCell&quot;).isDisplayed()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>waitForElementByName(loadMoreResultsCelltest).isDisplayed()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>inboxScreen.loadMoreResultsButton.isDisplayed()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>waitForElementByXpath(loadMoreResultsCell).isDisplayed()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-support/3.6.0/selenium-support-3.6.0-sources.jar!/org/openqa/selenium/support/pagefactory/internal/LocatingElementHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-support/3.6.0/selenium-support-3.6.0-sources.jar!/org/openqa/selenium/support/pagefactory/DefaultElementLocator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -912,48 +1027,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/testng/testng/6.10/testng-6.10-sources.jar!/org/testng/internal/Invoker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="1186" column="0" lean-forward="false" selection-start-line="1186" selection-start-column="0" selection-end-line="1186" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailsOptionScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="22" column="58" lean-forward="true" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testng.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="208" column="16" lean-forward="false" selection-start-line="208" selection-start-column="16" selection-end-line="208" selection-end-column="36" />
-          <folding>
-            <marker date="1528094528780" expanded="true" signature="192:767" ph="..." />
-            <marker date="1528094528780" expanded="true" signature="194:767" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="15" column="147" lean-forward="false" selection-start-line="15" selection-start-column="147" selection-end-line="15" selection-end-column="147" />
           <folding>
             <element signature="e#261#316#0" expanded="false" />
-            <element signature="e#3959#4132#0" expanded="false" />
+            <element signature="e#3957#4130#0" expanded="false" />
             <element signature="method#delegateSelectedCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
-            <element signature="e#6066#6198#0" expanded="false" />
+            <element signature="e#6063#6195#0" expanded="false" />
             <element signature="method#delegateAllCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
-            <element signature="e#11302#11475#0" expanded="false" />
+            <element signature="e#11297#11470#0" expanded="false" />
             <element signature="method#delegateSelectedOMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
-            <element signature="e#13396#13528#0" expanded="false" />
+            <element signature="e#13391#13523#0" expanded="false" />
             <element signature="method#delegateAllOMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
-            <element signature="e#18426#18599#0" expanded="false" />
+            <element signature="e#18421#18594#0" expanded="false" />
             <element signature="method#delegateSelectedPNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
-            <element signature="e#20427#20559#0" expanded="false" />
+            <element signature="e#20422#20554#0" expanded="false" />
             <element signature="method#delegateAllPNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
           </folding>
         </state>
@@ -989,13 +1079,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/LandingScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-345">
@@ -1026,59 +1109,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="182" column="30" lean-forward="false" selection-start-line="182" selection-start-column="30" selection-end-line="182" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3855">
-          <caret line="1471" column="39" lean-forward="false" selection-start-line="1471" selection-start-column="39" selection-end-line="1471" selection-end-column="39" />
-          <folding>
-            <element signature="e#256#348#0" expanded="false" />
-            <element signature="method#swipeToSendCNAWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#sendCNAWorkflowToPCForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#sendCNAWorkflowToLMForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#10774#10843#0" expanded="false" />
-            <element signature="method#sendCNAWorkflowToCNAPerformerForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#12671#12740#0" expanded="false" />
-            <element signature="method#sendCNAWorkflowToMOForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#sendCNAWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#swipeToSendCNAWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#27062#27320#0" expanded="false" />
-            <element signature="method#clarifySelectedCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#30850#31014#0" expanded="false" />
-            <element signature="method#clarifyAllCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#sendPNLWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#swipeToSendPNLWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#42855#43105#0" expanded="false" />
-            <element signature="method#clarifySelectedPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#46612#46776#0" expanded="false" />
-            <element signature="method#clarifyAllPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#sendOMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#swipeToSendOMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#58431#58689#0" expanded="false" />
-            <element signature="method#clarifySelectedOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#62092#62256#0" expanded="false" />
-            <element signature="method#clarifyAllOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#clarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="method#swipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#73219#73392#0" expanded="false" />
-            <element signature="method#clarifySelectedCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#76542#76661#0" expanded="false" />
-            <element signature="method#clarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationOptionScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
           <caret line="40" column="33" lean-forward="false" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1094,14 +1128,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="11" column="54" lean-forward="true" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="356" column="39" lean-forward="true" selection-start-line="356" selection-start-column="39" selection-end-line="356" selection-end-column="39" />
           <folding />
         </state>
       </provider>
@@ -1152,14 +1178,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1897">
-          <caret line="151" column="26" lean-forward="true" selection-start-line="151" selection-start-column="26" selection-end-line="151" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1172,39 +1190,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
           <caret line="86" column="101" lean-forward="false" selection-start-line="86" selection-start-column="76" selection-end-line="86" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="51" column="69" lean-forward="false" selection-start-line="51" selection-start-column="69" selection-end-line="51" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-86">
-          <caret line="286" column="36" lean-forward="false" selection-start-line="286" selection-start-column="36" selection-end-line="286" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="113" column="18" lean-forward="false" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1216,10 +1201,170 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/scb/fmsw/mobile/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailsOptionScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="50" column="38" lean-forward="false" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="68" column="47" lean-forward="false" selection-start-line="68" selection-start-column="47" selection-end-line="68" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testng.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="41" lean-forward="false" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+          <folding>
+            <marker date="1531452743258" expanded="true" signature="192:767" ph="..." />
+            <marker date="1531452743258" expanded="true" signature="194:767" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding>
+            <element signature="e#254#317#0" expanded="false" />
+            <element signature="method#acknowledgeCNAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#3029#3200#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#4591#4718#0" expanded="false" />
+            <element signature="method#acknowledgeAllCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeOMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeOMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#8616#8787#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedOMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#10224#10351#0" expanded="false" />
+            <element signature="method#acknowledgeAllOMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#11489#11560#0" expanded="false" />
+            <element signature="method#reviewAndAssessCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndAssessCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#14412#14588#0" expanded="false" />
+            <element signature="method#reviewAndAssessSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#16018#16147#0" expanded="false" />
+            <element signature="method#reviewAndAssessAllCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#17316#17440#0" expanded="false" />
+            <element signature="method#reviewAndApproveCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#18873#18993#0" expanded="false" />
+            <element signature="method#swipeToReviewAndApproveCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#20329#20507#0" expanded="false" />
+            <element signature="method#reviewAndApproveSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#21953#22083#0" expanded="false" />
+            <element signature="method#reviewAndApproveAllCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeFVAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#25794#25969#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#27360#27495#0" expanded="false" />
+            <element signature="method#acknowledgeAllFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndAcceptPNLWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndAcceptPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#31180#31355#0" expanded="false" />
+            <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#32735#32862#0" expanded="false" />
+            <element signature="method#reviewAndAcceptAllPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#approveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToApproveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndActionWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndActionWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndActionSelectedWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SelectMultipleWorkflowScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-59">
+          <caret line="79" column="47" lean-forward="false" selection-start-line="79" selection-start-column="47" selection-end-line="79" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="43" column="52" lean-forward="false" selection-start-line="43" selection-start-column="52" selection-end-line="43" selection-end-column="52" />
+        <state relative-caret-position="154">
+          <caret line="43" column="53" lean-forward="false" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="34" column="48" lean-forward="false" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="323" column="51" lean-forward="false" selection-start-line="323" selection-start-column="51" selection-end-line="323" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="54" column="53" lean-forward="false" selection-start-line="54" selection-start-column="53" selection-end-line="54" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/testng/testng/6.10/testng-6.10-sources.jar!/org/testng/internal/Invoker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="659" column="0" lean-forward="false" selection-start-line="659" selection-start-column="0" selection-end-line="659" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="45" column="11" lean-forward="false" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="102" column="13" lean-forward="false" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1227,52 +1372,74 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123">
-          <caret line="616" column="43" lean-forward="false" selection-start-line="616" selection-start-column="43" selection-end-line="616" selection-end-column="43" />
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
           <folding>
-            <element signature="e#5585#5586#0" expanded="true" />
-            <element signature="e#5648#5649#0" expanded="true" />
-            <element signature="e#6838#6839#0" expanded="true" />
-            <element signature="e#6893#6894#0" expanded="true" />
-            <element signature="e#8814#8815#0" expanded="true" />
-            <element signature="e#8869#8870#0" expanded="true" />
+            <element signature="e#9689#9690#0" expanded="true" />
+            <element signature="e#9745#9746#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="323" column="66" lean-forward="false" selection-start-line="323" selection-start-column="66" selection-end-line="323" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="238" column="51" lean-forward="true" selection-start-line="238" selection-start-column="51" selection-end-line="238" selection-end-column="51" />
+        <state relative-caret-position="192">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="633" column="54" lean-forward="false" selection-start-line="633" selection-start-column="54" selection-end-line="633" selection-end-column="54" />
+        <state relative-caret-position="-796">
+          <caret line="1099" column="30" lean-forward="false" selection-start-line="1099" selection-start-column="30" selection-end-line="1099" selection-end-column="30" />
           <folding>
-            <element signature="e#3044#3215#0" expanded="false" />
-            <element signature="e#4607#4734#0" expanded="false" />
-            <element signature="e#8634#8805#0" expanded="false" />
-            <element signature="e#10242#10369#0" expanded="false" />
-            <element signature="e#14430#14606#0" expanded="false" />
-            <element signature="e#16036#16165#0" expanded="false" />
-            <element signature="e#18891#19011#0" expanded="false" />
-            <element signature="e#20347#20525#0" expanded="false" />
-            <element signature="e#21971#22101#0" expanded="false" />
-            <element signature="e#31293#31468#0" expanded="false" />
-            <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#32848#32975#0" expanded="false" />
-            <element signature="method#reviewAndAcceptAllPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#343#435#0" expanded="false" />
+            <element signature="method#sendCNAWorkflowToPCForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendCNAWorkflowToLMForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#6174#6243#0" expanded="false" />
+            <element signature="method#sendCNAWorkflowToCNAPerformerForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#8053#8122#0" expanded="false" />
+            <element signature="method#sendCNAWorkflowToMOForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendCNAWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendCNAWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#22174#22432#0" expanded="false" />
+            <element signature="method#clarifySelectedCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#25962#26126#0" expanded="false" />
+            <element signature="method#clarifyAllCNAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendPNLWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendPNLWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#38015#38273#0" expanded="false" />
+            <element signature="method#clarifySelectedPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#41760#41928#0" expanded="false" />
+            <element signature="method#clarifyAllPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendOMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendOMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#53542#53800#0" expanded="false" />
+            <element signature="method#clarifySelectedOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#57207#57371#0" expanded="false" />
+            <element signature="method#clarifyAllOMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#clarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#71665#71784#0" expanded="false" />
+            <element signature="method#clarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#clarifyVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToClarifyVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#clarifyVEWorkflowToComplianceSelectedTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#respondVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToRespondVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#respondSelectedVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendFVAWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendFVAWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#96010#96272#0" expanded="false" />
+            <element signature="method#clarifySelectedFVAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#99710#99878#0" expanded="false" />
+            <element signature="method#clarifyAllFVAWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendGMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendGMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#111332#111593#0" expanded="false" />
+            <element signature="method#clarifySelectedGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#115050#115217#0" expanded="false" />
+            <element signature="method#clarifyAllGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
           </folding>
         </state>
       </provider>

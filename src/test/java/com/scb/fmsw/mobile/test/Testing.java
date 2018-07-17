@@ -32,7 +32,7 @@ public class Testing extends BaseTest {
         String comment = MSG_ENTER_COMMENT + " " + String.valueOf(new Date());
 
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
 
         Thread.sleep(5000);
         overviewScreen.tapOnMenuButton();

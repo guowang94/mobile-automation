@@ -14,7 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,21 +34,20 @@ public class BaseScreen implements WorkflowConstants {
     //xpath
     private String inboxSpecificButton = "//XCUIElementTypeStaticText[@name='$1']";
     private String formSwitchXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeSwitch";
-    private String formTextFieldXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextView";
+    private String formTextViewXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextView";
+    private String formTextFieldXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextField";
     private String formButtonXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeButton";
     private String pickerDoneButtonXpath = "//XCUIElementTypePickerWheel/ancestor::XCUIElementTypePicker/preceding-sibling::XCUIElementTypeButton[@name='Done']";
     private String pickerWheelXpath = "//XCUIElementTypePickerWheel";
-    private String dayPickerWheelXpath = "//XCUIElementTypePickerWheel[1]";
-    private String monthPickerWheelXpath = "//XCUIElementTypePickerWheel[2]";
-    private String yearPickerWheelXpath = "//XCUIElementTypePickerWheel[3]";
     private String formDoneButtonXpath = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[2]";
     private String formContainer = "//XCUIElementTypeTable[@visible='true']";
+    private String statusBar = "//XCUIElementTypeStatusBar";
+
 
     //accessibility id
     private String menuButton = "MenuIcon";
     private String sideNavHelp = "Help";
     private String logout = "Logout";
-    private String starhubText = "StarHub network";
     private String delegation = "Delegation";
     private String moreOption = "more option";
 
@@ -96,8 +94,24 @@ public class BaseScreen implements WorkflowConstants {
      * @param comments
      */
     public void enterComments(String commentsLabel, String comments) {
-        findElementByXpath(formTextFieldXpath.replace("$1", commentsLabel)).sendKeys(comments);
+        findElementByXpath(formTextViewXpath.replace("$1", commentsLabel)).sendKeys(comments);
         iosDriver.hideKeyboard();
+    }
+
+    /**
+     * This method will search for user
+     * @param searchFieldLabel
+     * @param userID
+     */
+    public void searchForUser(String searchFieldLabel, String userID) {
+        findElementByXpath(formTextFieldXpath.replace("$1", searchFieldLabel)).sendKeys(userID.substring(0, 5));
+        hasLoadingCompleted();
+        try {
+            scrollToElement(waitForElementById(userID)).click();
+        } catch (Exception e) {
+            screenshot(SCREENSHOT_MSG_NO_USER_FOUND);
+            throw new RuntimeException(ERROR_MSG_NO_USER_FOUND.replace("$1", userID));
+        }
     }
 
     /**
@@ -113,22 +127,6 @@ public class BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will select Date Picker Value
-     *
-     * @param pickerLabel
-     * @param day
-     * @param month
-     * @param year
-     */
-    public void selectDatePickerValue(String pickerLabel, String day, String month, String year) {
-        findElementByXpath(formButtonXpath.replace("$1", pickerLabel)).click();
-        findElementByXpath(dayPickerWheelXpath).sendKeys(day);
-        findElementByXpath(monthPickerWheelXpath).sendKeys(month);
-        findElementByXpath(yearPickerWheelXpath).sendKeys(year);
-        findElementByXpath(pickerDoneButtonXpath).click();
-    }
-
-    /**
      * This method will toggle Switch
      *
      * @param switchLabel
@@ -139,8 +137,37 @@ public class BaseScreen implements WorkflowConstants {
             try {
                 findElementByXpath(formSwitchXpath.replace("$1", switchLabel)).click();
             } catch (Exception e) {
-                System.out.println(ERROR_MSG_DO_NOT_HAVE_SWITCH_ELEMENT);
+                //Do nothing
             }
+        }
+    }
+
+    /**
+     * This method will select Late Code value and enter Late Comments
+     *
+     * @param lateCode
+     */
+    public void selectLateCode(String lateCode) {
+        if (lateCode != null) {
+            selectPickerValue(FORM_LABEL_LATE_CODE, lateCode);
+            enterComments(FORM_LABEL_LATE_COMMENTS, MSG_ENTER_LATE_COMMENT);
+        }
+    }
+
+    /**
+     * This method will select Late Response Code value and enter Late Response Comments
+     *
+     * @param lateResponseCode
+     * @param workflowType
+     */
+    public void selectLateResponseCode(String lateResponseCode, String workflowType) {
+        if (lateResponseCode != null) {
+            if (WORKFLOW_VE.equals(workflowType)) {
+                selectPickerValue(FORM_LABEL_VE_LATE_RESPONSE_CODE, lateResponseCode);
+            } else {
+                selectPickerValue(FORM_LABEL_LATE_RESPONSE_CODE, lateResponseCode);
+            }
+            enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS, MSG_ENTER_LATE_COMMENT);
         }
     }
 
@@ -260,7 +287,7 @@ public class BaseScreen implements WorkflowConstants {
     }
 
     public void scrollToTop() {
-        waitForElementById(starhubText).click();
+        waitForElementByXpath(statusBar).click();
     }
 
     /**
@@ -272,7 +299,7 @@ public class BaseScreen implements WorkflowConstants {
     public WebElement scrollToElement(WebElement element) {
         TouchAction action = new TouchAction(iosDriver);
         if (!element.isDisplayed()) {
-            action.press(200, 220).moveTo(element).release().perform();
+            action.press(200, 180).moveTo(element).release().perform();
         }
         return element;
     }

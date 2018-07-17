@@ -9,6 +9,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.IFactoryAnnotation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,10 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private PageObjects inboxScreen;
 
     //accessibility id
-    private String swipeAcknowledgeButton = "Acknowledge";
-    private String swipeApproveButton = "Approve";
-    private String swipeRNAButton = "R&A";
-    private String swipeReviewAndAction = "Review & Action";
+    private String swipeAcknowledgeButton = "acknowledge";
     private String swipeBookmarkButton = "Bookmark";
-    private String swipeClarificationButton = "Request for Clarification";
+    private String swipeClarificationButton = "Clarification";
+    private String swipeNewClarificationButton = "Request for Clarification";
     private String swipeDelegateButton = "Delegate";
     private String swipeSubmitButton = "Submit";
     private String swipeRespondButton = "Respond";
@@ -148,8 +147,8 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will verify the workflow in the respective bucket
      *
-     * @param workflowID     of the workflow that need to be verified
-     * @param count          is <b>always</b> 1
+     * @param workflowID of the workflow that need to be verified
+     * @param count      is <b>always</b> 1
      * @return boolean
      */
     public boolean verifyWorkflowInBucket(String workflowID, int count, String currentBucket) {
@@ -192,20 +191,21 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         InboxDetailViewScreen inboxDetailViewScreen = navigateToDetailView(workflowID);
 
         //Verify Prev Actor Comment and Workflow Status
+        //------------------------------ VE WORKFLOW ------------------------------
         if (workflowType.equals(WORKFLOW_VE)) {
             switch (workflowStatus) {
                 case WORKFLOW_STATUS_PENDING_MTCR_OR_MRO_UPLOADER_CLARIFICATION:
                     if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL) &&
                             verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                         return true;
-                    }  else {
+                    } else {
                         throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                     }
                 case WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION:
                     if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL) &&
                             verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                         return true;
-                    }  else {
+                    } else {
                         throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                     }
                 case WORKFLOW_STATUS_PENDING_COMPLIANCE_ACTION_POST_CLARIFICATION:
@@ -214,17 +214,17 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                         if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_MRO_OR_MTCR_UPLOADER_COMMENTS_CELL) &&
                                 verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                             return true;
-                        }  else {
+                        } else {
                             throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                         }
                     } else if (prevActorType.equals(PREV_ACTOR_TYPE_ROLE_VOLCKER_DESK_OWNER)) {
                         if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_VDO_COMMENTS_CELL) &&
                                 verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                             return true;
-                        }  else {
+                        } else {
                             throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                         }
-                    }  else {
+                    } else {
                         throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                     }
                 case WORKFLOW_STATUS_PENDING_COMPLIANCE_CLARIFICATION_UT:
@@ -258,7 +258,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
             }
 
-        } else if (workflowType.equals(WORKFLOW_PNL)) {
+        }
+        //------------------------------ PNL WORKFLOW ------------------------------
+        else if (workflowType.equals(WORKFLOW_PNL)) {
             //For PNL, I will be checking Workflow Event Status instead of Workflow Status
             if (!workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED)) {
                 if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
@@ -272,7 +274,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             } else {
                 throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
             }
-        } else if (workflowType.equals(WORKFLOW_CE) && !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
+        }
+        //------------------------------ CE WORKFLOW ------------------------------
+        else if (workflowType.equals(WORKFLOW_CE) && !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
                 !workflowStatus.equals(WORKFLOW_STATUS_PENDING_MTCR_REVIEW_POST_CLARIFICATION)) {
             if (workflowStatus.equals(WORKFLOW_STATUS_PENDING_FO_REVIEW)) {
                 if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ISSUE_FLAG_COMMENT_CELL, MSG_ENTER_ISSUE_FLAG_COMMENT) &&
@@ -295,20 +299,52 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 }
             }
 
-        } else if (workflowType.equals(WORKFLOW_OMR)) {
-            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
-                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                return true;
-            } else {
-                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+        }
+        //------------------------------ OMR WORKFLOW ------------------------------
+        else if (workflowType.equals(WORKFLOW_OMR)) {
+            switch (workflowStatus) {
+                case WORKFLOW_STATUS_PENDING_CLARIFICATION:
+                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
+                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                        return true;
+                    } else {
+                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                    }
+                case WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION:
+                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
+                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                        return true;
+                    } else {
+                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                    }
+                case WORKFLOW_STATUS_ACKNOWLEDGED:
+                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
+                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                        return true;
+                    } else {
+                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                    }
+                    default:
+                        throw new RuntimeException("None of the Workflow Status are matched");
             }
-        } else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) &&
+        }
+        //------------------------------ OTHERS WORKFLOW ------------------------------
+        else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) &&
                 !workflowStatus.equals(WORKFLOW_STATUS_APPROVED)) {
-            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                return true;
+            if (WORKFLOW_FVA.equals(workflowType)) {
+                if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
+                        inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
+                    return true;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
             } else {
-                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
+                        verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                    return true;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
             }
         } else if (verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
             return true;
@@ -635,16 +671,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public AcknowledgeScreen swipeRightAndTapOnAcknowledge(String workflowID, String workflowType) {
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            if (WORKFLOW_PNL.equalsIgnoreCase(workflowType) || WORKFLOW_CE.equalsIgnoreCase(workflowType)) {
-                //fixme this will failed as they changed the id
-                waitForElementById(swipeRNAButton).click();
-            } else if (WORKFLOW_VE.equalsIgnoreCase(workflowType)) {
-                waitForElementById(swipeReviewAndAction).click();
-            } else if (WORKFLOW_GMR.equalsIgnoreCase(workflowType) || WORKFLOW_GT.equalsIgnoreCase(workflowType)) {
-                waitForElementById(swipeApproveButton).click();
-            } else {
-                waitForElementById(swipeAcknowledgeButton).click();
-            }
+            waitForElementById(swipeAcknowledgeButton).click();
             System.out.println("Navigate to Acknowledge Screen");
         }
         return new AcknowledgeScreen(iosDriver);
@@ -707,7 +734,11 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
-            waitForElementById(swipeClarificationButton).click();
+            try {
+                waitForElementById(swipeClarificationButton).click();
+            } catch (Exception e) {
+                waitForElementById(swipeNewClarificationButton).click();
+            }
             System.out.println("Navigate to Clarification Option Screen");
         }
         return new ClarificationOptionScreen(iosDriver);
@@ -723,7 +754,11 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
-            waitForElementById(swipeClarificationButton).click();
+            try {
+                waitForElementById(swipeClarificationButton).click();
+            } catch (Exception e) {
+                waitForElementById(swipeNewClarificationButton).click();
+            }
             System.out.println("Navigate to Clarification Screen");
         }
         return new ClarificationScreen(iosDriver);

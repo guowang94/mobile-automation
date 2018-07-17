@@ -18,7 +18,7 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: cnaBookmarkDetailViewTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -36,7 +36,7 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: cnaSwipeBookmarkTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -55,7 +55,7 @@ public class BookmarkTest extends BaseTest {
         List<String> workflowIDList;
         int workflowCount = 2;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -82,7 +82,7 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: cnaBookmarkAllTest");
         List<String> workflowIDList;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();

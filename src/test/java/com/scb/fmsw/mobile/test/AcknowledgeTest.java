@@ -18,7 +18,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: acknowledgeCNAWorkflowDetailViewTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
 //        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -39,7 +39,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: swipeToAcknowledgeCNAWorkflowTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login("1440264"/*prop.getProperty("uat.CNAUsername02")*/);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -62,7 +62,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -86,7 +86,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -108,7 +108,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: acknowledgeOMRWorkflowDetailViewTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -388,7 +388,7 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_IPV_FVA})
     public void acknowledgeFVAWorkflowDetailViewTest() {
         System.out.println("Method: acknowledgeFVAWorkflowDetailViewTest()");
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
@@ -408,7 +408,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: swipeToAcknowledgeFVAWorkflowTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
@@ -430,7 +430,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -454,7 +454,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
@@ -474,7 +474,7 @@ public class AcknowledgeTest extends BaseTest {
     public void reviewAndAcceptPNLWorkflowDetailViewTest() {
         System.out.println("Method: reviewAndAcceptPNLWorkflowDetailViewTest()");
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
@@ -493,11 +493,10 @@ public class AcknowledgeTest extends BaseTest {
     public void swipeToReviewAndAcceptPNLWorkflowTest() {
         System.out.println("Method: swipeToAcknowledgePNLWorkflowTest()");
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        //fixme swipe is not working for pnl because the text that is displayed is wrong
         AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_PNL);
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, WORKFLOW_PNL, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -560,7 +559,7 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_GT_GMR})
     public void approveGMRWorkflowDetailViewTest() {
         System.out.println("Method: approveGMRWorkflowDetailViewTest(), Concurrent Workflow");
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         String workflowID = inboxScreen.getFirstWorkflowId();
@@ -575,7 +574,7 @@ public class AcknowledgeTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", subWorkflowID));
         inboxScreen.logout();
 
-        overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         subWorkflowID = inboxScreen.getSubWorkflowId(workflowID);
@@ -593,7 +592,7 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_GT_GMR})
     public void swipeToApproveGMRWorkflowDetailViewTest() {
         System.out.println("Method: swipeToApproveGMRWorkflowDetailViewTest(), Concurrent Workflow");
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.CNAUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         String workflowID = inboxScreen.getFirstWorkflowId();
@@ -607,7 +606,7 @@ public class AcknowledgeTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", subWorkflowID));
         inboxScreen.logout();
 
-        overviewScreen = login(prop.getProperty("uat.CNAUsername01"));
+        overviewScreen = login(prop.getProperty("uat.FOUsername01"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         subWorkflowID = inboxScreen.getSubWorkflowId(workflowID);

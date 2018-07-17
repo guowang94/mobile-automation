@@ -137,13 +137,6 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
                                                String workflowType, int workflowCount) {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
-            /*selectDisciplinaryActionPickerValue(disciplinaryAction);
-            enterFirstComment(MSG_ENTER_FO_JUSTIFICATION_COMMENT);
-            enterSecondComment(MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
-            enterThirdComment(MSG_ENTER_REMEDIATION_ACTION_COMMENT);
-            enterFourthComment(MSG_ENTER_VDO_COMMENT);
-            acknowledgeScreen.acknowledgeButton.click();*/
-
             selectPickerValue(FORM_LABEL_DISCIPLINARY_ACTION_TAKEN, disciplinaryAction);
             enterComments(FORM_LABEL_JUSTIFICATION_FOR_DISCIPLINARY_ACTION, MSG_ENTER_FO_JUSTIFICATION_COMMENT);
             enterComments(FORM_LABEL_HOW_TO_PREVENT_RECURRENCE, MSG_ENTER_PREVENT_RECURRENCE_COMMENT);
@@ -187,61 +180,25 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
             }
         } catch (Exception e) {
             if (!isAlertPopUpDisplayed) {
-                acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, workflowType, workflowCount);
+                selectLateCode(LATE_CODE_DEADLINE_MISSED);
+            } else if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText()) &&
+                    WORKFLOW_OMR.equals(workflowType)) {
+                acknowledgeScreen.alertOkButton.click();
+                selectLateCode(LATE_CODE_DEADLINE_MISSED);
+            } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                acknowledgeScreen.alertOkButton.click();
+                selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+            } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+            } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
+                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
             } else {
-                if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                    throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
-                } else {
-                    if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText()) &&
-                            WORKFLOW_OMR.equals(workflowType)) {
-                        acknowledgeScreen.alertOkButton.click();
-                        scrollToTop();
-                        selectLateCode(LATE_CODE_DEADLINE_MISSED);
-                    } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(
-                            acknowledgeScreen.alertMessage.getText())) {
-                        acknowledgeScreen.alertOkButton.click();
-                        scrollToTop();
-                        selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
-                    } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                        screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-                        throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-                    } else {
-                        screenshot("None of Alert Message are matched");
-                        throw new RuntimeException("None of Alert Message are matched");
-                    }
-                    tapOnFormDoneButton();
-                    verifyAcknowledgeStatus(workflowType, workflowCount);
-                }
+                screenshot("None of Alert Message are matched");
+                throw new RuntimeException("None of Alert Message are matched");
             }
-        }
-    }
-
-    /**
-     * This method will select Late Code value and enter Late Comments
-     *
-     * @param lateCode
-     */
-    private void selectLateCode(String lateCode) {
-        if (lateCode != null) {
-            super.selectPickerValue(FORM_LABEL_LATE_CODE, lateCode);
-            super.enterComments(FORM_LABEL_LATE_COMMENTS, MSG_ENTER_LATE_COMMENT);
-        }
-    }
-
-    /**
-     * This method will select Late Response Code value and enter Late Response Comments
-     *
-     * @param lateResponseCode
-     * @param workflowType
-     */
-    private void selectLateResponseCode(String lateResponseCode, String workflowType) {
-        if (lateResponseCode != null) {
-            if (WORKFLOW_VE.equals(workflowType)) {
-                selectPickerValue(FORM_LABEL_VE_LATE_RESPONSE_CODE, lateResponseCode);
-            } else {
-                selectPickerValue(FORM_LABEL_LATE_RESPONSE_CODE, lateResponseCode);
-            }
-            enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS, MSG_ENTER_LATE_COMMENT);
+            tapOnFormDoneButton();
+            verifyAcknowledgeStatus(workflowType, workflowCount);
         }
     }
 

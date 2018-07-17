@@ -33,27 +33,34 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
      * this method send workflow for clarification
      *
      * @param userID
-     * @param toggleSwitch always false for Middle Office, Line Manager and Performer
+     * @param isToggle  always false for Middle Office, Line Manager and Performer
      * @param workflowType
      * @param workflowCount
      * @return InboxScreen
      */
-    public InboxScreen clarifyWorkflow(String lateCode, String userID, boolean toggleSwitch, String workflowType, int workflowCount) {
+    public InboxScreen clarifyWorkflow(String lateCode, String userID, boolean isToggle, String workflowType, int workflowCount) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
+        if (hasFormContainerLoaded()) {
+
+            if (isToggle) {
+                toggleSwitch(FORM_LABEL_DISPUTE, isToggle);
+                toggleSwitch(FORM_LABEL_ESCALATE, isToggle);
+            }
+
             if (userID != null) {
-                searchForUser(userID);
+                searchForUser(FORM_LABEL_PSID_OR_NAME, userID);
             }
-            if (lateCode != null) {
-                enterLateComment();
-                selectLateCode(lateCode);
+
+            if (WORKFLOW_VE.equals(workflowType)) {
+                enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
+            } else {
+                enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
             }
-            enterComment();
-            toggleSwitch(toggleSwitch);
-            clarificationScreen.clarifyButton.click();
+            selectLateCode(lateCode);
+
+            tapOnFormDoneButton();
             verifyClarificationStatus(workflowType, workflowCount);
         } else {
-            System.out.println(hasContainerLoaded());
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
         }
         return new InboxScreen(iosDriver);
@@ -69,76 +76,17 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
      */
     public InboxScreen clarifyCEWorkflow(String lateCode, String workflowType, int workflowCount) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            if (lateCode != null) {
-                selectLateCode(lateCode);
-                enterLateComment();
-            }
-            enterComment();
-            clarificationScreen.clarifyButton.click();
+        if (hasFormContainerLoaded()) {
+            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            selectLateCode(lateCode);
+
+            tapOnFormDoneButton();
             verifyClarificationStatus(workflowType, workflowCount);
         } else {
             System.out.println(hasContainerLoaded());
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
         }
         return new InboxScreen(iosDriver);
-    }
-
-    /**
-     * this method will key in late comment
-     */
-    private void enterLateComment() {
-        clarificationScreen.lateCommentTextbox.sendKeys(MSG_ENTER_LATE_COMMENT);
-    }
-
-    /**
-     * this method will select late code from the picker
-     *
-     * @param lateCode
-     */
-    private void selectLateCode(String lateCode) {
-        clarificationScreen.lateCodeTextBox.click();
-        clarificationScreen.lateCodePicker.sendKeys(lateCode);
-        clarificationScreen.pickerDoneButton.click();
-    }
-
-    /**
-     * this method will key in comment
-     */
-    private void enterComment() {
-        clarificationScreen.commentTextbox.sendKeys(MSG_ENTER_COMMENT);
-        iosDriver.hideKeyboard();
-    }
-
-    /**
-     * this method will toggle the switch based on the user choice
-     *
-     * @param userChoice
-     */
-    private void toggleSwitch(boolean userChoice) {
-        if (userChoice) {
-            try {
-                clarificationScreen.toggleSwitch.click();
-            } catch (Exception e) {
-                System.out.println(ERROR_MSG_DO_NOT_HAVE_SWITCH_ELEMENT);
-            }
-        }
-    }
-
-    /**
-     * this method will search for user based on the user id
-     *
-     * @param userid
-     */
-    private void searchForUser(String userid) {
-        clarificationScreen.psidSearchTextbox.sendKeys(userid.substring(0, 5));
-        hasLoadingCompleted();
-        try {
-            waitForElementById(userid).click();
-        } catch (Exception e) {
-            screenshot(SCREENSHOT_MSG_NO_USER_FOUND);
-            throw new RuntimeException(ERROR_MSG_NO_USER_FOUND.replace("$1", userid));
-        }
     }
 
     /**
@@ -167,39 +115,27 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
                 throw new RuntimeException(FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1 ", ""));
             }
         } catch (Exception e) {
-            if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
-                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
-            } else if (ALERT_MSG_ENTER_LATE_COMMENT.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
+            if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
                 clarificationScreen.alertOkButton.click();
-                iosDriver.hideKeyboard();
-                if (workflowType.equals(WORKFLOW_CE)) {
-                    clarifyCEWorkflow(CE_LATE_CODE_OTHERS, workflowType, workflowCount);
-                } else {
-                    clarifyWorkflow(LATE_CODE_DEADLINE_MISSED, null, false, workflowType, workflowCount);
-                }
+                selectLateCode(LATE_CODE_DEADLINE_MISSED);
+            } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
+                clarificationScreen.alertOkButton.click();
+                selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+            } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
+                screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+            } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
+                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
+            } else {
+                screenshot("None of Alert Message are matched");
+                throw new RuntimeException("None of Alert Message are matched");
             }
+            tapOnFormDoneButton();
+            verifyClarificationStatus(workflowType, workflowCount);
         }
     }
 
     class PageObjects {
-        @FindBy(id = "lateComment")
-        WebElement lateCommentTextbox;
-
-        @FindBy(id = "SelectPicker")
-        WebElement lateCodeTextBox;
-
-        @FindBy(xpath = "//XCUIElementTypePickerWheel")
-        WebElement lateCodePicker;
-
-        @FindBy(id = "Done")
-        WebElement pickerDoneButton;
-
-        @FindBy(id = "comment0")
-        WebElement commentTextbox;
-
-        @FindBy(id = "Send")
-        WebElement clarifyButton;
-
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 
@@ -208,12 +144,6 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         WebElement alertOkButton;
-
-        @FindBy(className = "XCUIElementTypeSwitch")
-        WebElement toggleSwitch;
-
-        @FindBy(id = "SearchText")
-        WebElement psidSearchTextbox;
     }
 
 }

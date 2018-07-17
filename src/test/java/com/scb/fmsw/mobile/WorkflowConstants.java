@@ -69,6 +69,7 @@ public interface WorkflowConstants {
 
     //GMR Workflow
     String WORKFLOW_STATUS_APPROVED = "Approved";
+    String WORKFLOW_STATUS_PENDING_APPROVAL_POST_CLARIFICATION = "Pending Approval Post Clarification";
 
     //-------------------------------------------------------------------------
 
@@ -319,6 +320,8 @@ public interface WorkflowConstants {
 
     //Form's Label
     String FORM_LABEL_LATE_CODE = "Late Code";
+    String FORM_LABEL_COMMENTS = "Comments";
+    String FORM_LABEL_VDO_COMMENTS = "VDO Comments*";
     String FORM_LABEL_LATE_COMMENTS = "Late Comments";
     String FORM_LABEL_LATE_RESPONSE_CODE = "Late Response Code";
     String FORM_LABEL_VE_LATE_RESPONSE_CODE = "Late Response Code*";
@@ -342,6 +345,9 @@ public interface WorkflowConstants {
     String FORM_LABEL_HOW_TO_PREVENT_RECURRENCE = "How to prevent recurrence";
     String FORM_LABEL_REMEDIATION_ACTION = "Remediation Action*";
     String FORM_LABEL_SUPERVISOR_COMMENTS = "Supervisor Comments (Optional)";
+    String FORM_LABEL_PSID_OR_NAME = "PSID/Name";
+    String FORM_LABEL_ESCALATE = "Escalate";
+    String FORM_LABEL_DISPUTE = "Dispute";
 
     //------------------ Clarification Option Screen ----------------
 

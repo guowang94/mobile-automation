@@ -73,10 +73,11 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
             for (int i = 1; i < workflowCount + 1; i++) {
                 WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", String.valueOf(i)));
                 scrollDownUntilElementIsDisplayed(element);
-                System.out.println(element.getText());
+                System.out.println("Workflow ID: " + element.getText());
                 workflowIdList.add(element.getText());
                 element.click();
             }
+            screenshot("Selected Workflow(s)");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
@@ -96,6 +97,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
                 scrollDownUntilElementIsDisplayed(element);
                 element.click();
             }
+            screenshot("Selected Workflow(s)");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }

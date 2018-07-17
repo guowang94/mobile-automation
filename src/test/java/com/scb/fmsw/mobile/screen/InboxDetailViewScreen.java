@@ -76,7 +76,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public ClarificationOptionScreen tapOnClarificationButton() {
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
-            inboxDetailViewScreen.clarificationButton.click();
+            try {
+                inboxDetailViewScreen.clarificationButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.newClarificationButton.click();
+            }
             System.out.println("Navigate to Clarification Option Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
@@ -92,7 +96,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public ClarificationScreen tapOnClarificationButtonForCE() {
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
-            inboxDetailViewScreen.clarificationButton.click();
+            try {
+                inboxDetailViewScreen.clarificationButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.newClarificationButton.click();
+            }
             System.out.println("Navigate to Clarification Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
@@ -124,7 +132,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public SubmitScreen tapOnSubmitButton() {
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
-            inboxDetailViewScreen.submitButton.click();
+            try {
+                inboxDetailViewScreen.submitButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.newSubmitButton.click();
+            }
             System.out.println("Navigate to Submit Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
@@ -140,7 +152,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public SubmitOptionScreen tapOnSubmitButtonVE() {
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
-            inboxDetailViewScreen.submitButton.click();
+            try {
+                inboxDetailViewScreen.submitButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.newSubmitButton.click();
+            }
             System.out.println("Navigate to Submit Option Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
@@ -283,7 +299,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         try {
             scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Status")));
             if (workflowStatus.equals(waitForElementByXpath(cellValue.replace("$1", "Workflow Status")
-                    .replace("$2", workflowStatus)).getText())) {
+                    .replace("$2", workflowStatus)).getText().trim())) {
                 System.out.println("Verified Workflow Status");
                 return true;
             }
@@ -303,7 +319,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         scrollToTop();
         try {
             scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Event Status")));
-            if (workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue).getText())) {
+            if (workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue).getText().trim())) {
                 System.out.println("Verified Workflow Event Status");
                 tapOnBackButton();
                 return true;
@@ -322,7 +338,6 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
      * @return InboxScreen
      */
     public InboxScreen tapOnBackButton() {
-        hasLoadingCompleted();
         inboxDetailViewScreen.backButton.click();
         return new InboxScreen(iosDriver);
     }
@@ -343,6 +358,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         WebElement acknowledgeButton;
 
         @FindBy(id = "clarificationWhite")
+        WebElement newClarificationButton;
+
+        @FindBy(id = "ic_quick_contacts_mail copy")
         WebElement clarificationButton;
 
         @FindBy(id = "re-assign copy")
@@ -351,8 +369,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         @FindBy(id = "ic_book_white")
         WebElement bookmarkButton;
 
-        @FindBy(id = "submitWhite")
+        @FindBy(id = "ic_reply copy")
         WebElement submitButton;
+
+        @FindBy(id = "submitWhite")
+        WebElement newSubmitButton;
 
         @FindBy(id = "recall_White")
         WebElement recallButton;

@@ -33,6 +33,8 @@ public class SubmitScreen extends BaseScreen {
         if (hasFormContainerLoaded()) {
             if (WORKFLOW_VE.equals(workflowType)) {
                 enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
+            } else if (WORKFLOW_CE.equals(workflowType)) {
+                enterComments(FORM_LABEL_RESPONSE_COMMENTS, MSG_ENTER_COMMENT);
             } else {
                 enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
             }
@@ -58,27 +60,19 @@ public class SubmitScreen extends BaseScreen {
                                               String workflowType, int workflowCount) {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
-            //fixme there is a production issue for this as the user cannot use For Clarification tab therefore i am unable to get the label
-
-            //todo to be deleted
-            /*selectVELateCode(lateCode, disciplinaryAction);
-            selectDisciplinaryActionPickerValue(disciplinaryAction);
-            enterFirstComment(MSG_ENTER_FO_JUSTIFICATION_COMMENT_EDIT);
-            enterSecondComment(MSG_ENTER_PREVENT_RECURRENCE_COMMENT_EDIT);
-            enterThirdComment(MSG_ENTER_REMEDIATION_ACTION_COMMENT_EDIT);
-            enterFourthComment(MSG_ENTER_VDO_COMMENT_EDIT);
-
-            submitScreen.submitButton.click();*/
-
-            //todo need to add in the label
+            if (WORKFLOW_VE.equals(workflowType)) {
+                //todo need to add in the label
             /*selectPickerValue("", disciplinaryAction);
             enterComments("", MSG_ENTER_FO_JUSTIFICATION_COMMENT_EDIT);
             enterComments("", MSG_ENTER_PREVENT_RECURRENCE_COMMENT_EDIT);
             enterComments("", MSG_ENTER_REMEDIATION_ACTION_COMMENT_EDIT);
             enterComments("", MSG_ENTER_VDO_COMMENT_EDIT);
             selectLateResponseCode(lateCode, WORKFLOW_VE);
+            */
+            } else if (WORKFLOW_CE.equals(workflowType)) {
 
-            tapOnFormDoneButton();*/
+            }
+            tapOnFormDoneButton();
             verifySubmitStatus(workflowType, workflowCount);
         }
         return new InboxScreen(iosDriver);

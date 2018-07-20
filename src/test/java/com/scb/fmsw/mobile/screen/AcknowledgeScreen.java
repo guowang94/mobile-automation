@@ -194,8 +194,8 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
             } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
                 throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
             } else {
-                screenshot("None of Alert Message are matched");
-                throw new RuntimeException("None of Alert Message are matched");
+                screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
             }
             tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, workflowCount);

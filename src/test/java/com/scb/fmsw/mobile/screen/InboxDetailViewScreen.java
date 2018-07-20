@@ -149,7 +149,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
      *
      * @return SubmitOptionScreen
      */
-    public SubmitOptionScreen tapOnSubmitButtonVE() {
+    public SubmitOptionScreen tapOnSubmitButtonVECE() {
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
             try {
@@ -200,13 +200,20 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
      * This method return Bookmark value
      *
      * @return String
+     * @param workflowType
      */
-    public String getBookmarkValue() {
+    public String getBookmarkValue(String workflowType) {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked?")));
-            return waitForElementByXpath(cellValue.replace("$1", "Bookmarked?")
-                    .replace("$2", "Y")).getText();
+            if (WORKFLOW_VE.equals(workflowType)) {
+                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked")));
+                return waitForElementByXpath(cellValue.replace("$1", "Bookmarked")
+                        .replace("$2", "Y")).getText();
+            } else {
+                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked?")));
+                return waitForElementByXpath(cellValue.replace("$1", "Bookmarked?")
+                        .replace("$2", "Y")).getText();
+            }
         } catch (Exception e) {
             throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_BOOKMARK_ELEMENT);
         }

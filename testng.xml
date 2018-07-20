@@ -28,7 +28,7 @@
         </classes>
     </test>
 
-    <test name="OMR Workflow Regression" enabled="true">
+    <test name="OMR Workflow Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -195,7 +195,7 @@
         </classes>
     </test>
 
-    <test name="Test Regression" enabled="false">
+    <test name="Test Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -211,7 +211,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+            <class name="com.scb.fmsw.mobile.test.BookmarkTest"/>
         </classes>
     </test>
 

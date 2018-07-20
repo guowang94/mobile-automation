@@ -12,22 +12,12 @@ import io.appium.java_client.ios.IOSElement;
 public class BookmarkScreen extends BaseScreen {
 
     private PageObjects bookmarkScreen;
-    private String container = "(//XCUIElementTypeImage[@name='Rectangle 4'])[2]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 
     public BookmarkScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
         bookmarkScreen = new PageObjects();
         PageFactory.initElements(iosDriver, bookmarkScreen);
-    }
-
-    /**
-     * This method will check if Container has loaded
-     *
-     * @return boolean
-     */
-    private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
     }
 
     /**
@@ -39,21 +29,14 @@ public class BookmarkScreen extends BaseScreen {
      */
     public InboxScreen bookmarkWorkflow(String workflowType, int workflowCount) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            bookmarkComment();
-            bookmarkScreen.bookmarkButton.click();
+        if (hasFormContainerLoaded()) {
+            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            tapOnFormDoneButton();
             verifyBookmarkStatus(workflowType, workflowCount);
         } else {
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
         }
         return new InboxScreen(iosDriver);
-    }
-
-    /**
-     * This method will key in comment
-     */
-    private void bookmarkComment() {
-        bookmarkScreen.commentTextbox.sendKeys(MSG_ENTER_COMMENT);
     }
 
     /**
@@ -87,12 +70,6 @@ public class BookmarkScreen extends BaseScreen {
     }
 
     class PageObjects {
-        @FindBy(id = "comment0")
-        public WebElement commentTextbox;
-
-        @FindBy(xpath = "//XCUIElementTypeButton[@name=\"Bookmark\"]")
-        public WebElement bookmarkButton;
-
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         public WebElement alertOkButton;
 

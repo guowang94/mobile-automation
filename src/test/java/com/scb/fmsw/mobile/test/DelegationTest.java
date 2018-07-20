@@ -15,7 +15,7 @@ import java.util.List;
 public class DelegationTest extends BaseTest {
 
     //Note: For manual workflow, in order to create delegation, the user has to be the acknowledger
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA
+    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, VE, CE
 
     //-------------------------------- MULTIPLE WORKFLOW TYPE ---------------------------------
 

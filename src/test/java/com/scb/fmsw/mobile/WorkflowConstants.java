@@ -44,9 +44,10 @@ public interface WorkflowConstants {
     //----------------------------- Workflow Status ----------------------------
 
     //CE Workflow
-    String WORKFLOW_STATUS_PENDING_MTCR_REVIEW = "Pending MTCR Review";
     String WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING = "Pending Clarification with Limit Monitoring";
+    String WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR = "Pending Clarification with MTCR";
     String WORKFLOW_STATUS_PENDING_MTCR_REVIEW_POST_CLARIFICATION = "Pending MTCR Review Post clarification";
+    String WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION = "Pending FO Review Post clarification";
     String WORKFLOW_STATUS_PENDING_FO_REVIEW = "Pending FO Review";
     String WORKFLOW_STATUS_REVIEWED_AND_DISCIPLINARY_ACTION_TAKEN = "Reviewed & Disciplinary action taken";
 
@@ -92,8 +93,11 @@ public interface WorkflowConstants {
     String ALERT_MSG_ALREADY_HAS_DEFAULT_DELEGATION = "already has a default delegation for the selected priority or user";
     String ALERT_MSG_EXISTING_ACTIVE_DELEGATION = "You already have an existing active delegation in the period/date selected so you cannot create another delegation";
     String ALERT_MSG_ACCEPT_DELEGATION = "You are about to accept all the selected pending delegations. Do you wish to continue? Only pending delegations will be accepted.";
+    String ALERT_MSG_REJECT_DELEGATION = "You are about to reject all the selected pending delegations. Do you wish to continue? Only pending delegations will be rejected.";
     String ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION = "None of the selected delegations are pending so no action has been taken.";
     String ALERT_MSG_ACCEPTED_SUCCESSFULLY = "1 delegation accepted successfully";
+    String ALERT_MSG_REJECTED_SUCCESSFULLY = "1 delegation rejected successfully";
+    String ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED = "None of Alert Message are matched";
 
     //Message
     String MSG_NO_MORE_LOAD_RESULTS_BUTTON = "There is no more Load More Results Button";
@@ -154,6 +158,7 @@ public interface WorkflowConstants {
 
     //Error Message
     String ERROR_MSG_NO_USER_FOUND = "There is no user found with the given PSID: $1";
+    String ERROR_MSG_NO_GROUP_FOUND = "There is no group found with the given Group Name: $1";
     String ERROR_MSG_NO_RESULT_FOUND = "There is no result found with the given keyword: $1";
     String ERROR_MSG_TABLE_CONTAINER_NOT_LOADED = "Table Container has not loaded";
     String ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED = "Button Container has not loaded";
@@ -190,13 +195,16 @@ public interface WorkflowConstants {
     String SCREENSHOT_MSG_FAILED_TO_BOOKMARK_WORKFLOW = "Failed to Bookmark $1 Workflow";
     String SCREENSHOT_MSG_SUCCESSFULLY_BOOKMARK_WORKFLOW = "Bookmarked $1 Workflow";
     String SCREENSHOT_MSG_NO_USER_FOUND = "No User found";
+    String SCREENSHOT_MSG_NO_GROUP_FOUND = "No Group found";
     String SCREENSHOT_MSG_NO_RESULT_FOUND = "No Result found";
     String SCREENSHOT_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION = "Failed to create Default Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Created Default Delegation";
     String SCREENSHOT_MSG_FAILED_TO_CREATE_USERS_DELEGATION = "Failed to create Users Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Created Users Delegation";
     String SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION = "Failed to accept Delegation";
+    String SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION = "Failed to reject Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPT_DELEGATION = "Successfully accepted Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION = "Successfully rejected Delegation";
     String SCREENSHOT_MSG_FAILED_TO_REVIEWED_AND_ASSESSED = "Failed to Review and Assess Workflow";
     String SCREENSHOT_MSG_SUCCESSFULLY_REVIEWED_AND_ASSESSED = "Successfully Reviewed and Assessed Workflow";
 
@@ -315,13 +323,17 @@ public interface WorkflowConstants {
     String ACKNOWLEDGEMENT_CODE_HRR_DEAL = "HRR Deal";
 
     //PC Group
-    String PC_GRP_PC_ALM = "PC ALM";
+
+    String PC_GRP_PC_ALM = "PC ALM - Treasury";
     String PC_GRP_PC_GBS = "PC GBS";
+    String PC_GRP_ALM = "alm";
+    String PC_GRP_GBS = "gbs";
 
     //Form's Label
     String FORM_LABEL_LATE_CODE = "Late Code";
     String FORM_LABEL_COMMENTS = "Comments";
     String FORM_LABEL_VDO_COMMENTS = "VDO Comments*";
+    String FORM_LABEL_RESPONSE_COMMENTS = "Response Comments";
     String FORM_LABEL_LATE_COMMENTS = "Late Comments";
     String FORM_LABEL_LATE_RESPONSE_CODE = "Late Response Code";
     String FORM_LABEL_VE_LATE_RESPONSE_CODE = "Late Response Code*";
@@ -348,6 +360,7 @@ public interface WorkflowConstants {
     String FORM_LABEL_PSID_OR_NAME = "PSID/Name";
     String FORM_LABEL_ESCALATE = "Escalate";
     String FORM_LABEL_DISPUTE = "Dispute";
+    String FORM_LABEL_TO_GROUP = "To Group";
 
     //------------------ Clarification Option Screen ----------------
 
@@ -369,6 +382,7 @@ public interface WorkflowConstants {
     //------------------ Clarification Option Screen ----------------
     String RESPOND_OPTION_RESPOND_SELECTED = "Respond Selected";
     String RESPOND_OPTION_EDIT_AND_RESPOND = "Edit and Respond";
+    String RESPOND_OPTION_RESPOND = "Respond";
 
     //------------------ Driver Setup --------------------
 

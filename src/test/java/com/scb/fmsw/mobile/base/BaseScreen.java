@@ -115,6 +115,27 @@ public class BaseScreen implements WorkflowConstants {
     }
 
     /**
+     * This method will search for group
+     * @param searchFieldLabel
+     * @param groupName
+     */
+    public void searchForGroup(String searchFieldLabel, String groupName) {
+        findElementByXpath(formTextFieldXpath.replace("$1", searchFieldLabel)).sendKeys(groupName);
+        hasLoadingCompleted();
+        try {
+            //TODO will change this once jai has fixed the space issue when searching for group
+            if (PC_GRP_ALM.equals(groupName)) {
+                scrollToElement(waitForElementByName(PC_GRP_PC_ALM)).click();
+            } else if (PC_GRP_GBS.equals(groupName)) {
+                scrollToElement(waitForElementByName(PC_GRP_PC_GBS)).click();
+            }
+        } catch (Exception e) {
+            screenshot(SCREENSHOT_MSG_NO_GROUP_FOUND);
+            throw new RuntimeException(ERROR_MSG_NO_GROUP_FOUND.replace("$1", groupName));
+        }
+    }
+
+    /**
      * This method will select Picker Value
      *
      * @param pickerLabel

@@ -276,8 +276,12 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             }
         }
         //------------------------------ CE WORKFLOW ------------------------------
-        else if (workflowType.equals(WORKFLOW_CE) && !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
-                !workflowStatus.equals(WORKFLOW_STATUS_PENDING_MTCR_REVIEW_POST_CLARIFICATION)) {
+        else if (workflowType.equals(WORKFLOW_CE) &&
+                !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
+                !workflowStatus.equals(WORKFLOW_STATUS_PENDING_MTCR_REVIEW_POST_CLARIFICATION) &&
+                !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR) &&
+                !workflowStatus.equals(WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION)) {
+
             if (workflowStatus.equals(WORKFLOW_STATUS_PENDING_FO_REVIEW)) {
                 if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ISSUE_FLAG_COMMENT_CELL, MSG_ENTER_ISSUE_FLAG_COMMENT) &&
                         inboxDetailViewScreen.compareComment(INBOX_DETAIL_RISK_ASSESSMENT_COMMENT_CELL, MSG_ENTER_RISK_ASSESSMENT_COMMENT) &&

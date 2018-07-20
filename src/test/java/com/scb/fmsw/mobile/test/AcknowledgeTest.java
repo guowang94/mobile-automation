@@ -491,7 +491,7 @@ public class AcknowledgeTest extends BaseTest {
 
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_PNL})
     public void swipeToReviewAndAcceptPNLWorkflowTest() {
-        System.out.println("Method: swipeToAcknowledgePNLWorkflowTest()");
+        System.out.println("Method: swipeToReviewAndAcceptPNLWorkflowTest()");
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
@@ -510,7 +510,7 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_PNL},
             dependsOnMethods = {"swipeToAcknowledgePNLWorkflowTest", "reviewAndAcceptPNLWorkflowDetailViewTest"})
     public void reviewAndAcceptSelectedPNLWorkflowTest() {
-        System.out.println("Method: acknowledgeSelectedPNLWorkflowTest()");
+        System.out.println("Method: reviewAndAcceptSelectedPNLWorkflowTest()");
         int workflowCount = 1;
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
@@ -535,7 +535,7 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_PNL},
             dependsOnMethods = {"acknowledgeSelectedPNLWorkflowTest"})
     public void reviewAndAcceptAllPNLWorkflowTest() {
-        System.out.println("Method: acknowledgeAllPNLWorkflowTest()");
+        System.out.println("Method: reviewAndAcceptAllPNLWorkflowTest()");
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
@@ -619,6 +619,8 @@ public class AcknowledgeTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", subWorkflowID));
         System.out.println("Complete!");
     }
+
+    //todo need selected and all as well
 
     //-------------------------------- VE ---------------------------------
 

@@ -102,11 +102,11 @@ public class OthersDelegationsScreen extends BaseScreen {
     }
 
     /**
-     * This method will delete the Delegation
+     * This method will reject the Delegation
      *
      * @param index
      */
-    public void deleteDelegation(int index) {
+    public void rejectDelegation(int index) {
         //scroll till element is visible then swipe left
         scrollDownUntilElementIsDisplayed(othersDelegationsScreen.delegatorIDList.get(index));
         new TouchAction(iosDriver).press(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),

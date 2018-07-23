@@ -24,7 +24,7 @@ public class ReassignTest extends BaseTest {
         workflowID = inboxScreen.getFirstWorkflowId();
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
-        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_ALM, WORKFLOW_CNA, 1, true);
+        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_ALM, WORKFLOW_CNA, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS), FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1", workflowID));
         inboxScreen.logout();
@@ -50,7 +50,7 @@ public class ReassignTest extends BaseTest {
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
         ReassignScreen reassignScreen = inboxScreen.swipeLeftAndTapOnReassign(workflowID);
-        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_ALM, WORKFLOW_CNA, 1, true);
+        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_ALM, WORKFLOW_CNA, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS), FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1", workflowID));
         inboxScreen.logout();
@@ -81,7 +81,7 @@ public class ReassignTest extends BaseTest {
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(count, BUCKET_TO_DO, MORE_OPTION_REASSIGN_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(count);
         ReassignScreen reassignScreen = selectMultipleWorkflowScreen.tapOnReassignSelectedScreenDoneButton();
-        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_ALM, WORKFLOW_CNA, count, true);
+        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_ALM, WORKFLOW_CNA, count, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         System.out.println("Get all workflow id in In Progress bucket");
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -113,7 +113,7 @@ public class ReassignTest extends BaseTest {
         inboxScreen.tapOnForClarificationSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ReassignScreen reassignScreen = inboxScreen.reassignAllWorkflow();
-        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_GBS, WORKFLOW_CNA, workflowIDList.size(), true);
+        inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_GBS, WORKFLOW_CNA, workflowIDList.size(), true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_REASSIGN_ALL_WORKFLOW);

@@ -515,7 +515,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegationUsername"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
@@ -539,7 +539,7 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegationUsername"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -620,7 +620,52 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    //todo need selected and all as well
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_GT_GMR},
+            dependsOnMethods = {"approveGMRWorkflowDetailViewTest", "swipeToApproveGMRWorkflowDetailViewTest"})
+    public void approveSelectedGMRWorkflowTest() {
+        System.out.println("Method: approveSelectedGMRWorkflowTest()");
+        int workflowCount = 1;
+        List<String> workflowIDList;
+        List<String> workflowIDInClosedBucket;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
+                .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO,
+                        MORE_OPTION_APPROVE_SELECTED);
+        workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
+        AcknowledgeScreen acknowledgeScreen = selectMultipleWorkflowScreen
+                .tapOnAcknowledgeSelectedScreenDoneButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_GMR, workflowCount);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
+        Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_SELECTED_WORKFLOW);
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_GT_GMR},
+            dependsOnMethods = {"approveSelectedGMRWorkflowTest"})
+    public void approveAllGMRWorkflowTest() {
+        System.out.println("Method: approveAllGMRWorkflowTest()");
+        List<String> workflowIDList;
+        List<String> workflowIDInClosedBucket;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        inboxScreen.tapOnForReviewAndAcceptanceSubTab();
+        workflowIDList = inboxScreen.getAllCNAWorkflowId();
+        AcknowledgeScreen acknowledgeScreen = inboxScreen
+                .acknowledgeAllWorkflow(MORE_OPTION_APPROVE_ALL);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_GMR,
+                workflowIDList.size());
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
+        Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
+        System.out.println("Complete!");
+    }
 
     //-------------------------------- VE ---------------------------------
 

@@ -40,6 +40,8 @@ public interface WorkflowConstants {
     String TEST_GRP_CLARIFICATION_PC = "PC";
     String TEST_GRP_CLARIFICATION_MTCR_OR_MRO_UPLOADER = "MTRC/MRO UPLOADER";
     String TEST_GRP_CLARIFICATION_VDO = "VDO";
+    String TEST_GRP_ACCEPT_DELEGATION = "ACCEPT DELEGATION";
+    String TEST_GRP_REJECT_DELEGATION = "REJECT DELEGATION";
 
     //----------------------------- Workflow Status ----------------------------
 
@@ -279,18 +281,23 @@ public interface WorkflowConstants {
     String DELEGATION_TYPE_USER = "User";
     String DELEGATION_TYPE_HIERARCHY = "Hierarchy";
     String DELEGATION_TYPE_DESK_OR_COUNTRY = "Desk/Country";
-    String DELEGATION_TYPE_CE_USER = "User";
+    String DELEGATION_TYPE_CE_VE_USER = "User";
     String DELEGATION_TYPE_PORTFOLIO = "Portfolio";
     String DELEGATION_TYPE_REPORT_LABEL = "Report Label";
     String DELEGATION_OPTION_ALL = "ALL";
-    String DELEGATION_OPTION_FXRC = "FXRC";
     String DELEGATION_OPTION_FX = "FX";
     String DELEGATION_OPTION_FX_CASH = "FX Cash";
     String DELEGATION_OPTION_FX_ASA = "FX ASA";
+    String DELEGATION_OPTION_CMS = "CMS";
+    String DELEGATION_OPTION_ABS_STRUCTURED = "ABS - Structured";
+    String DELEGATION_OPTION_ABS_STRUCTERED_MTM = "ABS - Structured - MTM";
 
     String DELEGATION_STATUS_PENDING = "Pending";
     String DELEGATION_STATUS_ACCEPTED = "Accepted";
     String DELEGATION_STATUS_REJECTED = "Rejected";
+
+    String DELEGATION_COUNTRY_JAPAN = "JAPAN";
+    String DELEGATION_COUNTRY_KOREA = "KOREA, REPUBLIC OF";
 
     //----------------- Overview Screen ---------------------
 
@@ -326,8 +333,6 @@ public interface WorkflowConstants {
 
     String PC_GRP_PC_ALM = "PC ALM - Treasury";
     String PC_GRP_PC_GBS = "PC GBS";
-    String PC_GRP_ALM = "alm";
-    String PC_GRP_GBS = "gbs";
 
     //Form's Label
     String FORM_LABEL_LATE_CODE = "Late Code";

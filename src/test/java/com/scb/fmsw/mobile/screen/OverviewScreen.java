@@ -11,7 +11,7 @@ import io.appium.java_client.ios.IOSElement;
 public class OverviewScreen extends BaseScreen {
 
     //xpath
-    private String workflowCount = "//XCUIElementTypeStaticText[@name='$1'][@visible='true']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeStaticText[@name='$2']";
+    private String workflowCount = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeStaticText[@name='$2']";
     private String workflowType = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@value='$1']/ancestor::XCUIElementTypeCell";
     private String container = "//XCUIElementTypeTable[@visible='true']";
 
@@ -25,7 +25,7 @@ public class OverviewScreen extends BaseScreen {
      * @return boolean
      */
     private boolean hasTabContainerLoaded() {
-        return waitForElementByXpath(container).isDisplayed();
+        return waitForElementByXpath(container, true).isDisplayed();
     }
 
     /**
@@ -38,12 +38,13 @@ public class OverviewScreen extends BaseScreen {
     public InboxScreen tapOnWorkflowCount(String workflowType, String workflowStatus) {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
-            WebElement workflowTypeElement = waitForElementByXpath(this.workflowType.replace("$1", workflowType));
+            String tempWorkflow = WORKFLOW_IPV.equalsIgnoreCase(workflowType) ? WORKFLOW_PNL : workflowType;
+            WebElement workflowTypeElement = waitForElementByXpath(this.workflowType.replace("$1", tempWorkflow), true);
             TouchAction action = new TouchAction(iosDriver);
             while (!workflowTypeElement.isDisplayed()) {
                 action.press(180, 620).moveTo(0, -180).release().perform();
             }
-            waitForElementByXpath(workflowCountXpath(workflowType, workflowStatus)).click();
+            waitForElementByXpath(workflowCountXpath(workflowType, workflowStatus), true).click();
             System.out.println("Navigate to " + workflowType + " inbox");
         } else {
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);

@@ -55,7 +55,7 @@ public class BookmarkScreen extends BaseScreen {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
+            waitForElementByXpath(alertTitle, duration, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(bookmarkScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_BOOKMARK_WORKFLOW.replace("$1 ", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_BOOKMARK_WORKFLOW);

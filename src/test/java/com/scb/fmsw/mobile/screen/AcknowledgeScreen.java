@@ -168,7 +168,7 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
+            waitForElementByXpath(alertTitle, duration, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(acknowledgeScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_ACKNOWLEDGED_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_ACKNOWLEDGE_WORKFLOW);
@@ -181,21 +181,26 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
         } catch (Exception e) {
             if (!isAlertPopUpDisplayed) {
                 selectLateCode(LATE_CODE_DEADLINE_MISSED);
-            } else if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText()) &&
-                    WORKFLOW_OMR.equals(workflowType)) {
-                acknowledgeScreen.alertOkButton.click();
-                selectLateCode(LATE_CODE_DEADLINE_MISSED);
-            } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                acknowledgeScreen.alertOkButton.click();
-                selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
-            } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-                throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-            } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(acknowledgeScreen.alertMessage.getText())) {
-                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
             } else {
-                screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
-                throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                switch (acknowledgeScreen.alertMessage.getText()) {
+                    case ALERT_MSG_SELECT_LATE_CODE:
+                        if (WORKFLOW_OMR.equals(workflowType)) {
+                            acknowledgeScreen.alertOkButton.click();
+                            selectLateCode(LATE_CODE_DEADLINE_MISSED);
+                        }
+                        break;
+                    case ALERT_MSG_SELECT_LATE_RESPONSE_CODE:
+                        acknowledgeScreen.alertOkButton.click();
+                        selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+                        break;
+                    case ALERT_MSG_UNEXPECTED_ERROR_OCCURRED:
+                        throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                    case ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED:
+                        throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
+                    default:
+                        screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                        throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                }
             }
             tapOnFormDoneButton();
             verifyAcknowledgeStatus(workflowType, workflowCount);

@@ -19,7 +19,7 @@ public class SubmitOptionScreen extends BaseScreen implements WorkflowConstants 
      * @return boolean
      */
     private boolean hasTableContainerLoaded() {
-        return waitForElementByXpath(tableContainer).isDisplayed();
+        return waitForElementByXpath(tableContainer, true).isDisplayed();
     }
 
     //TODO this is for VE workflow
@@ -31,7 +31,7 @@ public class SubmitOptionScreen extends BaseScreen implements WorkflowConstants 
      */
     public SubmitScreen selectSubmitOption(String option) {
         if (hasTableContainerLoaded()) {
-            waitForElementById(option).click();
+            waitForElementById(option, true).click();
             System.out.println("Navigate to Submit Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);

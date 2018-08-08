@@ -61,12 +61,12 @@ public class ReassignScreen extends BaseScreen implements WorkflowConstants {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
-            if ("Message".equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
+            waitForElementByXpath(alertTitle, duration, true);
+            if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_REASSIGN_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_REASSIGN_WORKFLOW);
                 reassignScreen.alertOkButton.click();
-            } else if ("Alert!".equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
+            } else if (ALERT_TITLE_FAILED.equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", workflowType));
                 throw new RuntimeException(FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", ""));
             }

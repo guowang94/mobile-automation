@@ -26,14 +26,15 @@ public class SubmitScreen extends BaseScreen {
      * @param lateCode
      * @param workflowType
      * @param workflowCount
+     * @param ceToDealer
      * @return InboxScreen
      */
-    public InboxScreen submitWorkflow(String lateCode, String workflowType, int workflowCount) {
+    public InboxScreen submitWorkflow(String lateCode, String workflowType, int workflowCount, boolean ceToDealer) {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
             if (WORKFLOW_VE.equals(workflowType)) {
                 enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
-            } else if (WORKFLOW_CE.equals(workflowType)) {
+            } else if (WORKFLOW_CE.equals(workflowType) && ceToDealer) {
                 enterComments(FORM_LABEL_RESPONSE_COMMENTS, MSG_ENTER_COMMENT);
             } else {
                 enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
@@ -94,7 +95,7 @@ public class SubmitScreen extends BaseScreen {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
+            waitForElementByXpath(alertTitle, duration, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(submitScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_SUBMIT_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_SUBMIT_WORKFLOW);

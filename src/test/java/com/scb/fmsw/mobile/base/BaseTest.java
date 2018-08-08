@@ -35,10 +35,10 @@ public class BaseTest extends BaseDriver implements Runnable {
 		System.out.println("Separate thread " + Thread.currentThread().getId() + " started running");
 		while (!Thread.currentThread().isInterrupted()) {
 			try {
-//				Thread.sleep(35000); // sleep for 35 sec
-				Thread.sleep(240000); // sleep for 4min
+				Thread.sleep(35000); // sleep for 35 sec
+//				Thread.sleep(240000); // sleep for 4min
 				new TouchAction(iosDriver).tap(180, 40).perform();
-				System.out.println("Separate thread " + Thread.currentThread().getId() + ": tap on screen to prevent it from sleeping");
+//				System.out.println("Separate thread " + Thread.currentThread().getId() + ": tap on screen to prevent it from sleeping");
 			} catch (Exception e) {
 				Thread.currentThread().interrupt();
 				System.out.println(Thread.currentThread().getId());

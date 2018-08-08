@@ -25,7 +25,7 @@ public class ResponsesDetailViewScreen extends BaseScreen implements WorkflowCon
      * @return boolean
      */
     private boolean hasContainerLoaded() {
-        return waitForElementByXpath(tableContainer).isDisplayed();
+        return waitForElementByXpath(tableContainer, true).isDisplayed();
     }
 
     /**

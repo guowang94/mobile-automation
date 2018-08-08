@@ -39,7 +39,7 @@ public class DelegationPortfolioScreen extends BaseScreen {
 
             if (!isDeskOrCountry) {
                 for (int i = 1; i < count + 1; i++) {
-                    WebElement element = waitForElementByXpath(portfolioCell.replace("$1", String.valueOf(i)));
+                    WebElement element = waitForElementByXpath(portfolioCell.replace("$1", String.valueOf(i)), true);
                     scrollDownUntilElementIsDisplayed(element);
                     element.click();
                 }

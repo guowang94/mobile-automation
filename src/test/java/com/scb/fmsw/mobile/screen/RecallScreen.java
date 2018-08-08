@@ -28,7 +28,7 @@ public class RecallScreen extends BaseScreen {
      * @return boolean
      */
     private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
+        return waitForElementByXpath(container, true).isEnabled();
     }
 
     /**
@@ -105,7 +105,7 @@ public class RecallScreen extends BaseScreen {
         if (isNilReport) {
             try {
                 recallScreen.toggleSwitch.click();
-                waitForElementByName("Ok");
+                waitForElementByName("Ok", true);
                 recallScreen.alertOkButton.click();
             } catch (Exception e) {
                 System.out.println(ERROR_MSG_DO_NOT_HAVE_SWITCH_ELEMENT);
@@ -130,7 +130,7 @@ public class RecallScreen extends BaseScreen {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
+            waitForElementByXpath(alertTitle, duration, true);
             if ("Successfully Completed".equalsIgnoreCase(recallScreen.alertMessage.getText())) {
                 screenshot("Recalled " + recallType + " " + workflowType + " Workflow");
                 System.out.println("Successfully Recall Workflow");

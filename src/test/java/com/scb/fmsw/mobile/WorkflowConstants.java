@@ -38,10 +38,17 @@ public interface WorkflowConstants {
     String TEST_GRP_CLARIFICATION_LM = "LM";
     String TEST_GRP_CLARIFICATION_MO = "MO";
     String TEST_GRP_CLARIFICATION_PC = "PC";
+    String TEST_GRP_CLARIFICATION_VC = "VC";
+    String TEST_GRP_CLARIFICATION_MRO_OR_MTCR_OR_GT = "MRO/MTCR/GT";
     String TEST_GRP_CLARIFICATION_MTCR_OR_MRO_UPLOADER = "MTRC/MRO UPLOADER";
     String TEST_GRP_CLARIFICATION_VDO = "VDO";
     String TEST_GRP_ACCEPT_DELEGATION = "ACCEPT DELEGATION";
     String TEST_GRP_REJECT_DELEGATION = "REJECT DELEGATION";
+
+    //Navigation Bar
+    String NAV_BAR_TITLE_TO_LIMIT_MONITORING = "Request for Clarification - To Limit Monitoring";
+    String NAV_BAR_TITLE_TO_MTCR = "Request for Clarification - To MTCR";
+
 
     //----------------------------- Workflow Status ----------------------------
 
@@ -59,8 +66,8 @@ public interface WorkflowConstants {
     String WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION = "Pending Ack-Post Clarification";
 
     //PNL Workflow
-    String WORKFLOW_STATUS_PENDING_REVIEW_AND_ACCEPTANCE_POST_CLARIFICATION = "Pending Review & Acceptance Post Clarification ";
-    String WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED = "Reviewed & Accepted ";
+    String WORKFLOW_STATUS_PENDING_REVIEW_AND_ACCEPTANCE_POST_CLARIFICATION = "Pending Review & Acceptance Post Clarification";
+    String WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED = "Reviewed & Accepted";
 
     //VE Workflow
     String WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION = "Pending VDO Clarification";
@@ -82,12 +89,9 @@ public interface WorkflowConstants {
 
     //Alert Message
     String ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED = "The workflow status has been updated, you can no longer perform any actions on the workflow";
-    String ALERT_MSG_ENTER_LATE_COMMENT = "Please write the late comments";
     String ALERT_MSG_SELECT_LATE_CODE = "Please select value of Late Code";
     String ALERT_MSG_SELECT_LATE_RESPONSE_CODE = "Please select value of Late Response Code";
     String ALERT_MSG_UNEXPECTED_ERROR_OCCURRED = "Unexpected error occured";
-    String ALERT_MSG_SELECT_TYPE = "Please select the type";
-    String ALERT_MSG_SELECT_DISCIPLINARY_ACTION_TAKEN = "Please select value of Disciplinary Action taken*";
     String ALERT_MSG_STAFF_NOT_AVAILABLE = "Selected staff is not available in the system or does not have a valid role.Please select another option";
     String ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE = "Workflow cannot be self delegated";
     String ALERT_MSG_DELEGATION_CANNOT_SELF_DELEGATE = "Cannot delegate to Same Person";
@@ -100,9 +104,11 @@ public interface WorkflowConstants {
     String ALERT_MSG_ACCEPTED_SUCCESSFULLY = "1 delegation accepted successfully";
     String ALERT_MSG_REJECTED_SUCCESSFULLY = "1 delegation rejected successfully";
     String ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED = "None of Alert Message are matched";
+    String ALERT_MSG_NETWORK_CONNECTION_WAS_LOST = "The network connection was lost.";
 
     //Message
     String MSG_NO_MORE_LOAD_RESULTS_BUTTON = "There is no more Load More Results Button";
+    String MSG_VERIFIED_CLARIFICATION_OPTIONS = "Verified Clarification Options";
     String MSG_ENTER_COMMENT = "Mobile Automation Testing, Comment";
     String MSG_ENTER_LATE_COMMENT = "Mobile Automation Testing, Late Comment";
     String MSG_ENTER_ISSUE_FLAG_COMMENT = "Mobile Automation Testing, Issue Flag Comment";
@@ -130,7 +136,6 @@ public interface WorkflowConstants {
     String SUCCESS_MSG_SUCCESSFULLY_BOOKMARK_WORKFLOW = "Successfully Bookmark Workflow";
     String SUCCESS_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Successfully created Default Delegation";
     String SUCCESS_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Successfully created Users Delegation";
-    String SUCCESS_MSG_SUCCESSFULLY_REVIEWED_AND_ASSESSED_WORKFLOW = "Successfully Reviewed and Assessed Workflow";
 
     //Failed Message
     String FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW = "Failed to Acknowledge $1 Workflow";
@@ -166,13 +171,16 @@ public interface WorkflowConstants {
     String ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED = "Button Container has not loaded";
     String ERROR_MSG_TAB_CONTAINER_NOT_LOADED = "Tab Container has not loaded";
     String ERROR_MSG_CONTAINER_NOT_LOADED = "Container has not loaded";
-    String ERROR_MSG_NO_WORKFLOW_FOUND = "There is no workflow found with that workflow id";
+    String ERROR_MSG_NO_WORKFLOW_FOUND = "There is no workflow found";
+    String ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID = "There is no workflow found with that workflow id";
     String ERROR_MSG_NOT_ENOUGH_WORKFLOW = "There are not enough workflow or there is no workflow";
     String ERROR_MSG_UNABLE_TO_FIND_BOOKMARK_ELEMENT = "Unable to find Bookmark element";
     String ERROR_MSG_UNABLE_TO_FIND_PREV_ACTOR_TYPE_ELEMENT = "Unable to find Prev Actor Type element";
     String ERROR_MSG_UNABLE_TO_FIND_COMMENT_ELEMENT = "Unable to find $1 element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_STATUS_ELEMENT = "Unable to find Workflow Status element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_EVENT_STATUS_ELEMENT = "Unable to find Workflow Event Status element";
+    String ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_TYPE_ELEMENT = "Unable to find Curr Actor Type element";
+    String ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_GROUP_ELEMENT = "Unable to find Curr Actor Group element";
     String ERROR_MSG_APPIUM_DRIVER_NOT_FOUND = "Appium driver could not be initialised for device";
     String ERROR_MSG_NO_ELEMENT_FOUND = "$1 Element could not be found";
     String ERROR_MSG_DO_NOT_HAVE_SWITCH_ELEMENT = "This clarification option does not have this switch element";
@@ -180,6 +188,8 @@ public interface WorkflowConstants {
     String ERROR_MSG_NO_COUNTRY = "There is no country";
     String ERROR_MSG_DELEGATION_NOT_MATCHED = "No matched delegation found";
     String ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW = "Failed to verify workflow";
+    String ERROR_MSG_CLARIFICATION_OPTION_NOT_MATCHED = "None of the Clarification option are matched";
+    String ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION = "Failed to verify Clarification Options";
 
     //Screenshot Message
     String SCREENSHOT_MSG_NO_WORKFLOW_FOUND = "No Workflow found";
@@ -207,8 +217,6 @@ public interface WorkflowConstants {
     String SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION = "Failed to reject Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPT_DELEGATION = "Successfully accepted Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION = "Successfully rejected Delegation";
-    String SCREENSHOT_MSG_FAILED_TO_REVIEWED_AND_ASSESSED = "Failed to Review and Assess Workflow";
-    String SCREENSHOT_MSG_SUCCESSFULLY_REVIEWED_AND_ASSESSED = "Successfully Reviewed and Assessed Workflow";
 
     //------------------Inbox Screen---------------------
 
@@ -217,10 +225,8 @@ public interface WorkflowConstants {
     String BUCKET_IN_PROGRESS = "IN PROGRESS";
     String BUCKET_CLOSED = "CLOSED";
     String BUCKET_TO_REVIEW = "TO REVIEW";
-    String BUCKET_TO_CLAIM = "TO CLAIM";
 
     //More Option's Action
-    String MORE_OPTION_HOME = "Home";
     String MORE_OPTION_ACKNOWLEDGE_SELECTED = "Acknowledge Selected";
     String MORE_OPTION_ACKNOWLEDGE_ALL = "Acknowledge All";
     String MORE_OPTION_REVIEW_AND_ACCEPT_SELECTED = "Review & Accept Selected";
@@ -252,7 +258,7 @@ public interface WorkflowConstants {
     String INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL = "Compliance Comments";
     String INBOX_DETAIL_VDO_COMMENTS_CELL = "VDO Comments";
     String INBOX_DETAIL_MRO_OR_MTCR_UPLOADER_COMMENTS_CELL = "MRO/MTCR Uploader Comments";
-    String INBOX_DETAIL_OTHER_USER_COMMENTS_CELL = "Other User Comments";
+    String INBOX_DETAIL_CURR_ACTOR_TYPE = "Curr Actor Type";
 
     //-------- CE Workflow ----------
     //MTCR User
@@ -274,6 +280,19 @@ public interface WorkflowConstants {
 
     String PREV_ACTOR_TYPE_ROLE_MTCR_OR_MRO_UPLOADER = "MTCR/MRO Uploader";
     String PREV_ACTOR_TYPE_ROLE_VOLCKER_DESK_OWNER = "VOLCKERDESKOWNER";
+
+    String CURR_ACTOR_TYPE_CNA_PERFORMER_LM = "CNAPERFORMERLM";
+    String CURR_ACTOR_TYPE_CNA_PERFORMER = "CNAPERFORMER";
+    String CURR_ACTOR_TYPE_OMR_PERFORMER_LM = "OMRPERFORMERLM";
+    String CURR_ACTOR_TYPE_OMR_PERFORMER = "OMRPERFORMER";
+    String CURR_ACTOR_TYPE_PC_USER = "PCUSER";
+    String CURR_ACTOR_TYPE_MO_USER = "MOUSER";
+    String CURR_ACTOR_TYPE_OTHER_USER = "OTHERUSER";
+    String CURR_ACTOR_TYPE_MRO_MTCR_GT_USER = "MRO/MTCR/GT USER";
+    String CURR_ACTOR_TYPE_VC_USER = "VC USER";
+    String CURR_ACTOR_TYPE_COMPLIANCE = "COMPLIANCE";
+
+    String CURR_ACTOR_GROUP_PC_GBS = "PC GBS";
 
     //----------------- Delegation Screen ---------------------
 

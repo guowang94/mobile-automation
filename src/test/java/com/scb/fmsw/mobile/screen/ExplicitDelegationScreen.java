@@ -48,7 +48,7 @@ public class ExplicitDelegationScreen extends BaseScreen {
     private void verifyDelegateStatus(String workflowType) {
         hasLoadingCompleted();
         try {
-            waitForElementByXpath(alertTitle);
+            waitForElementByXpath(alertTitle, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(delegateScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_DELEGATE_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_DELEGATE_WORKFLOW);
@@ -66,6 +66,7 @@ public class ExplicitDelegationScreen extends BaseScreen {
                 case ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE:
                     throw new RuntimeException(ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE);
                     default:
+                        screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
                         throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
             }
         }

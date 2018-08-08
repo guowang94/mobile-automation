@@ -9,7 +9,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.IFactoryAnnotation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return boolean
      */
     private boolean hasTabContainerLoaded() {
-        return waitForElementByXpath(tabContainer).isDisplayed();
+        return waitForElementByXpath(tabContainer, true).isDisplayed();
     }
 
     /**
@@ -70,7 +69,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             try {
-                workflowID = waitForElementByXpath(this.workflowID).getText();
+                workflowID = waitForElementByXpath(this.workflowID, true).getText();
                 System.out.println("Workflow Id: " + workflowID);
             } catch (Exception e) {
                 screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
@@ -92,7 +91,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             try {
-                workflowID = waitForElementByXpath(cnaWorkflowID).getText();
+                workflowID = waitForElementByXpath(cnaWorkflowID, true).getText();
                 System.out.println("Workflow Id: " + workflowID);
             } catch (Exception e) {
                 screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
@@ -115,11 +114,11 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             try {
-                subWorkflowID = waitForElementByXpath(subWorkflowIDByWorkflowID.replace("$1", workflowID)).getText();
+                subWorkflowID = waitForElementByXpath(subWorkflowIDByWorkflowID.replace("$1", workflowID), true).getText();
                 System.out.println("Sub Workflow Id: " + subWorkflowID);
             } catch (Exception e) {
                 screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
-                throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
+                throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
             }
         } else {
             throw new RuntimeException(ERROR_MSG_TAB_CONTAINER_NOT_LOADED);
@@ -135,11 +134,11 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public InboxDetailViewScreen tapOnWorkflow(String workflowID) {
         try {
-            tapOnElement(waitForElementByXpath(workflow.replace("$1", workflowID)));
+            tapOnElement(waitForElementByXpath(workflow.replace("$1", workflowID), true));
             System.out.println("Navigate to Detail View");
         } catch (Exception e) {
             screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
-            throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
+            throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
         }
         return new InboxDetailViewScreen(iosDriver);
     }
@@ -159,19 +158,19 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             System.out.println("Finding workflow with this id: " + workflowID);
             try {
                 //Find workflow
-                element = waitForElementByXpath(workflowCell.replace("$1", workflowID));
+                element = waitForElementByXpath(workflowCell.replace("$1", workflowID), true);
                 scrollDownUntilElementIsDisplayed(element);
                 screenshot(SCREENSHOT_MSG_VERIFIED_WORKFLOW_IS_IN_BUCKET.replace("$1", workflowID).replace("$2", currentBucket));
                 return true;
             } catch (Exception e) {
-                if (Integer.parseInt(waitForElementByXpath(bucketCount.replace("$1", currentBucket)).getText()) > 50 * count) {
+                if (Integer.parseInt(waitForElementByXpath(bucketCount.replace("$1", currentBucket), true).getText()) > 50 * count) {
                     tapOnLoadMoreResultsButton();
                     System.out.println("Retrying to verify workflow " + workflowID);
                     count++;
                     return verifyWorkflowInBucket(workflowID, count, currentBucket);
                 } else {
-                    screenshot(ERROR_MSG_NO_WORKFLOW_FOUND);
-                    throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
+                    screenshot(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
+                    throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
                 }
             }
         } else {
@@ -182,9 +181,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will verify the details of the workflow after action has been performed
      *
-     * @param workflowStatus
-     * @param workflowType
-     * @param workflowID
+     * @param workflowStatus e.g. overdue, due or open
+     * @param workflowType   workflow type
+     * @param workflowID     of the workflow
      * @return boolean
      */
     public boolean verifyDetailsPostActionPerformed(String workflowStatus, String workflowType, String workflowID) {
@@ -259,22 +258,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             }
 
         }
-        //------------------------------ PNL WORKFLOW ------------------------------
-        else if (workflowType.equals(WORKFLOW_PNL)) {
-            //For PNL, I will be checking Workflow Event Status instead of Workflow Status
-            if (!workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED)) {
-                if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                        inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
-                    return true;
-                } else {
-                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                }
-            } else if (inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
-                return true;
-            } else {
-                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-            }
-        }
         //------------------------------ CE WORKFLOW ------------------------------
         else if (workflowType.equals(WORKFLOW_CE) &&
                 !workflowStatus.equals(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_LIMIT_MONITORING) &&
@@ -304,38 +287,30 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             }
 
         }
-        //------------------------------ OMR WORKFLOW ------------------------------
-        else if (workflowType.equals(WORKFLOW_OMR)) {
-            switch (workflowStatus) {
-                case WORKFLOW_STATUS_PENDING_CLARIFICATION:
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                case WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION:
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
-                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                case WORKFLOW_STATUS_ACKNOWLEDGED:
-                    if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
-                            verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
-                        return true;
-                    } else {
-                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
-                    }
-                    default:
-                        throw new RuntimeException("None of the Workflow Status are matched");
+        //-------------------------- PNL WORKFLOW's Review & Accepted ------------------------------
+        else if (workflowType.equals(WORKFLOW_PNL) && workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED)) {
+            if (inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
+                return true;
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+            }
+        }
+        //---------------------------- OMR WORKFLOW's Acknowledged ------------------------------
+        else if (workflowType.equals(WORKFLOW_OMR) && WORKFLOW_STATUS_ACKNOWLEDGED.equals(workflowStatus)) {
+            if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
+                    verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                return true;
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
             }
         }
         //------------------------------ OTHERS WORKFLOW ------------------------------
         else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) &&
                 !workflowStatus.equals(WORKFLOW_STATUS_APPROVED)) {
-            if (WORKFLOW_FVA.equals(workflowType)) {
+
+            //Verify Comments and Workflow Status/Workflow Event Status
+            if (WORKFLOW_FVA.equals(workflowType) || WORKFLOW_PNL.equals(workflowType) ||
+                    WORKFLOW_IPV.equals(workflowType)) {
                 if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_PREV_ACTOR_COMMENTS_CELL) &&
                         inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
                     return true;
@@ -359,6 +334,97 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
+     * This method will verify Curr Actor Type/Group
+     *
+     * @param clarificationOption
+     * @param workflowType
+     * @param workflowID
+     * @return boolean
+     */
+    public boolean verifyCurrActorTypeOrGroup(String clarificationOption, String workflowType, String workflowID) {
+        InboxDetailViewScreen inboxDetailViewScreen = navigateToDetailView(workflowID);
+
+        //Verify Curr Actor Type/Group
+        switch (clarificationOption) {
+            case CLARIFICATION_OPTION_CNA_LM:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_CNA_PERFORMER_LM)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_CNA_PERFORMER:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_CNA_PERFORMER)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_OMR_LM:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_OMR_PERFORMER_LM)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_OMR_PERFORMER:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_OMR_PERFORMER)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_SEND_TO:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_OTHER_USER)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_PC:
+                if (WORKFLOW_PNL.equals(workflowType)) {
+                    if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_PC_USER)) {
+                        break;
+                    } else {
+                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                    }
+                } else {
+                    if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_PC_USER) &&
+                            inboxDetailViewScreen.compareCurrActorGroup(CURR_ACTOR_GROUP_PC_GBS)) {
+                        break;
+                    } else {
+                        throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                    }
+                }
+            case CLARIFICATION_OPTION_MO:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_MO_USER) &&
+                        inboxDetailViewScreen.isCurrActorGroupValuePresent()) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_MRO_MTRC_GT:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_MRO_MTCR_GT_USER)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_VALUATION_CONTROL_USER:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_VC_USER)) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            case CLARIFICATION_OPTION_VOLCKER_COMPLIANCE:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_COMPLIANCE) &&
+                        inboxDetailViewScreen.isCurrActorGroupValuePresent()) {
+                    break;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            default:
+                throw new RuntimeException(ERROR_MSG_CLARIFICATION_OPTION_NOT_MATCHED);
+        }
+        inboxDetailViewScreen.tapOnBackButton();
+        return true;
+    }
+
+    /**
      * This method will contains steps for Verifying Workflow Status
      *
      * @param inboxDetailViewScreen
@@ -370,18 +436,14 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         boolean result;
         //TODO need to find out which workflow type also does not have Response Grid
         if (workflowType.equalsIgnoreCase(WORKFLOW_CNA) || workflowType.equalsIgnoreCase(WORKFLOW_OMR) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_PNL) || workflowType.equalsIgnoreCase(WORKFLOW_VE)) {
+                workflowType.equalsIgnoreCase(WORKFLOW_PNL) || workflowType.equalsIgnoreCase(WORKFLOW_VE) ||
+                workflowType.equalsIgnoreCase(WORKFLOW_CE)) {
             result = inboxDetailViewScreen.compareWorkflowStatus(workflowStatus);
         } else {
             //Navigate to Response Grid Screen and validate Workflow Status
             InboxDetailsOptionScreen inboxDetailsOptionScreen = inboxDetailViewScreen.navigateToInboxDetailsOptionScreen();
             InboxResponsesGridScreen inboxResponsesGridScreen = inboxDetailsOptionScreen.navigateToInboxResponseScreen();
             result = inboxResponsesGridScreen.verifyWorkflowStatus(workflowStatus, workflowType);
-            if (result) {
-                System.out.println("Verified Workflow Status");
-            } else {
-                System.out.println("Failed to verified Workflow Status");
-            }
 
             //Navigate back to Inbox Detail View Screen
             inboxDetailsOptionScreen = inboxResponsesGridScreen.tapOnBackButton();
@@ -401,10 +463,10 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         boolean loop = true;
         hasLoadingCompleted();
         try {
-            waitForElementById(loadMoreResultsButton, 15); // To check if element is available
+            waitForElementById(loadMoreResultsButton, 15, true); // To check if element is available
             while (loop) {
                 try {
-                    loop = (!waitForElementByXpath(loadMoreResultsCell, 10).isDisplayed());
+                    loop = (!waitForElementByXpath(loadMoreResultsCell, 10, true).isDisplayed());
                 } catch (Exception e) {
                     action.press(180, 620).moveTo(0, -620).release().perform();
                 }
@@ -425,7 +487,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return InboxDetailViewScreen
      */
     public InboxDetailViewScreen navigateToDetailView(String workflowID) {
-        waitForElementByXpath(workflowCell.replace("$1", workflowID)).click();
+        waitForElementByXpath(workflowCell.replace("$1", workflowID), true).click();
         System.out.println("Navigate to Inbox Detail View Screen");
         return new InboxDetailViewScreen(iosDriver);
     }
@@ -438,7 +500,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void navigateToBucket(String currentBucket) {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
-            waitForElementById(currentBucket).click();
+            waitForElementById(currentBucket, true).click();
             System.out.println("Navigate to " + currentBucket + " bucket");
         } else {
             throw new RuntimeException(ERROR_MSG_TAB_CONTAINER_NOT_LOADED);
@@ -491,7 +553,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             }
             List<WebElement> workflowIdElementList;
             try {
-                workflowIdElementList = waitForElementsByXpath(workflowList);
+                workflowIdElementList = waitForElementsByXpath(workflowList, true);
             } catch (NoSuchElementException e) {
                 screenshot(ERROR_MSG_NO_WORKFLOW_FOUND);
                 throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
@@ -528,7 +590,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
             }
             List<WebElement> workflowIdElementList;
             try {
-                workflowIdElementList = waitForElementsByXpath(cnaWorkflowList);
+                workflowIdElementList = waitForElementsByXpath(cnaWorkflowList, true);
             } catch (NoSuchElementException e) {
                 screenshot(ERROR_MSG_NO_WORKFLOW_FOUND);
                 throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
@@ -553,10 +615,12 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @param action                        Acknowledge Selected, Review & Accept Selected, Approve Selected or Clarify Selected
      * @return SelectMultipleWorkflowScreen
      */
-    public SelectMultipleWorkflowScreen navigateToSelectMultipleWorkflowScreen(int numbersOfWorkflowToBeSelected, String currentBucket, String action) {
-        if (numbersOfWorkflowToBeSelected <= Integer.parseInt(waitForElementByXpath(bucketCount.replace("$1", currentBucket)).getText())) {
+    public SelectMultipleWorkflowScreen navigateToSelectMultipleWorkflowScreen(int numbersOfWorkflowToBeSelected,
+                                                                               String currentBucket, String action) {
+        if (numbersOfWorkflowToBeSelected <= Integer.parseInt(waitForElementByXpath(
+                bucketCount.replace("$1", currentBucket), true).getText())) {
             tapOnMoreOption();
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(options.replace("$1", action))).click();
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(options.replace("$1", action), true)).click();
             System.out.println("Navigate to Select Multiple Workflow Screen");
         } else {
             screenshot(ERROR_MSG_NOT_ENOUGH_WORKFLOW);
@@ -574,9 +638,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public AcknowledgeScreen acknowledgeAllWorkflow(String action) {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", action)));
-        waitForElementByXpath(options.replace("$1", action)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", action), true));
+        waitForElementByXpath(options.replace("$1", action), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Acknowledge Screen");
         return new AcknowledgeScreen(iosDriver);
     }
@@ -588,9 +652,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ClarificationOptionScreen clarifyAllWorkflow() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_CLARIFY_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_CLARIFY_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_CLARIFY_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_CLARIFY_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Clarification Option Screen");
         return new ClarificationOptionScreen(iosDriver);
     }
@@ -602,9 +666,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ClarificationScreen clarifyAllWorkflowForCE() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_CLARIFY_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_CLARIFY_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_CLARIFY_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_CLARIFY_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Clarification Screen");
         return new ClarificationScreen(iosDriver);
     }
@@ -616,9 +680,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ReassignScreen reassignAllWorkflow() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_REASSIGN_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_REASSIGN_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_REASSIGN_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_REASSIGN_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Reassign Screen");
         return new ReassignScreen(iosDriver);
     }
@@ -630,11 +694,25 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public SubmitScreen submitAllWorkflow() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_SUBMIT_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_SUBMIT_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_SUBMIT_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_SUBMIT_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Submit Screen");
         return new SubmitScreen(iosDriver);
+    }
+
+    /**
+     * This method will tap on Submit All
+     *
+     * @return SubmitOptionScreen
+     */
+    public SubmitOptionScreen submitAllWorkflowCE() {
+        tapOnMoreOption();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_SUBMIT_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_SUBMIT_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
+        System.out.println("Navigate to Submit Option Screen");
+        return new SubmitOptionScreen(iosDriver);
     }
 
     /**
@@ -644,9 +722,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ExplicitDelegationScreen delegateAllWorkflow() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_DELEGATE_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_DELEGATE_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_DELEGATE_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_DELEGATE_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Explicit Delegation Screen");
         return new ExplicitDelegationScreen(iosDriver);
     }
@@ -658,9 +736,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public BookmarkScreen bookmarkAllWorkflow() {
         tapOnMoreOption();
-        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_BOOKMARK_ALL)));
-        waitForElementByXpath(options.replace("$1", MORE_OPTION_BOOKMARK_ALL)).click();
-        waitForElementUntilClickable(inboxScreen.alertOkButton).click();
+        scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", MORE_OPTION_BOOKMARK_ALL), true));
+        waitForElementByXpath(options.replace("$1", MORE_OPTION_BOOKMARK_ALL), true).click();
+        waitForElementUntilClickable(inboxScreen.alertOkButton, true).click();
         System.out.println("Navigate to Bookmark Screen");
         return new BookmarkScreen(iosDriver);
     }
@@ -675,7 +753,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public AcknowledgeScreen swipeRightAndTapOnAcknowledge(String workflowID, String workflowType) {
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            waitForElementById(swipeAcknowledgeButton).click();
+            waitForElementById(swipeAcknowledgeButton, true).click();
             System.out.println("Navigate to Acknowledge Screen");
         }
         return new AcknowledgeScreen(iosDriver);
@@ -690,10 +768,25 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public SubmitScreen swipeRightAndTapOnSubmit(String workflowID) {
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            waitForElementById(swipeSubmitButton).click();
+            waitForElementById(swipeSubmitButton, true).click();
             System.out.println("Navigate to Submit Screen");
         }
         return new SubmitScreen(iosDriver);
+    }
+
+    /**
+     * This method will swipe right on a workflow and tap on Submit
+     *
+     * @param workflowID
+     * @return SubmitOptionScreen
+     */
+    public SubmitOptionScreen swipeRightAndTapOnSubmitCE(String workflowID) {
+        if (hasTabContainerLoaded()) {
+            swipeRight(workflowID);
+            waitForElementById(swipeSubmitButton, true).click();
+            System.out.println("Navigate to Submit Option Screen");
+        }
+        return new SubmitOptionScreen(iosDriver);
     }
 
     /**
@@ -706,7 +799,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            waitForElementById(swipeRespondButton).click();
+            waitForElementById(swipeRespondButton, true).click();
             System.out.println("Navigate to Submit Screen");
         }
         return new SubmitScreen(iosDriver);
@@ -722,7 +815,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            waitForElementById(swipeRespondButton).click();
+            waitForElementById(swipeRespondButton, true).click();
             System.out.println("Navigate to Submit Option Screen");
         }
         return new SubmitOptionScreen(iosDriver);
@@ -739,9 +832,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
             try {
-                waitForElementById(swipeClarificationButton).click();
+                waitForElementById(swipeClarificationButton, true).click();
             } catch (Exception e) {
-                waitForElementById(swipeNewClarificationButton).click();
+                waitForElementById(swipeNewClarificationButton, true).click();
             }
             System.out.println("Navigate to Clarification Option Screen");
         }
@@ -759,9 +852,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
             try {
-                waitForElementById(swipeClarificationButton).click();
+                waitForElementById(swipeClarificationButton, true).click();
             } catch (Exception e) {
-                waitForElementById(swipeNewClarificationButton).click();
+                waitForElementById(swipeNewClarificationButton, true).click();
             }
             System.out.println("Navigate to Clarification Screen");
         }
@@ -778,7 +871,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
-            waitForElementById(swipeDelegateButton).click();
+            waitForElementById(swipeDelegateButton, true).click();
             System.out.println("Navigate to Explicit Delegation Screen");
         }
         return new ExplicitDelegationScreen(iosDriver);
@@ -794,7 +887,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
-            waitForElementById(swipeBookmarkButton).click();
+            waitForElementById(swipeBookmarkButton, true).click();
             System.out.println("Navigate to Bookmark Screen");
         }
         return new BookmarkScreen(iosDriver);
@@ -810,7 +903,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeLeft(workflowID);
-            waitForElementById(swipeReassignButton).click();
+            waitForElementById(swipeReassignButton, true).click();
             System.out.println("Navigate to Reassign Screen");
         }
         return new ReassignScreen(iosDriver);
@@ -826,7 +919,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         hasLoadingCompleted();
         if (hasTabContainerLoaded()) {
             swipeRight(workflowID);
-            waitForElementById(swipeReassignButton).click();
+            waitForElementById(swipeReassignButton, true).click();
             System.out.println("Navigate to Reassign Screen");
         }
         return new ReassignScreen(iosDriver);
@@ -838,9 +931,10 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @param workflowID
      */
     private void swipeLeft(String workflowID) {
-        WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID));
-        scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID)));
-        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement), getElementLocationY(workflowCellElement)).moveTo(-100, 0).release().perform();
+        WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
+        scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
+        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement),
+                getElementLocationY(workflowCellElement)).moveTo(-100, 0).release().perform();
     }
 
     /**
@@ -849,9 +943,10 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @param workflowID
      */
     private void swipeRight(String workflowID) {
-        WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID));
-        scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID)));
-        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement), getElementLocationY(workflowCellElement)).moveTo(100, 0).release().perform();
+        WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
+        scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
+        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement),
+                getElementLocationY(workflowCellElement)).moveTo(100, 0).release().perform();
     }
 
     /**

@@ -15,9 +15,11 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     private PageObjects inboxDetailViewScreen;
 
     //xpath
-    private String prevActorTypeValue = "//XCUIElementTypeStaticText[@name='Prev Actor Type']/preceding-sibling::XCUIElementTypeStaticText";
-    private String workflowStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Status']/preceding-sibling::XCUIElementTypeStaticText";
-    private String workflowEventStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Event Status']/preceding-sibling::XCUIElementTypeStaticText";
+    private String prevActorTypeValue = "//XCUIElementTypeStaticText[@name='Prev Actor Type']/preceding-sibling::XCUIElementTypeStaticText[1]";
+    private String workflowStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Status']/preceding-sibling::XCUIElementTypeStaticText[1]";
+    private String workflowEventStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Event Status']/preceding-sibling::XCUIElementTypeStaticText[1]";
+    private String currActorTypeValue = "//XCUIElementTypeStaticText[@name='Curr Actor Type']/preceding-sibling::XCUIElementTypeStaticText[1]";
+    private String currActorGroupValue = "//XCUIElementTypeStaticText[@name='Curr Actor Group']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String cellValue = "//XCUIElementTypeStaticText[@name='$1']/preceding-sibling::XCUIElementTypeStaticText[@value='$2']";
     private String tableCell = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell";
 
@@ -199,20 +201,20 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     /**
      * This method return Bookmark value
      *
-     * @return String
      * @param workflowType
+     * @return String
      */
     public String getBookmarkValue(String workflowType) {
         scrollToTop();
         try {
             if (WORKFLOW_VE.equals(workflowType)) {
-                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked")));
+                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked"), true));
                 return waitForElementByXpath(cellValue.replace("$1", "Bookmarked")
-                        .replace("$2", "Y")).getText();
+                        .replace("$2", "Y"), true).getText();
             } else {
-                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked?")));
+                scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Bookmarked?"), true));
                 return waitForElementByXpath(cellValue.replace("$1", "Bookmarked?")
-                        .replace("$2", "Y")).getText();
+                        .replace("$2", "Y"), true).getText();
             }
         } catch (Exception e) {
             throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_BOOKMARK_ELEMENT);
@@ -227,8 +229,8 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public String getPrevActorTypeValue() {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Prev Actor Type")));
-            String prevActorType = waitForElementByXpath(prevActorTypeValue).getText();
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Prev Actor Type"), true));
+            String prevActorType = waitForElementByXpath(prevActorTypeValue, true).getText();
             System.out.println("Prev Actor Type: " + prevActorType);
             return prevActorType;
         } catch (Exception e) {
@@ -244,8 +246,8 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public String getWorkflowStatusValue() {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Status")));
-            String workflowStatus = waitForElementByXpath(workflowStatusValue).getText();
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Status"), true));
+            String workflowStatus = waitForElementByXpath(workflowStatusValue, true).getText();
             System.out.println("Workflow Status: " + workflowStatus);
             return workflowStatus;
         } catch (Exception e) {
@@ -261,9 +263,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public boolean compareComment(String columnName) {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", columnName)));
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", columnName), true));
             if (MSG_ENTER_COMMENT.equals(waitForElementByXpath(cellValue.replace("$1", columnName)
-                    .replace("$2", MSG_ENTER_COMMENT)).getText())) {
+                    .replace("$2", MSG_ENTER_COMMENT), true).getText())) {
                 System.out.println("Verified " + columnName);
                 return true;
             }
@@ -282,9 +284,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public boolean compareComment(String columnName, String comment) {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", columnName)));
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", columnName), true));
             if (comment.equals(waitForElementByXpath(cellValue.replace("$1", columnName)
-                    .replace("$2", comment)).getText())) {
+                    .replace("$2", comment), true).getText())) {
                 System.out.println("Verified " + columnName);
                 return true;
             }
@@ -304,9 +306,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public boolean compareWorkflowStatus(String workflowStatus) {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Status")));
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Status"), true));
             if (workflowStatus.equals(waitForElementByXpath(cellValue.replace("$1", "Workflow Status")
-                    .replace("$2", workflowStatus)).getText().trim())) {
+                    .replace("$2", workflowStatus), true).getText().trim())) {
                 System.out.println("Verified Workflow Status");
                 return true;
             }
@@ -325,16 +327,83 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     public boolean compareWorkflowEventStatus(String workflowEventStatus) {
         scrollToTop();
         try {
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Event Status")));
-            if (workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue).getText().trim())) {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Workflow Event Status"), true));
+            if (workflowEventStatus.equals(waitForElementByXpath(workflowEventStatusValue, true).getText().trim())) {
                 System.out.println("Verified Workflow Event Status");
                 tapOnBackButton();
                 return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            screenshot("test");
             throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_EVENT_STATUS_ELEMENT);
+        }
+        return false;
+    }
+
+    /**
+     * This method compare Curr Actor Type
+     *
+     * @param currActorType
+     * @return boolean
+     */
+    public boolean compareCurrActorType(String currActorType) {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Curr Actor Type"), true));
+            if (currActorType.equals(waitForElementByXpath(currActorTypeValue, true).getText().trim())) {
+                System.out.println("Verified Curr Actor Type");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_TYPE_ELEMENT);
+        }
+        return false;
+    }
+
+    /**
+     * This method compare Curr Actor Group
+     *
+     * @param currActorGroup
+     * @return boolean
+     */
+    public boolean compareCurrActorGroup(String currActorGroup) {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Curr Actor Group"), true));
+            if (currActorGroup.equals(waitForElementByXpath(currActorGroupValue, true).getText().trim())) {
+                System.out.println("Verified Curr Actor Group");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_GROUP_ELEMENT);
+        }
+        return false;
+    }
+
+    /**
+     * This method check if Curr Actor Group's value is present
+     *
+     * @return boolean
+     */
+    public boolean isCurrActorGroupValuePresent() {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Curr Actor Group"), true));
+            if (waitForElementByXpath(currActorGroupValue, true).getText() != null) {
+                System.out.println("Curr Actor Group value is present");
+                return true;
+            } else {
+                screenshot("Curr Actor Group value is null");
+                System.out.println("Curr Actor Group value is null");
+            }
+        } catch (NullPointerException e) {
+            screenshot("Curr Actor Group value is null");
+            System.out.println("Curr Actor Group value is null");
+        } catch (Exception e) {
+            screenshot(ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_GROUP_ELEMENT);
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_GROUP_ELEMENT);
         }
         return false;
     }

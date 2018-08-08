@@ -41,13 +41,13 @@ public class DelegationWorkflowTypeScreen extends BaseScreen {
                 for (String workflowType : workflowTypeList) {
 
                     if (!workflowTypeList.contains(WORKFLOW_CNA)) {
-                        waitForElementByXpath(this.workflowType.replace("$1", WORKFLOW_CNA)).click();
+                        waitForElementByXpath(this.workflowType.replace("$1", WORKFLOW_CNA), true).click();
                     }
 
                     if (workflowType.equals(WORKFLOW_CE)) {
-                        waitForElementByXpath(this.workflowType.replace("$1", workflowType)).click();
+                        waitForElementByXpath(this.workflowType.replace("$1", workflowType), true).click();
                     } else if (!workflowType.equals(WORKFLOW_CNA) && !workflowType.equals(WORKFLOW_CE)) {
-                        waitForElementByXpath(this.workflowType.replace("$1", workflowType)).click();
+                        waitForElementByXpath(this.workflowType.replace("$1", workflowType), true).click();
                     }
                 }
             } else {

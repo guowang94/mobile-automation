@@ -10,203 +10,106 @@ import java.util.List;
 public class ClarificationTest extends BaseTest {
 
     //next time need to check for prev actor comment, isDisputed?, isEscalated?, workflow status
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA
+    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, CE, VE
 
     //-------------------------------- CNA ---------------------------------
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_PC})
-    public void sendCNAWorkflowToPCForClarificationDetailViewTest() {
-        System.out.println("Method: sendCNAWorkflowToPCForClarificationDetailViewTest()");
+    public void swipeToSendCNAWorkflowToPCForClarificationTest() {
+        System.out.println("Method: swipeToSendCNAWorkflowToPCForClarificationTest()");
         boolean hasDispute = true;
         String workflowID;
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_PC);
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_PC, WORKFLOW_CNA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        inboxScreen.logout();
-
-        //---------Login as GBS user to check if workflow is there-------
-
-        overviewScreen = login(prop.getProperty("uat.GBSUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.tapOnForClarificationSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
-                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-
-        //----------------Submit the workflow back to user-------------------
-
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1);
-        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
-                FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        inboxScreen.logout();
-
-        //---------Login as CNA user to check if workflow is there-------
-
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
-                FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_PC, WORKFLOW_CNA, workflowID));
         System.out.println("Complete!");
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_LM})
-    public void sendCNAWorkflowToLMForClarificationDetailViewTest() {
-        System.out.println("Method: sendCNAWorkflowToLMForClarificationDetailViewTest()");
-        boolean hasDispute = true;
+    public void swipeToSendCNAWorkflowToLMForClarificationTest() {
+        System.out.println("Method: swipeToSendCNAWorkflowToLMForClarificationTest()");
         String workflowID;
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_CNA_LM);
-        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_CNA, 1);
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_CNA_LM, WORKFLOW_CNA);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_CNA_LM, WORKFLOW_CNA, workflowID));
 
-        //---------Login as another user to check if workflow is there-------
-
-        //This part will not work as the workflow will not be able to send out
         System.out.println("Complete!");
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_PERFORMER})
-    public void sendCNAWorkflowToCNAPerformerForClarificationDetailViewTest() {
-        System.out.println("Method: sendCNAWorkflowToCNAPerformerForClarificationDetailViewTest()");
-        boolean hasDispute = false;
+    public void swipeToSendCNAWorkflowToCNAPerformerForClarificationTest() {
+        System.out.println("Method: swipeToSendCNAWorkflowToCNAPerformerForClarificationTest()");
         String workflowID;
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_CNA_PERFORMER);
-        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_CNA, 1);
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_CNA_PERFORMER, WORKFLOW_CNA);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_CNA_PERFORMER, WORKFLOW_CNA, workflowID));
 
-        //---------Login as another user to check if workflow is there-------
-
-        //This part will not work as the workflow will not be able to send out
-        //TODO need to write code for this, need to get the cna performer id from detail view as well
         System.out.println("Complete!");
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_MO})
-    public void sendCNAWorkflowToMOForClarificationDetailViewTest() {
-        System.out.println("Method: sendCNAWorkflowToMOForClarificationDetailViewTest()");
-        boolean hasDispute = false;
+    public void swipeToSendCNAWorkflowToMOForClarificationTest() {
+        System.out.println("Method: swipeToSendCNAWorkflowToMOForClarificationTest()");
         String workflowID;
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_MO);
-        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_CNA, 1);
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_MO, WORKFLOW_CNA);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        inboxScreen.logout();
-
-        //There is MO Group now therefore it wont go to MO Admin
-        /*//---------Login as MO Admin user to check if workflow is there-------
-
-        overviewScreen = login(prop.getProperty("uat.MOAdminUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_DO);
-        inboxScreen.tapOnForExceptionSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
-                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-
-        //----------------Reassign the workflow to MO user-------------------
-
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
-        inboxScreen = reassignScreen.reassignWorkflow(prop.getProperty("uat.MOUsername"), WORKFLOW_CNA, 1);
-        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
-                FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1", workflowID));
-        inboxScreen.logout();*/
-
-        //---------Login as the MO user to check if workflow is there-------
-
-        overviewScreen = login(prop.getProperty("uat.MOUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.tapOnForClarificationSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
-                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-
-        //----------------Submit the workflow back to CNA user-------------------
-
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
-        SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1);
-        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
-                FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        inboxScreen.logout();
-
-        //---------Login as the CNA user to check if workflow is there-------
-
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
-                FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_CNA, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_MO, WORKFLOW_CNA, workflowID));
 
         System.out.println("Complete!");
     }
@@ -219,14 +122,14 @@ public class ClarificationTest extends BaseTest {
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -234,6 +137,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA, workflowID));
         inboxScreen.logout();
 
         //---------Login as another user to check if workflow is there-------
@@ -250,7 +154,7 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -260,7 +164,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as CNA user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
@@ -279,13 +183,13 @@ public class ClarificationTest extends BaseTest {
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -293,6 +197,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_CNA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA, workflowID));
         inboxScreen.logout();
 
         //---------Login as Other user to check if workflow is there-------
@@ -308,7 +213,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -318,7 +223,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as CNA user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
@@ -359,7 +264,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_REVIEW, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_CNA, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -384,7 +289,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -403,8 +308,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS},
-            dependsOnMethods = {"clarifySelectedCNAWorkflowToAnyoneTest"})
+    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS}/*,
+            dependsOnMethods = {"clarifySelectedCNAWorkflowToAnyoneTest"}*/)
     public void clarifyAllCNAWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllCNAWorkflowToAnyoneTest()");
         List<String> workflowIDList;
@@ -419,7 +324,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.clarifyAllWorkflow();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA);
         clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"), hasEscalate,
                 WORKFLOW_CNA, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -440,7 +345,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to CNA user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -459,6 +364,31 @@ public class ClarificationTest extends BaseTest {
 
     //-------------------------------- PNL ---------------------------------
 
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_PC})
+    public void swipeToSendPNLWorkflowToPCForClarificationTest() {
+        System.out.println("Method: swipeToSendPNLWorkflowToPCForClarificationTest()");
+        boolean hasDispute = true;
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
+        inboxScreen.tapOnForReviewAndAcceptanceSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_PC, WORKFLOW_PNL);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_PNL, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_PNL, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_PC, WORKFLOW_PNL, workflowID));
+
+        System.out.println("Complete!");
+    }
+
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_OTHERS})
     public void sendPNLWorkflowToAnyoneForClarificationDetailViewTest() {
         System.out.println("Method: sendPNLWorkflowToAnyoneForClarificationDetailViewTest()");
@@ -474,7 +404,7 @@ public class ClarificationTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.ALMUsername"),
                 hasEscalate, WORKFLOW_PNL, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -482,6 +412,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_PNL, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL, workflowID));
         inboxScreen.logout();
 
         //---------Login as another user to check if workflow is there-------
@@ -498,7 +429,7 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -535,15 +466,15 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.ALMUsername"),
                 hasEscalate, WORKFLOW_PNL, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_PNL, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL, workflowID));
         inboxScreen.logout();
 
         //---------Login as others user to check if workflow is there-------
@@ -551,8 +482,7 @@ public class ClarificationTest extends BaseTest {
         overviewScreen = login(prop.getProperty("uat.ALMUsername"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_PNL, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -561,10 +491,9 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
                 WORKFLOW_STATUS_PENDING_REVIEW_AND_ACCEPTANCE_POST_CLARIFICATION, WORKFLOW_PNL, workflowID),
@@ -576,8 +505,7 @@ public class ClarificationTest extends BaseTest {
         overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
                 WORKFLOW_STATUS_PENDING_REVIEW_AND_ACCEPTANCE_POST_CLARIFICATION, WORKFLOW_PNL, workflowID),
@@ -588,8 +516,7 @@ public class ClarificationTest extends BaseTest {
         AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_PNL);
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_PNL, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED, WORKFLOW_PNL, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -617,7 +544,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.ALMUsername"),
                 hasEscalate, WORKFLOW_PNL, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -642,7 +569,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_SELECTED_WORKFLOW);
@@ -659,8 +586,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_OTHERS}/*,
-            dependsOnMethods = {"clarifySelectedPNLWorkflowToAnyoneTest"}*/)
+    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_OTHERS},
+            dependsOnMethods = {"clarifySelectedPNLWorkflowToAnyoneTest"})
     public void clarifyAllPNLWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllPNLWorkflowToAnyoneTest()");
         List<String> workflowIDList;
@@ -675,7 +602,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.clarifyAllWorkflow();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL);
         clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.ALMUsername"),
                 hasEscalate, WORKFLOW_PNL, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -694,7 +621,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to PNL user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -713,6 +640,79 @@ public class ClarificationTest extends BaseTest {
 
     //-------------------------------- OMR ---------------------------------
 
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_OMR, TEST_GRP_CLARIFICATION_LM})
+    public void swipeToSendOMRWorkflowToLMForClarificationTest() {
+        System.out.println("Method: swipeToSendOMRWorkflowToLMForClarificationTest()");
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        inboxScreen.tapOnForAcknowledgementSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_OMR_LM, WORKFLOW_OMR);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_OMR, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_OMR_LM, WORKFLOW_OMR, workflowID));
+
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_OMR, TEST_GRP_CLARIFICATION_PERFORMER})
+    public void swipeToSendOMRWorkflowToOMRPerformerForClarificationTest() {
+        System.out.println("Method: swipeToSendOMRWorkflowToOMRPerformerForClarificationTest()");
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        inboxScreen.tapOnForAcknowledgementSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_OMR_PERFORMER, WORKFLOW_OMR);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_OMR, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_OMR_PERFORMER, WORKFLOW_OMR, workflowID));
+
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_OMR, TEST_GRP_CLARIFICATION_PC})
+    public void swipeToSendOMRWorkflowToPCForClarificationTest() {
+        System.out.println("Method: swipeToSendOMRWorkflowToPCForClarificationTest()");
+        boolean hasDispute = false;
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        inboxScreen.tapOnForAcknowledgementSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_PC, WORKFLOW_OMR);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_OMR, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_PC, WORKFLOW_OMR, workflowID));
+
+        System.out.println("Complete!");
+    }
+
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_OMR, TEST_GRP_CLARIFICATION_OTHERS})
     public void sendOMRWorkflowToAnyoneForClarificationDetailViewTest() {
         System.out.println("Method: sendOMRWorkflowToAnyoneForClarificationDetailViewTest()");
@@ -721,13 +721,13 @@ public class ClarificationTest extends BaseTest {
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_OMR, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -735,6 +735,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR, workflowID));
         inboxScreen.logout();
 
         //---------Login as another user to check if workflow is there-------
@@ -742,8 +743,7 @@ public class ClarificationTest extends BaseTest {
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -752,10 +752,9 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -763,11 +762,10 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as OMR user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -784,19 +782,19 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_OMR, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR, workflowID));
         inboxScreen.logout();
 
         //---------Login as Other user to check if workflow is there-------
@@ -804,8 +802,7 @@ public class ClarificationTest extends BaseTest {
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -813,10 +810,9 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -827,8 +823,7 @@ public class ClarificationTest extends BaseTest {
         overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -839,8 +834,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(null,
                 ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED
-                ),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_OMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
@@ -856,18 +850,18 @@ public class ClarificationTest extends BaseTest {
         boolean hasEscalate = true;
         List<String> workflowIDList;
         List<String> allWorkflowIDList;
-        int workflowCount = 2;
+        int workflowCount = 1;
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(workflowCount,
-                BUCKET_TO_REVIEW, MORE_OPTION_CLARIFY_SELECTED);
+                BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_OMR, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -890,7 +884,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_SELECTED_WORKFLOW);
@@ -898,7 +892,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as OMR user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -917,13 +911,13 @@ public class ClarificationTest extends BaseTest {
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.clarifyAllWorkflow();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR);
         clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"), hasEscalate,
                 WORKFLOW_OMR, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -942,7 +936,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to CNA user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -950,7 +944,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as OMR user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.OMRUsername01"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -976,7 +970,7 @@ public class ClarificationTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationScreen clarificationScreen = detailViewScreen.tapOnClarificationButtonForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "Limit Monitoring");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
@@ -997,7 +991,7 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1030,7 +1024,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationScreen clarificationScreen = inboxScreen.swipeLeftAndTapOnClarificationForCE(workflowID);
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "Limit Monitoring");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
@@ -1050,7 +1044,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1083,8 +1077,7 @@ public class ClarificationTest extends BaseTest {
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
-            dependsOnMethods = {"mtcrClarifyCEWorkflowDetailViewTest",
-                    "mtcrSwipeToClarifyCEWorkflowTest"})
+            dependsOnMethods = {"mtcrClarifyCEWorkflowDetailViewTest", "mtcrSwipeToClarifyCEWorkflowTest"})
     public void mtcrClarifySelectedCEWorkflowTest() {
         System.out.println("Method: mtcrClarifySelectedCEWorkflowTest()");
         List<String> workflowIDList;
@@ -1100,7 +1093,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationScreen clarificationScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButtonForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowCount);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowCount, "Limit Monitoring");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1122,7 +1115,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1141,8 +1134,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
-            dependsOnMethods = {"mtcrClarifySelectedCEWorkflowTest"})
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE}/*,
+            dependsOnMethods = {"mtcrClarifySelectedCEWorkflowTest"}*/)
     public void mtcrClarifyAllCEWorkflowTest() {
         System.out.println("Method: mtcrClarifyAllCEWorkflowTest()");
         List<String> workflowIDList;
@@ -1156,7 +1149,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationScreen clarificationScreen = inboxScreen.clarifyAllWorkflowForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowIDList.size());
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowIDList.size(), "Limit Monitoring");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1174,7 +1167,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to MTCR user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -1206,7 +1199,7 @@ public class ClarificationTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationScreen clarificationScreen = detailViewScreen.tapOnClarificationButtonForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "MTCR");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
@@ -1229,7 +1222,7 @@ public class ClarificationTest extends BaseTest {
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitOptionScreen submitOptionScreen = inboxDetailViewScreen.tapOnSubmitButtonVECE();
         SubmitScreen submitScreen = submitOptionScreen.selectSubmitOption(RESPOND_OPTION_RESPOND);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1262,11 +1255,12 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationScreen clarificationScreen = inboxScreen.swipeLeftAndTapOnClarificationForCE(workflowID);
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "MTCR");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR, WORKFLOW_CE, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR, WORKFLOW_CE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         inboxScreen.logout();
 
@@ -1277,17 +1271,20 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForClarificationSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR, WORKFLOW_CE, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_CLARIFICATION_WITH_MTCR, WORKFLOW_CE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Submit the workflow back to user-------------------
 
-        SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1);
+        SubmitOptionScreen submitOptionScreen = inboxScreen.swipeRightAndTapOnSubmitCE(workflowID);
+        SubmitScreen submitScreen = submitOptionScreen.selectSubmitOption(RESPOND_OPTION_RESPOND);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION, WORKFLOW_CE, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION, WORKFLOW_CE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         inboxScreen.logout();
 
@@ -1298,18 +1295,20 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForReviewSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION, WORKFLOW_CE, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FO_REVIEW_POST_CLARIFICATION, WORKFLOW_CE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Acknowledge the workflow-------------------
 
         AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_CE);
-        inboxScreen = acknowledgeScreen.reviewAndAssessWorkflow(null, CE_SEVERITY_HIGH,
-                CE_POTENTIAL_LOSS_YES, WORKFLOW_CE, 1);
+        inboxScreen = acknowledgeScreen.reviewAndApproveWorkflow(null, CE_DISCIPLINARY_ACTION_DISMISSAL,
+                WORKFLOW_CE, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_REVIEW_AND_ASSESS_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_REVIEWED_AND_DISCIPLINARY_ACTION_TAKEN, WORKFLOW_CE, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_REVIEWED_AND_DISCIPLINARY_ACTION_TAKEN, WORKFLOW_CE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         System.out.println("Complete!");
@@ -1333,7 +1332,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationScreen clarificationScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButtonForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowCount);
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowCount, "MTCR");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1355,8 +1354,9 @@ public class ClarificationTest extends BaseTest {
         selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(allWorkflowIDList.size(),
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
-        SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowCount);
+        SubmitOptionScreen submitOptionScreen = selectMultipleWorkflowScreen.tapOnRespondSelectedScreenDoneButton();
+        SubmitScreen submitScreen = submitOptionScreen.selectSubmitOption(RESPOND_OPTION_RESPOND);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowCount, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1375,8 +1375,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
-            dependsOnMethods = {"dealerClarifySelectedCEWorkflowTest"})
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE}/*,
+            dependsOnMethods = {"dealerClarifySelectedCEWorkflowTest"}*/)
     public void dealerClarifyAllCEWorkflowTest() {
         System.out.println("Method: dealerClarifyAllCEWorkflowTest()");
         List<String> workflowIDList;
@@ -1384,13 +1384,13 @@ public class ClarificationTest extends BaseTest {
 
         //--------------Send for Clarification-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.MTCRUsername"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DealerSupervisor"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForReviewSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationScreen clarificationScreen = inboxScreen.clarifyAllWorkflowForCE();
-        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowIDList.size());
+        inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, workflowIDList.size(), "MTCR");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1399,7 +1399,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as MTCR user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.LimitMonitoringUsername"));
+        overviewScreen = login(prop.getProperty("uat.MTCRUsername"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -1408,8 +1408,10 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to Dealer user-------------------
 
-        SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowIDList.size());
+        //TODO Submit all will submit all the workflow in both For Review and For Clarification sub tab. FMSW-8791
+        SubmitOptionScreen submitOptionScreenScreen = inboxScreen.submitAllWorkflowCE();
+        SubmitScreen submitScreen = submitOptionScreenScreen.selectSubmitOption(RESPOND_OPTION_RESPOND);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, workflowIDList.size(), true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -1417,7 +1419,7 @@ public class ClarificationTest extends BaseTest {
 
         //---------Login as Dealer user to check if workflow is there-------
 
-        overviewScreen = login(prop.getProperty("uat.MTCRUsername"));
+        overviewScreen = login(prop.getProperty("uat.DealerSupervisor"));
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForReviewSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -1442,7 +1444,7 @@ public class ClarificationTest extends BaseTest {
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen
-                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE);
+                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_VE, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
@@ -1450,6 +1452,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
                 WORKFLOW_STATUS_PENDING_COMPLIANCE_CLARIFICATION_UT, WORKFLOW_VE, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE, workflowID));
 
         System.out.println("Complete!");
     }
@@ -1467,13 +1470,14 @@ public class ClarificationTest extends BaseTest {
         workflowID = inboxScreen.getFirstWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
         ClarificationScreen clarificationScreen = clarificationOptionScreen
-                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE);
+                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_VE, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_COMPLIANCE_CLARIFICATION_UT,
                 WORKFLOW_VE, workflowID), FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE, workflowID));
 
         System.out.println("Complete!");
     }
@@ -1494,7 +1498,7 @@ public class ClarificationTest extends BaseTest {
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen
-                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE);
+                .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, null, false, WORKFLOW_VE, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowIDList.get(0), workflowCount, BUCKET_IN_PROGRESS),
@@ -1522,7 +1526,7 @@ public class ClarificationTest extends BaseTest {
         workflowStatus = detailViewScreen.getWorkflowStatusValue();
         if (WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION.equals(workflowStatus)) {
             SubmitScreen submitScreen = detailViewScreen.tapOnSubmitButton();
-            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1);
+            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1, false);
             inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
             Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                     FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1562,7 +1566,7 @@ public class ClarificationTest extends BaseTest {
         detailViewScreen.tapOnBackButton();
         if (WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION.equals(workflowStatus)) {
             SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnRespond(workflowID);
-            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1);
+            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1, false);
             inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
             Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                     FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1605,7 +1609,7 @@ public class ClarificationTest extends BaseTest {
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowID);
         if (WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION.equals(workflowStatus)) {
             SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1);
+            inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_VE, 1, false);
             inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
             Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                     FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1630,137 +1634,164 @@ public class ClarificationTest extends BaseTest {
 
     //--------------------------- IPV/FVA ------------------------------
 
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_VC})
+    public void swipeToSendIPVWorkflowToVCForClarificationTest() {
+        System.out.println("Method: swipeToSendIPVWorkflowToVCForClarificationTest()");
+        boolean hasDispute = false;
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
+        inboxScreen.tapOnForAcknowledgementSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_VALUATION_CONTROL_USER, WORKFLOW_IPV);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_IPV, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_VALUATION_CONTROL_USER, WORKFLOW_IPV, workflowID));
+
+        System.out.println("Complete!");
+    }
+
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS})
-    public void sendFVAWorkflowToAnyoneForClarificationDetailViewTest() {
-        System.out.println("Method: sendFVAWorkflowToAnyoneForClarificationDetailViewTest()");
+    public void sendIPVWorkflowToAnyoneForClarificationDetailViewTest() {
+        System.out.println("Method: sendIPVWorkflowToAnyoneForClarificationDetailViewTest()");
         boolean hasEscalate = true;
         String workflowID;
 
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV, workflowID));
         inboxScreen.logout();
 
         //---------Login as another user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Submit the workflow back to FVA user-------------------
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_FVA, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         inboxScreen.logout();
 
         //---------Login as FVA user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         System.out.println("Complete!");
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS})
-    public void swipeToSendFVAWorkflowToAnyoneForClarificationTest() {
-        System.out.println("Method: swipeToSendFVAWorkflowToAnyoneForClarificationTest()");
+    public void swipeToSendIPVWorkflowToAnyoneForClarificationTest() {
+        System.out.println("Method: swipeToSendIPVWorkflowToAnyoneForClarificationTest()");
         boolean hasEscalate = false;
         String workflowID;
 
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
-                hasEscalate, WORKFLOW_FVA, 1);
+                hasEscalate, WORKFLOW_IPV, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV, workflowID));
         inboxScreen.logout();
 
         //---------Login as Other user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_FVA, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         inboxScreen.logout();
 
         //---------Login as FVA user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Acknowledge the workflow-------------------
 
-        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_FVA);
-        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_FVA, 1);
+        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_IPV);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_IPV, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_FVA, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_IPV, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         System.out.println("Complete!");
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION_SELECTED, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS},
-            dependsOnMethods = {"swipeToSendFVAWorkflowToAnyoneForClarificationTest",
-                    "sendFVAWorkflowToAnyoneForClarificationDetailViewTest"})
-    public void clarifySelectedFVAWorkflowToAnyoneTest() {
-        System.out.println("Method: clarifySelectedFVAWorkflowToAnyoneTest()");
+            dependsOnMethods = {"swipeToSendIPVWorkflowToAnyoneForClarificationTest",
+                    "sendIPVWorkflowToAnyoneForClarificationDetailViewTest"})
+    public void clarifySelectedIPVWorkflowToAnyoneTest() {
+        System.out.println("Method: clarifySelectedIPVWorkflowToAnyoneTest()");
         boolean hasEscalate = true;
         List<String> workflowIDList;
         List<String> allWorkflowIDList;
@@ -1769,15 +1800,15 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(workflowCount,
                 BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
-                hasEscalate, WORKFLOW_FVA, workflowCount);
+                hasEscalate, WORKFLOW_IPV, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1787,7 +1818,7 @@ public class ClarificationTest extends BaseTest {
         //---------Login as other user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1800,7 +1831,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_FVA, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_SELECTED_WORKFLOW);
@@ -1809,7 +1840,7 @@ public class ClarificationTest extends BaseTest {
         //---------Login as FVA user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_SELECTED_WORKFLOW);
@@ -1818,9 +1849,9 @@ public class ClarificationTest extends BaseTest {
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS},
-            dependsOnMethods = {"clarifySelectedFVAWorkflowToAnyoneTest"})
-    public void clarifyAllFVAWorkflowToAnyoneTest() {
-        System.out.println("Method: clarifyAllFVAWorkflowToAnyoneTest()");
+            dependsOnMethods = {"clarifySelectedIPVWorkflowToAnyoneTest"})
+    public void clarifyAllIPVWorkflowToAnyoneTest() {
+        System.out.println("Method: clarifyAllIPVWorkflowToAnyoneTest()");
         List<String> workflowIDList;
         List<String> allWorkflowIDList;
         boolean hasEscalate = true;
@@ -1828,14 +1859,14 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.clarifyAllWorkflow();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
         clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"), hasEscalate,
-                WORKFLOW_FVA, workflowIDList.size());
+                WORKFLOW_IPV, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1845,7 +1876,7 @@ public class ClarificationTest extends BaseTest {
         //---------Login as other user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -1854,7 +1885,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to FVA user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_FVA, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -1863,7 +1894,7 @@ public class ClarificationTest extends BaseTest {
         //---------Login as FVA user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
@@ -1872,6 +1903,31 @@ public class ClarificationTest extends BaseTest {
     }
 
     //--------------------------- GMR/GT ------------------------------
+
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_GT_GMR, TEST_GRP_CLARIFICATION_MRO_OR_MTCR_OR_GT})
+    public void swipeToSendGMRWorkflowToMROOrMTCROrGTForClarificationTest() {
+        System.out.println("Method: swipeToSendGMRWorkflowToMROOrMTCROrGTForClarificationTest()");
+        boolean hasDispute = false;
+        String workflowID;
+
+        //--------------Send for Clarification-------------
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_MRO_MTRC_GT, WORKFLOW_GMR);
+        inboxScreen = clarificationScreen.clarifyWorkflow(null, null, hasDispute, WORKFLOW_GMR, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_GMR, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_MRO_MTRC_GT, WORKFLOW_GMR, workflowID));
+
+        System.out.println("Complete!");
+    }
 
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_GT_GMR, TEST_GRP_CLARIFICATION_OTHERS})
     public void sendGMRWorkflowToAnyoneForClarificationDetailViewTest() {
@@ -1887,7 +1943,7 @@ public class ClarificationTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_GMR, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -1895,6 +1951,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_GMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR, workflowID));
         inboxScreen.logout();
 
         //---------Login as another user to check if workflow is there-------
@@ -1911,7 +1968,7 @@ public class ClarificationTest extends BaseTest {
 
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -1945,7 +2002,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForApprovalSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_GMR, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -1953,6 +2010,7 @@ public class ClarificationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_GMR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR, workflowID));
         inboxScreen.logout();
 
         //---------Login as Other user to check if workflow is there-------
@@ -1968,7 +2026,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, 1);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
@@ -2012,13 +2070,13 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(workflowCount,
                 BUCKET_TO_DO, MORE_OPTION_CLARIFY_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         ClarificationOptionScreen clarificationOptionScreen = selectMultipleWorkflowScreen.tapOnClarifySelectedScreenDoneButton();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
                 hasEscalate, WORKFLOW_GMR, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -2043,7 +2101,7 @@ public class ClarificationTest extends BaseTest {
                 BUCKET_TO_DO, MORE_OPTION_SUBMIT_SELECTED);
         selectMultipleWorkflowScreen.selectNumberOfWorkflow(workflowIDList);
         SubmitScreen submitScreen = selectMultipleWorkflowScreen.tapOnSubmitSelectedScreenDoneButton();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, workflowCount);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, workflowCount, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList),
@@ -2073,12 +2131,12 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForApprovalSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.clarifyAllWorkflow();
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR);
         clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"), hasEscalate,
                 WORKFLOW_GMR, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -2099,7 +2157,7 @@ public class ClarificationTest extends BaseTest {
         //----------------Submit the workflow back to GMR user-------------------
 
         SubmitScreen submitScreen = inboxScreen.submitAllWorkflow();
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, workflowIDList.size());
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, workflowIDList.size(), false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);

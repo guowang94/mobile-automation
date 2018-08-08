@@ -2,7 +2,7 @@
 
 <suite name="Test Suite Mobile" configfailurepolicy="continue">
 
-    <test name="CNA Workflow Regression" enabled="false">
+    <test name="CNA Workflow Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -14,10 +14,10 @@
                 <exclude name="CE"/>
 
                 <!--Clarification Option-->
-                <include name="OTHERS"/>
-                <exclude name="LM"/>
-                <exclude name="PERFORMER"/>
-                <exclude name="MO"/>
+                <exclude name="OTHERS"/>
+                <include name="LM"/>
+                <include name="PERFORMER"/>
+                <include name="MO"/>
                 <exclude name="PC"/>
             </run>
         </groups>
@@ -28,7 +28,7 @@
         </classes>
     </test>
 
-    <test name="OMR Workflow Regression" enabled="true">
+    <test name="OMR Workflow Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -211,7 +211,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
+            <class name="com.scb.fmsw.mobile.test.BookmarkTest"/>
         </classes>
     </test>
 

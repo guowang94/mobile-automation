@@ -12,22 +12,12 @@ import io.appium.java_client.ios.IOSElement;
 public class ExplicitDelegationScreen extends BaseScreen {
 
     private PageObjects delegateScreen;
-    private String container = "(//XCUIElementTypeImage[@name='Rectangle 4'])[2]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 
     public ExplicitDelegationScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
         delegateScreen = new PageObjects();
         PageFactory.initElements(iosDriver, delegateScreen);
-    }
-
-    /**
-     * This method will check if Container has loaded
-     *
-     * @return boolean
-     */
-    private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
     }
 
     /**
@@ -39,33 +29,15 @@ public class ExplicitDelegationScreen extends BaseScreen {
      */
     public InboxScreen delegateWorkflow(String userID, String workflowType) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            searchForUser(userID);
-            enterComment();
-            delegateScreen.delegateButton.click();
+        if (hasFormContainerLoaded()) {
+            searchForUser(FORM_LABEL_PSID_OR_NAME, userID);
+            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            tapOnFormDoneButton();
             verifyDelegateStatus(workflowType);
         } else {
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
         }
         return new InboxScreen(iosDriver);
-    }
-
-    /**
-     * This method will search for user based on the userID
-     *
-     * @param userID
-     */
-    private void searchForUser(String userID) {
-        delegateScreen.psidSearchTextbox.sendKeys(userID);
-        hasLoadingCompleted();
-        waitForElementById(userID).click();
-    }
-
-    /**
-     * This method will key in comment
-     */
-    private void enterComment() {
-        delegateScreen.commentTextbox.sendKeys(MSG_ENTER_COMMENT);
     }
 
     /**
@@ -76,7 +48,7 @@ public class ExplicitDelegationScreen extends BaseScreen {
     private void verifyDelegateStatus(String workflowType) {
         hasLoadingCompleted();
         try {
-            waitForElementByXpath(alertTitle);
+            waitForElementByXpath(alertTitle, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(delegateScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_DELEGATE_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_DELEGATE_WORKFLOW);
@@ -93,6 +65,9 @@ public class ExplicitDelegationScreen extends BaseScreen {
                     throw new RuntimeException(ALERT_MSG_STAFF_NOT_AVAILABLE);
                 case ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE:
                     throw new RuntimeException(ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE);
+                    default:
+                        screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                        throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
             }
         }
     }
@@ -106,14 +81,5 @@ public class ExplicitDelegationScreen extends BaseScreen {
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[2]")
         WebElement alertMessage;
-
-        @FindBy(id = "SearchText")
-        WebElement psidSearchTextbox;
-
-        @FindBy(id = "comment0")
-        WebElement commentTextbox;
-
-        @FindBy(xpath = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[2]")
-        WebElement delegateButton;
     }
 }

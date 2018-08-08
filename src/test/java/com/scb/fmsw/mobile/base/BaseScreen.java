@@ -94,23 +94,41 @@ public class BaseScreen implements WorkflowConstants {
      * @param comments
      */
     public void enterComments(String commentsLabel, String comments) {
-        findElementByXpath(formTextViewXpath.replace("$1", commentsLabel)).sendKeys(comments);
+        findElementByXpath(formTextViewXpath.replace("$1", commentsLabel), true).sendKeys(comments);
         iosDriver.hideKeyboard();
     }
 
     /**
      * This method will search for user
+     *
      * @param searchFieldLabel
      * @param userID
      */
     public void searchForUser(String searchFieldLabel, String userID) {
-        findElementByXpath(formTextFieldXpath.replace("$1", searchFieldLabel)).sendKeys(userID.substring(0, 5));
+        findElementByXpath(formTextFieldXpath.replace("$1", searchFieldLabel), true).sendKeys(userID.substring(0, 5));
         hasLoadingCompleted();
         try {
-            scrollToElement(waitForElementById(userID)).click();
+            scrollToElement(waitForElementById(userID, true)).click();
         } catch (Exception e) {
             screenshot(SCREENSHOT_MSG_NO_USER_FOUND);
             throw new RuntimeException(ERROR_MSG_NO_USER_FOUND.replace("$1", userID));
+        }
+    }
+
+    /**
+     * This method will search for group
+     *
+     * @param searchFieldLabel
+     * @param groupName
+     */
+    public void searchForGroup(String searchFieldLabel, String groupName) {
+        findElementByXpath(formTextFieldXpath.replace("$1", searchFieldLabel), true).sendKeys(groupName.substring(0, 5));
+        hasLoadingCompleted();
+        try {
+            scrollToElement(waitForElementByName(groupName, true)).click();
+        } catch (Exception e) {
+            screenshot(SCREENSHOT_MSG_NO_GROUP_FOUND);
+            throw new RuntimeException(ERROR_MSG_NO_GROUP_FOUND.replace("$1", groupName));
         }
     }
 
@@ -121,9 +139,9 @@ public class BaseScreen implements WorkflowConstants {
      * @param value
      */
     public void selectPickerValue(String pickerLabel, String value) {
-        findElementByXpath(formButtonXpath.replace("$1", pickerLabel)).click();
-        findElementByXpath(pickerWheelXpath).sendKeys(value);
-        findElementByXpath(pickerDoneButtonXpath).click();
+        findElementByXpath(formButtonXpath.replace("$1", pickerLabel), true).click();
+        findElementByXpath(pickerWheelXpath, true).sendKeys(value);
+        findElementByXpath(pickerDoneButtonXpath, true).click();
     }
 
     /**
@@ -135,7 +153,7 @@ public class BaseScreen implements WorkflowConstants {
     public void toggleSwitch(String switchLabel, boolean isToggle) {
         if (isToggle) {
             try {
-                findElementByXpath(formSwitchXpath.replace("$1", switchLabel)).click();
+                findElementByXpath(formSwitchXpath.replace("$1", switchLabel), true).click();
             } catch (Exception e) {
                 //Do nothing
             }
@@ -175,7 +193,7 @@ public class BaseScreen implements WorkflowConstants {
      * This method will tap on Form's Done button
      */
     public void tapOnFormDoneButton() {
-        findElementByXpath(formDoneButtonXpath).click();
+        findElementByXpath(formDoneButtonXpath, true).click();
     }
 
     /**
@@ -185,7 +203,7 @@ public class BaseScreen implements WorkflowConstants {
      */
     public boolean hasFormContainerLoaded() {
         try {
-            return findElementByXpath(formContainer).isDisplayed();
+            return findElementByXpath(formContainer, true).isDisplayed();
         } catch (Exception e) {
             throw new RuntimeException("Table Container not found");
         }
@@ -199,7 +217,7 @@ public class BaseScreen implements WorkflowConstants {
     public LoginScreen logout() {
         hasLoadingCompleted();
         tapOnMenuButton();
-        waitForElementById(logout).click();
+        waitForElementById(logout, true).click();
         System.out.println("Logout of the Application\n");
         return new LoginScreen(iosDriver);
     }
@@ -209,7 +227,7 @@ public class BaseScreen implements WorkflowConstants {
      */
     public void tapOnMenuButton() {
         hasLoadingCompleted();
-        waitForElementById(menuButton).click();
+        waitForElementById(menuButton, true).click();
     }
 
     /**
@@ -217,14 +235,14 @@ public class BaseScreen implements WorkflowConstants {
      */
     public void tapOnMoreOptionButton() {
         hasLoadingCompleted();
-        waitForElementById(moreOption).click();
+        waitForElementById(moreOption, true).click();
     }
 
     /**
      * This method will tap on Help button in the side navigation
      */
     public void tapOnSideNavHelp() {
-        waitForElementById(sideNavHelp).click();
+        waitForElementById(sideNavHelp, true).click();
     }
 
     /**
@@ -234,7 +252,7 @@ public class BaseScreen implements WorkflowConstants {
      * @return InboxScreen
      */
     public InboxScreen navigateToSpecificInboxFromSideNav(String inboxName) {
-        waitForElementByXpath(inboxSpecificButton.replace("$1", inboxName)).click();
+        waitForElementByXpath(inboxSpecificButton.replace("$1", inboxName), true).click();
         return new InboxScreen(iosDriver);
     }
 
@@ -244,7 +262,7 @@ public class BaseScreen implements WorkflowConstants {
      * @return DelegationScreen
      */
     public DelegationScreen navigationToDelegationScreen() {
-        scrollToElement(waitForElementById(delegation)).click();
+        scrollToElement(waitForElementById(delegation, true)).click();
         System.out.println("Navigate to Delegation Screen");
         return new DelegationScreen(iosDriver);
     }
@@ -259,7 +277,7 @@ public class BaseScreen implements WorkflowConstants {
         while (!element.isDisplayed()) {
             action.press(180, 580).moveTo(0, -400).release().perform();
             try {
-                waitForElementUntilClickable(element, 15);
+                waitForElementUntilClickable(element, 15, true);
             } catch (Exception e) {
                 //Do nothing
             }
@@ -278,7 +296,7 @@ public class BaseScreen implements WorkflowConstants {
         while (!element.isDisplayed()) {
             action.press(180, 200).moveTo(0, 450).release().perform();
             try {
-                waitForElementUntilClickable(element);
+                waitForElementUntilClickable(element, true);
             } catch (Exception e) {
                 //Do nothing
             }
@@ -287,7 +305,7 @@ public class BaseScreen implements WorkflowConstants {
     }
 
     public void scrollToTop() {
-        waitForElementByXpath(statusBar).click();
+        waitForElementByXpath(statusBar, true).click();
     }
 
     /**
@@ -308,27 +326,35 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for element to be located by xpath
      *
      * @param elementXpath xpath of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByXpath(String elementXpath) {
+    public WebElement waitForElementByXpath(String elementXpath, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfElementLocated(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be located by id
      *
-     * @param elementId id of element
+     * @param elementId   id of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementById(String elementId) {
+    public WebElement waitForElementById(String elementId, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfElementLocated(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -336,13 +362,17 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for element to be located by name
      *
      * @param elementName name of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByName(String elementName) {
+    public WebElement waitForElementByName(String elementName, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfElementLocated(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
@@ -351,28 +381,36 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementXpath xpath of element
      * @param duration     custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByXpath(String elementXpath, int duration) {
+    public WebElement waitForElementByXpath(String elementXpath, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfElementLocated(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be located by id with custom duration
      *
-     * @param elementId id of element
-     * @param duration  custom duration
+     * @param elementId   id of element
+     * @param duration    custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementById(String elementId, int duration) {
+    public WebElement waitForElementById(String elementId, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfElementLocated(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -381,13 +419,17 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementName name of element
      * @param duration    custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByName(String elementName, int duration) {
+    public WebElement waitForElementByName(String elementName, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfElementLocated(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
@@ -395,27 +437,35 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for element to be clickable by xpath
      *
      * @param elementXpath xpath of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByXpathUntilClickable(String elementXpath) {
+    public WebElement waitForElementByXpathUntilClickable(String elementXpath, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.elementToBeClickable(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be clickable by id
      *
-     * @param elementId id of element
+     * @param elementId   id of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByIdUntilClickable(String elementId) {
+    public WebElement waitForElementByIdUntilClickable(String elementId, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -423,27 +473,35 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for element to be clickable by name
      *
      * @param elementName name of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByNameUntilClickable(String elementName) {
+    public WebElement waitForElementByNameUntilClickable(String elementName, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.elementToBeClickable(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be clickable
      *
-     * @param element element
+     * @param element     element
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementUntilClickable(WebElement element) {
+    public WebElement waitForElementUntilClickable(WebElement element, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.elementToBeClickable(element));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", element.getText()));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", element.getText()));
+            else
+                return null;
         }
     }
 
@@ -452,28 +510,36 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementXpath xpath of element
      * @param duration     custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByXpathUntilClickable(String elementXpath, int duration) {
+    public WebElement waitForElementByXpathUntilClickable(String elementXpath, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.elementToBeClickable(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be clickable by id with custom duration
      *
-     * @param elementId id of element
-     * @param duration  custom duration
+     * @param elementId   id of element
+     * @param duration    custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByIdUntilClickable(String elementId, int duration) {
+    public WebElement waitForElementByIdUntilClickable(String elementId, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.elementToBeClickable(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -482,28 +548,36 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementName name of element
      * @param duration    custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementByNameUntilClickable(String elementName, int duration) {
+    public WebElement waitForElementByNameUntilClickable(String elementName, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.elementToBeClickable(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for element to be clickable with custom duration
      *
-     * @param element  element
-     * @param duration custom duration
+     * @param element     element
+     * @param duration    custom duration
+     * @param isException
      * @return WebElement
      */
-    public WebElement waitForElementUntilClickable(WebElement element, int duration) {
+    public WebElement waitForElementUntilClickable(WebElement element, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.elementToBeClickable(element));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", element.getText()));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", element.getText()));
+            else
+                return null;
         }
     }
 
@@ -511,27 +585,35 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for all element to be located by xpath
      *
      * @param elementXpath xpath of element
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsByXpath(String elementXpath) {
+    public List<WebElement> waitForElementsByXpath(String elementXpath, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for all element to be located by id
      *
-     * @param elementId id of element
+     * @param elementId   id of element
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsById(String elementId) {
+    public List<WebElement> waitForElementsById(String elementId, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -539,13 +621,17 @@ public class BaseScreen implements WorkflowConstants {
      * This method will wait for all element to be located by name
      *
      * @param elementName name of element
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsByName(String elementName) {
+    public List<WebElement> waitForElementsByName(String elementName, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, 60).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
@@ -554,28 +640,36 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementXpath xpath of element
      * @param duration     custom duration
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsByXpath(String elementXpath, int duration) {
+    public List<WebElement> waitForElementsByXpath(String elementXpath, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementXpath)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will wait for all element to be located by id with custom duration
      *
-     * @param elementId id of element
-     * @param duration  custom duration
+     * @param elementId   id of element
+     * @param duration    custom duration
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsById(String elementId, int duration) {
+    public List<WebElement> waitForElementsById(String elementId, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(elementId)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -584,13 +678,17 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param elementName name of duration
      * @param duration    custom duration
+     * @param isException
      * @return List<WebElement>
      */
-    public List<WebElement> waitForElementsByName(String elementName, int duration) {
+    public List<WebElement> waitForElementsByName(String elementName, int duration, boolean isException) {
         try {
             return new WebDriverWait(iosDriver, duration).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.name(elementName)));
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
@@ -598,27 +696,35 @@ public class BaseScreen implements WorkflowConstants {
      * This method will find element by xpath
      *
      * @param elementXpath xpath of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement findElementByXpath(String elementXpath) {
+    public WebElement findElementByXpath(String elementXpath, boolean isException) {
         try {
             return iosDriver.findElementByXPath(elementXpath);
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementXpath));
+            else
+                return null;
         }
     }
 
     /**
      * This method will find element by accessibility id
      *
-     * @param elementId id of element
+     * @param elementId   id of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement findElementById(String elementId) {
+    public WebElement findElementById(String elementId, boolean isException) {
         try {
             return iosDriver.findElementByAccessibilityId(elementId);
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementId));
+            else
+                return null;
         }
     }
 
@@ -626,13 +732,17 @@ public class BaseScreen implements WorkflowConstants {
      * This method will find element by name
      *
      * @param elementName name of element
+     * @param isException
      * @return WebElement
      */
-    public WebElement findElementByName(String elementName) {
+    public WebElement findElementByName(String elementName, boolean isException) {
         try {
             return iosDriver.findElementByName(elementName);
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            if (isException)
+                throw new RuntimeException(ERROR_MSG_NO_ELEMENT_FOUND.replace("$1", elementName));
+            else
+                return null;
         }
     }
 
@@ -641,7 +751,7 @@ public class BaseScreen implements WorkflowConstants {
      */
     protected void hasLoadingCompleted() {
         try {
-            new WebDriverWait(iosDriver, 15).until(ExpectedConditions.invisibilityOfElementLocated(By.name("Loading...")));
+            new WebDriverWait(iosDriver, 60).until(ExpectedConditions.invisibilityOfElementLocated(By.id("Loading")));
         } catch (Exception e) {
             // Do nothing
         }

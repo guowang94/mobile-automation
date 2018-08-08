@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 public class ReassignScreen extends BaseScreen implements WorkflowConstants {
 
     private PageObjects reassignScreen;
-    private String container = "(//XCUIElementTypeImage[@name='Rectangle 4'])[2]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 
     public ReassignScreen(IOSDriver testDriver) {
@@ -20,56 +19,31 @@ public class ReassignScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will check if Container has loaded
-     *
-     * @return boolean
-     */
-    private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
-    }
-
-    /**
      * This method will reassign workflow
      *
      * @param searchQuery
      * @param workflowType
      * @param workflowCount
+     * @param toGroup
      * @return InboxScreen
      */
-    public InboxScreen reassignWorkflow(String searchQuery, String workflowType, int workflowCount) {
+    public InboxScreen reassignWorkflow(String searchQuery, String workflowType, int workflowCount, boolean toGroup) {
         hasLoadingCompleted();
-        if (hasContainerLoaded()) {
-            searchResult(searchQuery);
-            enterComment();
-            reassignScreen.reassignButton.click();
+        if (hasFormContainerLoaded()) {
+
+            if (toGroup) {
+                searchForGroup(FORM_LABEL_TO_GROUP, searchQuery);
+            } else {
+                searchForUser(FORM_LABEL_PSID_OR_NAME, searchQuery);
+            }
+            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            tapOnFormDoneButton();
+
             verifyReassignStatus(workflowType, workflowCount);
         } else {
             throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);
         }
         return new InboxScreen(iosDriver);
-    }
-
-    /**
-     * this method will key in comment
-     */
-    private void enterComment() {
-        reassignScreen.commentTextbox.sendKeys(MSG_ENTER_COMMENT);
-    }
-
-    /**
-     * this method will search for group
-     *
-     * @param searchQuery
-     */
-    private void searchResult(String searchQuery) {
-        reassignScreen.SearchTextbox.sendKeys(searchQuery);
-        hasLoadingCompleted();
-        try {
-            reassignScreen.searchResult.click();
-        } catch (Exception e) {
-            screenshot(SCREENSHOT_MSG_NO_RESULT_FOUND);
-            throw new RuntimeException(ERROR_MSG_NO_RESULT_FOUND.replace("$1", searchQuery));
-        }
     }
 
     /**
@@ -87,37 +61,25 @@ public class ReassignScreen extends BaseScreen implements WorkflowConstants {
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
-            if ("Message".equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
+            waitForElementByXpath(alertTitle, duration, true);
+            if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_REASSIGN_WORKFLOW.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_REASSIGN_WORKFLOW);
                 reassignScreen.alertOkButton.click();
-            } else if ("Alert!".equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
+            } else if (ALERT_TITLE_FAILED.equalsIgnoreCase(reassignScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", workflowType));
-                throw new RuntimeException(FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", "")); // so it will go to catch loop
+                throw new RuntimeException(FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", ""));
             }
         } catch (Exception e) {
-            throw new RuntimeException(FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", "")); // print out the error message
+            throw new RuntimeException(FAILED_MSG_FAILED_TO_REASSIGN_WORKFLOW.replace("$1 ", ""));
         }
     }
 
     class PageObjects {
-        @FindBy(id = "Reassign")
-        WebElement reassignButton;
-
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         WebElement alertOkButton;
-
-        @FindBy(id = "SearchText")
-        WebElement SearchTextbox;
-
-        @FindBy(xpath = "//XCUIElementTypeCell[@visible='true']")
-        WebElement searchResult;
-
-        @FindBy(id = "comment0")
-        WebElement commentTextbox;
     }
 }

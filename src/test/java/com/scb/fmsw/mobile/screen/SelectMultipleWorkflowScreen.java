@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -35,7 +34,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return boolean
      */
     private boolean hasTableContainerLoaded() {
-        return waitForElementByXpath(tableContainer).isDisplayed();
+        return waitForElementByXpath(tableContainer, true).isDisplayed();
     }
 
     /**
@@ -49,7 +48,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
         List<String> workflowIdList = new ArrayList<>();
         if (hasTableContainerLoaded()) {
             for (int i = 1; i < workflowCount + 1; i++) {
-                WebElement element = waitForElementByXpath(workflowID.replace("$1", String.valueOf(i)));
+                WebElement element = waitForElementByXpath(workflowID.replace("$1", String.valueOf(i)), true);
                 scrollDownUntilElementIsDisplayed(element);
                 workflowIdList.add(element.getText());
                 element.click();
@@ -71,7 +70,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
         List<String> workflowIdList = new ArrayList<>();
         if (hasTableContainerLoaded()) {
             for (int i = 1; i < workflowCount + 1; i++) {
-                WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", String.valueOf(i)));
+                WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", String.valueOf(i)), true);
                 scrollDownUntilElementIsDisplayed(element);
                 System.out.println("Workflow ID: " + element.getText());
                 workflowIdList.add(element.getText());
@@ -93,7 +92,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
             for (int i = 0; i < workflowIDList.size(); i++) {
-                WebElement element = waitForElementByXpath(workflow.replace("$1", workflowIDList.get(i)));
+                WebElement element = waitForElementByXpath(workflow.replace("$1", workflowIDList.get(i)), true);
                 scrollDownUntilElementIsDisplayed(element);
                 element.click();
             }
@@ -112,7 +111,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
             for (int i = 0; i < workflowIDList.size(); i++) {
-                WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", workflowIDList.get(i)));
+                WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", workflowIDList.get(i)), true);
                 scrollDownUntilElementIsDisplayed(element);
                 element.click();
             }
@@ -129,7 +128,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
     public void selectNumberOfWorkflow(String workflowID) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
-            WebElement element = waitForElementByXpath(workflow.replace("$1", workflowID));
+            WebElement element = waitForElementByXpath(workflow.replace("$1", workflowID), true);
             scrollDownUntilElementIsDisplayed(element);
             element.click();
         } else {
@@ -145,7 +144,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
     public void selectNumberOfCNAWorkflow(String workflowID) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
-            WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", workflowID));
+            WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", workflowID), true);
             scrollDownUntilElementIsDisplayed(element);
             element.click();
         } else {
@@ -159,7 +158,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return AcknowledgeScreen
      */
     public AcknowledgeScreen tapOnAcknowledgeSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Acknowledge Screen");
         return new AcknowledgeScreen(iosDriver);
@@ -171,7 +170,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return ClarificationOptionScreen
      */
     public ClarificationOptionScreen tapOnClarifySelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Clarification Option Screen");
         return new ClarificationOptionScreen(iosDriver);
@@ -183,7 +182,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return SubmitOptionScreen
      */
     public SubmitOptionScreen tapOnRespondSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Respond Option Screen");
         return new SubmitOptionScreen(iosDriver);
@@ -195,7 +194,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return ClarificationScreen
      */
     public ClarificationScreen tapOnClarifySelectedScreenDoneButtonForCE() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Clarification Screen");
         return new ClarificationScreen(iosDriver);
@@ -207,7 +206,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return ReassignScreen
      */
     public ReassignScreen tapOnReassignSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Reassign Screen");
         return new ReassignScreen(iosDriver);
@@ -219,7 +218,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return SubmitScreen
      */
     public SubmitScreen tapOnSubmitSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Submit Screen");
         return new SubmitScreen(iosDriver);
@@ -231,7 +230,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return ExplicitDelegationScreen
      */
     public ExplicitDelegationScreen tapOnDelegateSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Explicit Delegation Screen");
         return new ExplicitDelegationScreen(iosDriver);
@@ -243,7 +242,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
      * @return BookmarkScreen
      */
     public BookmarkScreen tapOnBookmarkSelectedScreenDoneButton() {
-        waitForElementById("Done");
+        waitForElementById("Done", true);
         selectMultipleWorkflowScreen.doneButton.click();
         System.out.println("Navigate to Bookmark Screen");
         return new BookmarkScreen(iosDriver);

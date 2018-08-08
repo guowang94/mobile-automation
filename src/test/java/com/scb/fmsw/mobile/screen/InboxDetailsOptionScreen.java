@@ -25,7 +25,7 @@ public class InboxDetailsOptionScreen extends BaseScreen implements WorkflowCons
      * @return boolean
      */
     private boolean hasTableContainerLoaded() {
-        return waitForElementByXpath(tableContainer).isDisplayed();
+        return waitForElementByXpath(tableContainer, true).isDisplayed();
     }
 
     /**

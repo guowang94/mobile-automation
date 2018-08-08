@@ -1,5 +1,0 @@
-27Mar
-- After searching for user in the Business Support View Screen and login as another user, the keyboard is not automatically hide.
-- Time out when performing action with more than 30 workflow
-- Change the id of the sub tab in inbox screen
-- Add id for trade id and workflow id in the inbox screen

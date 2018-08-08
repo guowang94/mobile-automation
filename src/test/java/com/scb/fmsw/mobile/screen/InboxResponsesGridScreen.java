@@ -29,7 +29,7 @@ public class InboxResponsesGridScreen extends BaseScreen implements WorkflowCons
      * @return boolean
      */
     private boolean hasTableContainerLoaded() {
-        return waitForElementByXpath(tableContainer).isDisplayed();
+        return waitForElementByXpath(tableContainer, true).isDisplayed();
     }
 
     /**
@@ -52,6 +52,12 @@ public class InboxResponsesGridScreen extends BaseScreen implements WorkflowCons
                 result =  responsesDetailViewScreen.verifyWorkflowEventStatus(workflowStatus);
             } else {
                 result =  responsesDetailViewScreen.verifyWorkflowStatus(workflowStatus);
+            }
+
+            if (result) {
+                System.out.println("Verified Workflow Status");
+            } else {
+                System.out.println("Failed to verified Workflow Status");
             }
 
             responsesDetailViewScreen.tapOnBackButton();

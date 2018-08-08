@@ -68,7 +68,7 @@ public class DelegationDefaultCreationScreen extends BaseScreen {
         delegationDefaultCreationScreen.delegationToField.sendKeys(delegateeID.substring(0,4));
         hasLoadingCompleted();
         try {
-            waitForElementById(delegateeID).click();
+            waitForElementById(delegateeID, true).click();
         } catch (Exception e) {
             screenshot(SCREENSHOT_MSG_NO_RESULT_FOUND);
             throw new RuntimeException(ERROR_MSG_NO_RESULT_FOUND.replace("$1", delegateeID));
@@ -87,7 +87,7 @@ public class DelegationDefaultCreationScreen extends BaseScreen {
      */
     private void verifyDefaultDelegationStatus() {
         hasLoadingCompleted();
-        waitForElementByXpath(alertMessage);
+        waitForElementByXpath(alertMessage, true);
 
         if (delegationDefaultCreationScreen.alertMessage.getText().contains(ALERT_MSG_SUCCESSFULLY_CREATED_DELEGATION)) {
 

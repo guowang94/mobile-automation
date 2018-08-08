@@ -23,6 +23,7 @@ public class LoginScreen extends BaseScreen {
      * @param username username
      */
     private void enterUsername(String username) {
+        loginScreen.usernameTextbox.clear();
         loginScreen.usernameTextbox.sendKeys(username);
     }
 

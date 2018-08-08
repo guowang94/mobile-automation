@@ -491,7 +491,7 @@ public class AcknowledgeTest extends BaseTest {
 
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_PNL})
     public void swipeToReviewAndAcceptPNLWorkflowTest() {
-        System.out.println("Method: swipeToAcknowledgePNLWorkflowTest()");
+        System.out.println("Method: swipeToReviewAndAcceptPNLWorkflowTest()");
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
@@ -510,12 +510,12 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_PNL},
             dependsOnMethods = {"swipeToAcknowledgePNLWorkflowTest", "reviewAndAcceptPNLWorkflowDetailViewTest"})
     public void reviewAndAcceptSelectedPNLWorkflowTest() {
-        System.out.println("Method: acknowledgeSelectedPNLWorkflowTest()");
+        System.out.println("Method: reviewAndAcceptSelectedPNLWorkflowTest()");
         int workflowCount = 1;
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegationUsername"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
@@ -535,11 +535,11 @@ public class AcknowledgeTest extends BaseTest {
     @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_PNL},
             dependsOnMethods = {"acknowledgeSelectedPNLWorkflowTest"})
     public void reviewAndAcceptAllPNLWorkflowTest() {
-        System.out.println("Method: acknowledgeAllPNLWorkflowTest()");
+        System.out.println("Method: reviewAndAcceptAllPNLWorkflowTest()");
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegationUsername"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
@@ -617,6 +617,53 @@ public class AcknowledgeTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", subWorkflowID));
         Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_APPROVED, WORKFLOW_GMR, subWorkflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", subWorkflowID));
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_GT_GMR},
+            dependsOnMethods = {"approveGMRWorkflowDetailViewTest", "swipeToApproveGMRWorkflowDetailViewTest"})
+    public void approveSelectedGMRWorkflowTest() {
+        System.out.println("Method: approveSelectedGMRWorkflowTest()");
+        int workflowCount = 1;
+        List<String> workflowIDList;
+        List<String> workflowIDInClosedBucket;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
+                .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO,
+                        MORE_OPTION_APPROVE_SELECTED);
+        workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
+        AcknowledgeScreen acknowledgeScreen = selectMultipleWorkflowScreen
+                .tapOnAcknowledgeSelectedScreenDoneButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_GMR, workflowCount);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
+        Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_SELECTED_WORKFLOW);
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_GT_GMR},
+            dependsOnMethods = {"approveSelectedGMRWorkflowTest"})
+    public void approveAllGMRWorkflowTest() {
+        System.out.println("Method: approveAllGMRWorkflowTest()");
+        List<String> workflowIDList;
+        List<String> workflowIDInClosedBucket;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
+        inboxScreen.tapOnForReviewAndAcceptanceSubTab();
+        workflowIDList = inboxScreen.getAllCNAWorkflowId();
+        AcknowledgeScreen acknowledgeScreen = inboxScreen
+                .acknowledgeAllWorkflow(MORE_OPTION_APPROVE_ALL);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_GMR,
+                workflowIDList.size());
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
+        Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
     }
 

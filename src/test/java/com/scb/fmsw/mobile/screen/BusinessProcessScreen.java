@@ -25,7 +25,7 @@ public class BusinessProcessScreen extends BaseScreen implements WorkflowConstan
      * @return boolean
      */
     private boolean hasTableLoaded() {
-        return waitForElementByXpath(userTable).isDisplayed();
+        return waitForElementByXpath(userTable, true).isDisplayed();
     }
 
     /**

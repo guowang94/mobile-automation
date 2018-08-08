@@ -100,7 +100,7 @@ public class DelegationDefaultScreen extends BaseScreen {
         if (!value.equalsIgnoreCase(defaultDelegationScreen.picker.getText())) {
             defaultDelegationScreen.picker.sendKeys(value);
         }
-        waitForElementByIdUntilClickable("Done");
+        waitForElementByIdUntilClickable("Done", true);
         defaultDelegationScreen.doneButton.click();
     }
 

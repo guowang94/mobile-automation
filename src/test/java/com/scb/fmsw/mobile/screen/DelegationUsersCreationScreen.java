@@ -44,7 +44,7 @@ public class DelegationUsersCreationScreen extends BaseScreen {
      */
     private void verifyUsersDelegationStatus() {
         hasLoadingCompleted();
-        waitForElementByXpath(alertMessage);
+        waitForElementByXpath(alertMessage, true);
 
         if (delegationUsersCreationScreen.alertMessage.getText().contains(ALERT_MSG_SUCCESSFULLY_CREATED_DELEGATION)) {
 

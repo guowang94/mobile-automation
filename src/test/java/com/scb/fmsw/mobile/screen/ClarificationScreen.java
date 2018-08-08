@@ -26,14 +26,14 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
      * @return boolean
      */
     private boolean hasContainerLoaded() {
-        return waitForElementByXpath(container).isEnabled();
+        return waitForElementByXpath(container, true).isEnabled();
     }
 
     /**
      * this method send workflow for clarification
      *
      * @param userID
-     * @param isToggle  always false for Middle Office, Line Manager and Performer
+     * @param isToggle      always false for Middle Office, Line Manager and Performer
      * @param workflowType
      * @param workflowCount
      * @return InboxScreen
@@ -72,11 +72,27 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
      * @param lateCode
      * @param workflowType
      * @param workflowCount
+     * @param toUser
      * @return InboxScreen
      */
-    public InboxScreen clarifyCEWorkflow(String lateCode, String workflowType, int workflowCount) {
+    public InboxScreen clarifyCEWorkflow(String lateCode, String workflowType, int workflowCount, String toUser) {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
+            //Need to check for Navigation bar title. ONLY FOR CE WORKFLOW.
+            if ("MTCR".equals(toUser)) {
+                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_MTCR)) {
+                    System.out.println("Verified Navigation title");
+                } else {
+                    throw new RuntimeException("Navigation Bar title does not match");
+                }
+            } else if ("Limit Monitoring".equals(toUser)) {
+                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_LIMIT_MONITORING)) {
+                    System.out.println("Verified Navigation title");
+                } else {
+                    throw new RuntimeException("Navigation Bar title does not match");
+                }
+            }
+
             enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
             selectLateCode(lateCode);
 
@@ -105,7 +121,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
             duration = duration * workflowCount;
         }
         try {
-            waitForElementByXpath(alertTitle, duration);
+            waitForElementByXpath(alertTitle, duration, true);
             if (ALERT_TITLE_SUCCESS.equalsIgnoreCase(clarificationScreen.alertTitle.getText())) {
                 screenshot(SCREENSHOT_MSG_SUCCESSFULLY_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowType));
                 System.out.println(SUCCESS_MSG_SUCCESSFULLY_SENT_WORKFLOW_FOR_CLARIFICATION);
@@ -115,20 +131,28 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
                 throw new RuntimeException(FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1 ", ""));
             }
         } catch (Exception e) {
-            if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
-                clarificationScreen.alertOkButton.click();
-                selectLateCode(LATE_CODE_DEADLINE_MISSED);
-            } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
-                clarificationScreen.alertOkButton.click();
-                selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
-            } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
-                screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-                throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-            } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(clarificationScreen.alertMessage.getText())) {
-                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
-            } else {
-                screenshot("None of Alert Message are matched");
-                throw new RuntimeException("None of Alert Message are matched");
+            switch (clarificationScreen.alertMessage.getText()) {
+                case ALERT_MSG_SELECT_LATE_CODE:
+                    clarificationScreen.alertOkButton.click();
+                    selectLateCode(LATE_CODE_DEADLINE_MISSED);
+                    break;
+                case ALERT_MSG_SELECT_LATE_RESPONSE_CODE:
+                    clarificationScreen.alertOkButton.click();
+                    selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+                    break;
+                case ALERT_MSG_NETWORK_CONNECTION_WAS_LOST:
+                    clarificationScreen.alertOkButton.click();
+                    tapOnFormDoneButton();
+                    break;
+                case ALERT_MSG_UNEXPECTED_ERROR_OCCURRED:
+                    throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                case ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED:
+                    throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
+                case ALERT_MSG_STAFF_NOT_AVAILABLE:
+                    throw new RuntimeException(ALERT_MSG_STAFF_NOT_AVAILABLE);
+                default:
+                    screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                    throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
             }
             tapOnFormDoneButton();
             verifyClarificationStatus(workflowType, workflowCount);
@@ -144,6 +168,9 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         WebElement alertOkButton;
+
+        @FindBy(xpath = "//XCUIElementTypeNavigationBar")
+        WebElement navigationBar;
     }
 
 }

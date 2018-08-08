@@ -102,6 +102,31 @@ public class OthersDelegationsScreen extends BaseScreen {
     }
 
     /**
+     * This method will reject the Delegation
+     *
+     * @param index
+     */
+    public void rejectDelegation(int index) {
+        //scroll till element is visible then swipe left
+        scrollDownUntilElementIsDisplayed(othersDelegationsScreen.delegatorIDList.get(index));
+        new TouchAction(iosDriver).press(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
+                getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))).moveTo(-100, 0).release().perform();
+
+        othersDelegationsScreen.rejectButton.click();
+        if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_REJECT_DELEGATION)) {
+            othersDelegationsScreen.alertOKButton.click();
+
+            if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_REJECTED_SUCCESSFULLY)) {
+                screenshot(SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION);
+                othersDelegationsScreen.alertOkButton.click();
+            } else if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION)) {
+                screenshot(SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+                throw new RuntimeException(SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+            }
+        }
+    }
+
+    /**
      * This method will get the x axis of the element
      *
      * @param element

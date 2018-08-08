@@ -40,6 +40,7 @@ public class DelegationCountrySearchScreen extends BaseScreen {
                     if (!delegationCountrySearchScreen.searchField.getText().isEmpty()) {
                         delegationCountrySearchScreen.searchField.clear();
                     }
+                    country = country.length() < 6 ? country : country.substring(0, 5);
                     delegationCountrySearchScreen.searchField.sendKeys(country);
                     delegationCountrySearchScreen.searchResult.click();
                 }

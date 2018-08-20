@@ -5,6 +5,7 @@ import com.scb.fmsw.mobile.screen.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AcknowledgeTest extends BaseTest {
@@ -20,10 +21,10 @@ public class AcknowledgeTest extends BaseTest {
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OVERDUE);
-//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, WORKFLOW_CNA, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -113,7 +114,7 @@ public class AcknowledgeTest extends BaseTest {
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(LATE_CODE_DEADLINE_MISSED,
                 ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, 1);
@@ -208,7 +209,7 @@ public class AcknowledgeTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = inboxDetailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.reviewAndAssessWorkflow(CE_LATE_CODE_OTHERS, CE_SEVERITY_HIGH,
                 CE_POTENTIAL_LOSS_YES, WORKFLOW_CE, 1);
@@ -300,7 +301,7 @@ public class AcknowledgeTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = inboxDetailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.reviewAndApproveWorkflow(CE_LATE_CODE_OTHERS, CE_DISCIPLINARY_ACTION_DISMISSAL,
                 WORKFLOW_CE, 1);
@@ -392,7 +393,7 @@ public class AcknowledgeTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, WORKFLOW_FVA, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -478,7 +479,7 @@ public class AcknowledgeTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_PNL, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -564,7 +565,7 @@ public class AcknowledgeTest extends BaseTest {
         inboxScreen.tapOnForApprovalSubTab();
         String workflowID = inboxScreen.getFirstWorkflowId();
         String subWorkflowID = inboxScreen.getSubWorkflowId(workflowID);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(subWorkflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(subWorkflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, WORKFLOW_GMR, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -578,7 +579,7 @@ public class AcknowledgeTest extends BaseTest {
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         subWorkflowID = inboxScreen.getSubWorkflowId(workflowID);
-        detailViewScreen = inboxScreen.tapOnWorkflow(subWorkflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(subWorkflowID, true);
         acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.acknowledgeWorkflow(LATE_CODE_DEADLINE_MISSED, WORKFLOW_GMR, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
@@ -678,7 +679,7 @@ public class AcknowledgeTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndActionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.reviewAndActionWorkflow(VE_LATE_CODE_INVESTIGATION_WITH_HR,
                 VE_DISCIPLINARY_ACTION_COACHING_OR_COUNSELING, WORKFLOW_VE, 1);
@@ -733,4 +734,354 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
+    //-------------------------------- TM ---------------------------------
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM})
+    public void approveTMWorkflowDetailViewTest() {
+        System.out.println("Method: approveTMWorkflowDetailViewTest()");
+        String workflowID;
+        String workflowStatus;
+        String nextUserID = null;
+
+        //Need to provide the Supervisor ID
+        OverviewScreen overviewScreen = login("1460477");
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        //Need to provide the Workflow ID
+        workflowID = "TMN0000257388";
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, false);
+
+        if (detailViewScreen != null) {
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL.equals(workflowStatus)) {
+
+                AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
+                inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+                inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+                Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                        FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+                Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                        WORKFLOW_STATUS_PENDING_TRADER_APPROVAL, WORKFLOW_TM, workflowID),
+                        FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+                detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        } else {
+            inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+            detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_TRADER_APPROVAL.equals(workflowStatus)) {
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        }
+
+        //----------- Login as Trader --------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+        AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+        detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+        nextUserID = detailViewScreen.getCurrActorValue();
+        inboxScreen = detailViewScreen.tapOnBackButton();
+        inboxScreen.logout();
+
+        //----------- Login as FM Head ------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+        acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_APPROVED, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM})
+    public void swipeToApproveTMWorkflowDetailViewTest() {
+        System.out.println("Method: swipeToApproveTMWorkflowDetailViewTest()");
+        String workflowID;
+        String workflowStatus;
+        String nextUserID = null;
+
+        //Need to provide the Supervisor ID
+        OverviewScreen overviewScreen = login("1460477");
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        //Need to provide the Workflow ID
+        workflowID = "TMN0000257500";
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, false);
+
+        if (detailViewScreen != null) {
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL.equals(workflowStatus)) {
+
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_TM);
+                inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+                inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+                Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                        FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+                Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                        WORKFLOW_STATUS_PENDING_TRADER_APPROVAL, WORKFLOW_TM, workflowID),
+                        FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+                detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        } else {
+            inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+            detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_TRADER_APPROVAL.equals(workflowStatus)) {
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        }
+
+        //----------- Login as Trader --------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_TM);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+        detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+        nextUserID = detailViewScreen.getCurrActorValue();
+        inboxScreen = detailViewScreen.tapOnBackButton();
+        inboxScreen.logout();
+
+        //----------- Login as FM Head ------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_TM);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_APPROVED, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM, TEST_GRP_ACKNOWLEDGE_SELECTED})
+    public void approveSelectedTMWorkflowDetailViewTest() {
+        System.out.println("Method: approveSelectedTMWorkflowDetailViewTest()");
+        String workflowID;
+        String workflowStatus;
+        String nextUserID = null;
+        int workflowCount = 1;
+
+        //Need to provide the Supervisor ID
+        OverviewScreen overviewScreen = login("1460477");
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        //Need to provide the Workflow ID
+        workflowID = "TMN0000257510";
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, false);
+
+        if (detailViewScreen != null) {
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL.equals(workflowStatus)) {
+
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
+                        .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO, MORE_OPTION_APPROVE_SELECTED);
+                selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowID);
+                AcknowledgeScreen acknowledgeScreen = selectMultipleWorkflowScreen.tapOnAcknowledgeSelectedScreenDoneButton();
+                inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+                inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+                Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                        FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+                Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                        WORKFLOW_STATUS_PENDING_TRADER_APPROVAL, WORKFLOW_TM, workflowID),
+                        FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+                detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        } else {
+            inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+            detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_TRADER_APPROVAL.equals(workflowStatus)) {
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        }
+
+        //----------- Login as Trader --------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
+                .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO, MORE_OPTION_APPROVE_SELECTED);
+        selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowID);
+        AcknowledgeScreen acknowledgeScreen = selectMultipleWorkflowScreen.tapOnAcknowledgeSelectedScreenDoneButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+        detailViewScreen = inboxScreen.navigateToDetailView(workflowID);
+        nextUserID = detailViewScreen.getCurrActorValue();
+        inboxScreen = detailViewScreen.tapOnBackButton();
+        inboxScreen.logout();
+
+        //----------- Login as FM Head ------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        selectMultipleWorkflowScreen = inboxScreen
+                .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO, MORE_OPTION_APPROVE_SELECTED);
+        selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowID);
+        acknowledgeScreen = selectMultipleWorkflowScreen.tapOnAcknowledgeSelectedScreenDoneButton();
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_APPROVED, WORKFLOW_TM, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM, TEST_GRP_ACKNOWLEDGE_ALL},
+            dependsOnMethods = {"approveTMWorkflowDetailViewTest", "swipeToApproveTMWorkflowDetailViewTest",
+                    "approveSelectedTMWorkflowDetailViewTest"})
+    public void approveAllTMWorkflowDetailViewTest() {
+        System.out.println("Method: approveAllTMWorkflowDetailViewTest()");
+        List<String> workflowID = new ArrayList<>();
+        String workflowStatus;
+        String nextUserID = null;
+
+        //Need to provide the Supervisor ID
+        OverviewScreen overviewScreen = login("1460477");
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        //Need to provide the Workflow ID
+        workflowID.add("TMN0000257513");
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID.get(0), false);
+
+        if (detailViewScreen != null) {
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL.equals(workflowStatus)) {
+
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                AcknowledgeScreen acknowledgeScreen = inboxScreen.acknowledgeAllWorkflow(MORE_OPTION_APPROVE_ALL);
+                inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+                inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+                Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID.get(0), 1, BUCKET_IN_PROGRESS),
+                        FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID.get(0)));
+                Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                        WORKFLOW_STATUS_PENDING_TRADER_APPROVAL, WORKFLOW_TM, workflowID.get(0)),
+                        FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID.get(0)));
+
+                detailViewScreen = inboxScreen.navigateToDetailView(workflowID.get(0));
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        } else {
+            inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+            detailViewScreen = inboxScreen.tapOnWorkflow(workflowID.get(0), true);
+            workflowStatus = detailViewScreen.getWorkflowStatusValue();
+
+            if (WORKFLOW_STATUS_PENDING_TRADER_APPROVAL.equals(workflowStatus)) {
+                nextUserID = detailViewScreen.getCurrActorValue();
+                inboxScreen = detailViewScreen.tapOnBackButton();
+                inboxScreen.logout();
+            }
+        }
+
+        //----------- Login as Trader --------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        AcknowledgeScreen acknowledgeScreen = inboxScreen.acknowledgeAllWorkflow(MORE_OPTION_APPROVE_ALL);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID.get(0), 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID.get(0)));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL, WORKFLOW_TM, workflowID.get(0)),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID.get(0)));
+
+        detailViewScreen = inboxScreen.navigateToDetailView(workflowID.get(0));
+        nextUserID = detailViewScreen.getCurrActorValue();
+        inboxScreen = detailViewScreen.tapOnBackButton();
+        inboxScreen.logout();
+
+        //----------- Login as FM Head ------------
+
+        overviewScreen = login(nextUserID);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TM, STATUS_OPEN);
+        inboxScreen.tapOnForApprovalSubTab();
+        acknowledgeScreen = inboxScreen.acknowledgeAllWorkflow(MORE_OPTION_APPROVE_ALL);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_TM, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID.get(0), 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID.get(0)));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(
+                WORKFLOW_STATUS_APPROVED, WORKFLOW_TM, workflowID.get(0)),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID.get(0)));
+
+
+        System.out.println("Complete!");
+    }
 }

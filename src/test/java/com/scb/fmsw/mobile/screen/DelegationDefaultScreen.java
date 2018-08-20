@@ -44,6 +44,7 @@ public class DelegationDefaultScreen extends BaseScreen {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
             selectWorkflowType(workflowTypeList);
+            hasLoadingCompleted();
             selectType(type);
             selectBusinessGroup(businessGroup);
             selectBusiness(business);

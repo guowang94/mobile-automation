@@ -130,15 +130,20 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * This method will tap on the workflow based on the workflow id
      *
      * @param workflowID of the workflow that need to be tapped
+     * @param isException
      * @return InboxDetailViewScreen
      */
-    public InboxDetailViewScreen tapOnWorkflow(String workflowID) {
+    public InboxDetailViewScreen tapOnWorkflow(String workflowID, boolean isException) {
         try {
             tapOnElement(waitForElementByXpath(workflow.replace("$1", workflowID), true));
             System.out.println("Navigate to Detail View");
         } catch (Exception e) {
-            screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
-            throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
+            if (isException) {
+                screenshot(SCREENSHOT_MSG_NO_WORKFLOW_FOUND);
+                throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND_WITH_THAT_WORKFLOW_ID);
+            } else {
+                return null;
+            }
         }
         return new InboxDetailViewScreen(iosDriver);
     }
@@ -286,6 +291,14 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 }
             }
 
+        }
+        //--------------------------- TM Workflow ---------------------------------------
+        else if (workflowType.equals(WORKFLOW_TM)) {
+            if (verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
+                return true;
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+            }
         }
         //-------------------------- PNL WORKFLOW's Review & Accepted ------------------------------
         else if (workflowType.equals(WORKFLOW_PNL) && workflowStatus.equals(WORKFLOW_STATUS_REVIEWED_AND_ACCEPTED)) {
@@ -437,7 +450,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         //TODO need to find out which workflow type also does not have Response Grid
         if (workflowType.equalsIgnoreCase(WORKFLOW_CNA) || workflowType.equalsIgnoreCase(WORKFLOW_OMR) ||
                 workflowType.equalsIgnoreCase(WORKFLOW_PNL) || workflowType.equalsIgnoreCase(WORKFLOW_VE) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_CE)) {
+                workflowType.equalsIgnoreCase(WORKFLOW_CE) || workflowType.equalsIgnoreCase(WORKFLOW_TM)) {
             result = inboxDetailViewScreen.compareWorkflowStatus(workflowStatus);
         } else {
             //Navigate to Response Grid Screen and validate Workflow Status
@@ -947,26 +960,6 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
         new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement),
                 getElementLocationY(workflowCellElement)).moveTo(100, 0).release().perform();
-    }
-
-    /**
-     * This method will get the x axis of the element
-     *
-     * @param element
-     * @return int
-     */
-    private int getElementLocationX(WebElement element) {
-        return element.getLocation().getX() + element.getRect().getWidth() / 2;
-    }
-
-    /**
-     * This method will get the y axis of the element
-     *
-     * @param element
-     * @return int
-     */
-    private int getElementLocationY(WebElement element) {
-        return element.getLocation().getY() + element.getRect().getHeight() / 2;
     }
 
     /**

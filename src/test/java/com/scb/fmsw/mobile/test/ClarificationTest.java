@@ -127,7 +127,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_CNA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
@@ -152,7 +152,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to CNA user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CNA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -402,7 +402,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_PNL);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.ALMUsername"),
@@ -427,7 +427,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to CNA user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -489,7 +489,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to CNA user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_PNL, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -725,7 +725,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_OMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
@@ -750,7 +750,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to OMR user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_OMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -968,7 +968,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForReviewSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationScreen clarificationScreen = detailViewScreen.tapOnClarificationButtonForCE();
         inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "Limit Monitoring");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -989,7 +989,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to MTCR user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -1197,7 +1197,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForReviewSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationScreen clarificationScreen = detailViewScreen.tapOnClarificationButtonForCE();
         inboxScreen = clarificationScreen.clarifyCEWorkflow(null, WORKFLOW_CE, 1, "MTCR");
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -1219,7 +1219,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to Dealer user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitOptionScreen submitOptionScreen = inboxDetailViewScreen.tapOnSubmitButtonVECE();
         SubmitScreen submitScreen = submitOptionScreen.selectSubmitOption(RESPOND_OPTION_RESPOND);
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_CE, 1, true);
@@ -1441,7 +1441,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndActionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen
                 .selectClarificationOption(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, WORKFLOW_VE);
@@ -1522,7 +1522,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         workflowStatus = detailViewScreen.getWorkflowStatusValue();
         if (WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION.equals(workflowStatus)) {
             SubmitScreen submitScreen = detailViewScreen.tapOnSubmitButton();
@@ -1561,7 +1561,7 @@ public class ClarificationTest extends BaseTest {
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         workflowStatus = detailViewScreen.getWorkflowStatusValue();
         detailViewScreen.tapOnBackButton();
         if (WORKFLOW_STATUS_PENDING_VDO_CLARIFICATION.equals(workflowStatus)) {
@@ -1601,7 +1601,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         workflowStatus = detailViewScreen.getWorkflowStatusValue();
         detailViewScreen.tapOnBackButton();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen.navigateToSelectMultipleWorkflowScreen(
@@ -1671,7 +1671,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
@@ -1696,7 +1696,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to FVA user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -1941,7 +1941,7 @@ public class ClarificationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OPEN);
         inboxScreen.tapOnForApprovalSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ClarificationOptionScreen clarificationOptionScreen = detailViewScreen.tapOnClarificationButton();
         ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_GMR);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
@@ -1966,7 +1966,7 @@ public class ClarificationTest extends BaseTest {
 
         //----------------Submit the workflow back to GMR user-------------------
 
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         SubmitScreen submitScreen = inboxDetailViewScreen.tapOnSubmitButton();
         inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_GMR, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);

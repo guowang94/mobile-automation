@@ -32,6 +32,7 @@ public interface WorkflowConstants {
     String TEST_GRP_OMR = "OMR";
     String TEST_GRP_CE = "CE";
     String TEST_GRP_VE = "VE";
+    String TEST_GRP_TM = "TM";
     String TEST_GRP_MULTIPLE_WORKFLOW = "MULTIPLE WORKFLOW";
     String TEST_GRP_CLARIFICATION_OTHERS = "OTHERS";
     String TEST_GRP_CLARIFICATION_PERFORMER = "PERFORMER";
@@ -81,6 +82,11 @@ public interface WorkflowConstants {
     String WORKFLOW_STATUS_APPROVED = "Approved";
     String WORKFLOW_STATUS_PENDING_APPROVAL_POST_CLARIFICATION = "Pending Approval Post Clarification";
 
+    //TM Workflow
+    String WORKFLOW_STATUS_PENDING_TRADER_APPROVAL = "Pending Trader Approval";
+    String WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL = "Pending FM Head Approval";
+    String WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL = "Pending Supervisor Approval";
+
     //-------------------------------------------------------------------------
 
     //Alert Title
@@ -100,9 +106,11 @@ public interface WorkflowConstants {
     String ALERT_MSG_EXISTING_ACTIVE_DELEGATION = "You already have an existing active delegation in the period/date selected so you cannot create another delegation";
     String ALERT_MSG_ACCEPT_DELEGATION = "You are about to accept all the selected pending delegations. Do you wish to continue? Only pending delegations will be accepted.";
     String ALERT_MSG_REJECT_DELEGATION = "You are about to reject all the selected pending delegations. Do you wish to continue? Only pending delegations will be rejected.";
+    String ALERT_MSG_DELETE_DELEGATION = "You are about to delete delegation. Do you wish to continue?";
     String ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION = "None of the selected delegations are pending so no action has been taken.";
     String ALERT_MSG_ACCEPTED_SUCCESSFULLY = "1 delegation accepted successfully";
     String ALERT_MSG_REJECTED_SUCCESSFULLY = "1 delegation rejected successfully";
+    String ALERT_MSG_DELETED_SUCCESSFULLY = "1 delegation deleted successfully";
     String ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED = "None of Alert Message are matched";
     String ALERT_MSG_NETWORK_CONNECTION_WAS_LOST = "The network connection was lost.";
 
@@ -160,6 +168,7 @@ public interface WorkflowConstants {
     String FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION = "Failed to create Users Delegation";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_ASSESS_WORKFLOW = "Failed to Review and Assess Workflow";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_APPROVE_WORKFLOW = "Failed to Review and Approve Workflow";
+    String FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW = "Failed to Approve Workflow";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_ACTION_WORKFLOW = "Failed to Review and Action Workflow";
     String FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS = "Failed to match Comments/Workflow Status";
 
@@ -176,6 +185,7 @@ public interface WorkflowConstants {
     String ERROR_MSG_NOT_ENOUGH_WORKFLOW = "There are not enough workflow or there is no workflow";
     String ERROR_MSG_UNABLE_TO_FIND_BOOKMARK_ELEMENT = "Unable to find Bookmark element";
     String ERROR_MSG_UNABLE_TO_FIND_PREV_ACTOR_TYPE_ELEMENT = "Unable to find Prev Actor Type element";
+    String ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_ELEMENT = "Unable to find Curr Actor element";
     String ERROR_MSG_UNABLE_TO_FIND_COMMENT_ELEMENT = "Unable to find $1 element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_STATUS_ELEMENT = "Unable to find Workflow Status element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_EVENT_STATUS_ELEMENT = "Unable to find Workflow Event Status element";
@@ -215,8 +225,10 @@ public interface WorkflowConstants {
     String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Created Users Delegation";
     String SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION = "Failed to accept Delegation";
     String SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION = "Failed to reject Delegation";
-    String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPT_DELEGATION = "Successfully accepted Delegation";
-    String SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION = "Successfully rejected Delegation";
+    String SCREENSHOT_MSG_FAILED_TO_DELETE_DELEGATION = "Failed to delete Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPTED_DELEGATION = "Successfully accepted Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_REJECTED_DELEGATION = "Successfully rejected Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_DELETED_DELEGATION = "Successfully deleted Delegation";
 
     //------------------Inbox Screen---------------------
 
@@ -335,6 +347,7 @@ public interface WorkflowConstants {
     String WORKFLOW_FVA = "Fair Value Adjustment";
     String WORKFLOW_CE = "Credit Excess";
     String WORKFLOW_VE = "Volcker RENTD Excess";
+    String WORKFLOW_TM = "Trader Mandate";
 
     //------------------- Action Screen --------------------------------
 

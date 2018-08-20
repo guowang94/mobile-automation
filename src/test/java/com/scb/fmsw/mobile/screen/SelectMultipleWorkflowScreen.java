@@ -20,6 +20,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
     private String workflow = "//XCUIElementTypeStaticText[@value='$1']";
     private String workflowID = "(//XCUIElementTypeStaticText[@name='WorkflowId'])[$1]";
     private String cnaWorkflowID = "(//XCUIElementTypeStaticText[@name='CNAWorkflowId'])[$1]";
+    private String cnaWorkflowIDValue = "(//XCUIElementTypeStaticText[@name='CNAWorkflowId'])[@value='$1']";
     private String tableContainer = "//XCUIElementTypeTable[@visible='true']";
 
     public SelectMultipleWorkflowScreen(IOSDriver<IOSElement> testDriver) {
@@ -144,7 +145,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
     public void selectNumberOfCNAWorkflow(String workflowID) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
-            WebElement element = waitForElementByXpath(cnaWorkflowID.replace("$1", workflowID), true);
+            WebElement element = waitForElementByXpath(cnaWorkflowIDValue.replace("$1", workflowID), true);
             scrollDownUntilElementIsDisplayed(element);
             element.click();
         } else {

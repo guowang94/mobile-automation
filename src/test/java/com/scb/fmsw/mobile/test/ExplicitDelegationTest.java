@@ -1,6 +1,5 @@
 package com.scb.fmsw.mobile.test;
 
-import com.scb.fmsw.mobile.WorkflowConstants;
 import com.scb.fmsw.mobile.base.BaseTest;
 import com.scb.fmsw.mobile.screen.*;
 import org.testng.Assert;
@@ -26,7 +25,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_CNA);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -151,7 +150,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_OMR);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -271,7 +270,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_PNL);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -389,7 +388,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_GMR);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -507,7 +506,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_FVA);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -625,7 +624,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndActionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_VE);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -714,7 +713,7 @@ public class ExplicitDelegationTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndActionSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ExplicitDelegationScreen explicitDelegationScreen = inboxDetailViewScreen.tapOnDelegateButton();
         inboxScreen = explicitDelegationScreen.delegateWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_CE);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);

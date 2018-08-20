@@ -262,6 +262,7 @@ public class BaseScreen implements WorkflowConstants {
      * @return DelegationScreen
      */
     public DelegationScreen navigationToDelegationScreen() {
+        hasLoadingCompleted();
         scrollToElement(waitForElementById(delegation, true)).click();
         System.out.println("Navigate to Delegation Screen");
         return new DelegationScreen(iosDriver);
@@ -762,11 +763,31 @@ public class BaseScreen implements WorkflowConstants {
      *
      * @param element to be tapped
      */
-    public void tapOnElement(WebElement element) {
+    protected void tapOnElement(WebElement element) {
         TouchAction action = new TouchAction(iosDriver);
         scrollDownUntilElementIsDisplayed(element);
         if (!element.getText().isEmpty()) {
             action.tap(element).perform();
         }
+    }
+
+    /**
+     * This method will get the x axis of the element
+     *
+     * @param element
+     * @return int
+     */
+    protected int getElementLocationX(WebElement element) {
+        return element.getLocation().getX() + element.getRect().getWidth() / 2;
+    }
+
+    /**
+     * This method will get the y axis of the element
+     *
+     * @param element
+     * @return int
+     */
+    protected int getElementLocationY(WebElement element) {
+        return element.getLocation().getY() + element.getRect().getHeight() / 2;
     }
 }

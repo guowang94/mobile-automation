@@ -77,6 +77,7 @@ public class BaseTest extends BaseDriver implements Runnable {
 	 * @return OverviewScreen
 	 */
 	protected OverviewScreen login(String userID) {
+		System.out.println("Login as: " + userID);
 		LoginScreen loginScreen = new LoginScreen(iosDriver);
 		LandingScreen landingScreen = loginScreen.login(userID);
 		return landingScreen.overviewScreenNavigation(userID);

@@ -16,6 +16,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
 
     //xpath
     private String prevActorTypeValue = "//XCUIElementTypeStaticText[@name='Prev Actor Type']/preceding-sibling::XCUIElementTypeStaticText[1]";
+    private String currActorValue = "//XCUIElementTypeStaticText[@name='Curr Actor']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String workflowStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Status']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String workflowEventStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Event Status']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String currActorTypeValue = "//XCUIElementTypeStaticText[@name='Curr Actor Type']/preceding-sibling::XCUIElementTypeStaticText[1]";
@@ -235,6 +236,23 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
             return prevActorType;
         } catch (Exception e) {
             throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_PREV_ACTOR_TYPE_ELEMENT);
+        }
+    }
+
+    /**
+     * This method return Curr Actor value
+     *
+     * @return String
+     */
+    public String getCurrActorValue() {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Curr Actor"), true));
+            String currActor = waitForElementByXpath(currActorValue, true).getText();
+            System.out.println("Curr Actor: " + currActor);
+            return currActor.substring(0, 7);
+        } catch (Exception e) {
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_ELEMENT);
         }
     }
 

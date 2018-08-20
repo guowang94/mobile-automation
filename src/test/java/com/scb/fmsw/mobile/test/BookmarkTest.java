@@ -23,10 +23,10 @@ public class BookmarkTest extends BaseTest {
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CNA, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CNA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -43,7 +43,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CNA, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CNA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -66,7 +66,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CNA, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CNA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -86,7 +86,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CNA, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CNA), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
@@ -104,10 +104,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -123,7 +123,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -145,7 +145,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -165,7 +165,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
@@ -183,10 +183,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_PNL, STATUS_OVERDUE);
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_PNL, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_PNL), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -202,7 +202,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_PNL, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_PNL), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -224,7 +224,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_PNL, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_PNL), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -244,7 +244,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_PNL, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_PNL), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
@@ -262,10 +262,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_GMR, STATUS_OVERDUE);
         inboxScreen.tapOnForApprovalSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_GMR, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_GMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -281,7 +281,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_GMR, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_GMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -303,7 +303,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_GMR, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_GMR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -322,7 +322,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_GMR, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_GMR), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
@@ -340,10 +340,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_FVA, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_FVA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -359,7 +359,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_FVA, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_FVA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -381,7 +381,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_FVA, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_FVA), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -400,7 +400,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_FVA, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_FVA), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
@@ -418,10 +418,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_VE, STATUS_OPEN);
         inboxScreen.tapOnForReviewAndActionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_VE, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_VE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -437,7 +437,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_VE, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_VE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -459,7 +459,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_VE, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_VE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -475,10 +475,10 @@ public class BookmarkTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         inboxScreen.tapOnForReviewSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CE, 1);
-        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -494,7 +494,7 @@ public class BookmarkTest extends BaseTest {
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CE, 1);
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
@@ -516,7 +516,7 @@ public class BookmarkTest extends BaseTest {
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CE, workflowCount);
 
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0));
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
         Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CE), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
@@ -535,7 +535,7 @@ public class BookmarkTest extends BaseTest {
         inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_CE, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
-            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+            InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
             Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_CE), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();

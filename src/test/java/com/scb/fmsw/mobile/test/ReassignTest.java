@@ -22,7 +22,7 @@ public class ReassignTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
         inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_ALM, WORKFLOW_CNA, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -143,7 +143,7 @@ public class ReassignTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForExceptionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
         inboxScreen = reassignScreen.reassignWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_CNA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);

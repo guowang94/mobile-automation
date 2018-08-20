@@ -92,7 +92,7 @@ public class OthersDelegationsScreen extends BaseScreen {
             othersDelegationsScreen.alertOKButton.click();
 
             if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_ACCEPTED_SUCCESSFULLY)) {
-                screenshot(SCREENSHOT_MSG_SUCCESSFULLY_ACCEPT_DELEGATION);
+                screenshot(SCREENSHOT_MSG_SUCCESSFULLY_ACCEPTED_DELEGATION);
                 othersDelegationsScreen.alertOkButton.click();
             } else if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION)) {
                 screenshot(SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
@@ -117,33 +117,13 @@ public class OthersDelegationsScreen extends BaseScreen {
             othersDelegationsScreen.alertOKButton.click();
 
             if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_REJECTED_SUCCESSFULLY)) {
-                screenshot(SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION);
+                screenshot(SCREENSHOT_MSG_SUCCESSFULLY_REJECTED_DELEGATION);
                 othersDelegationsScreen.alertOkButton.click();
             } else if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION)) {
                 screenshot(SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
                 throw new RuntimeException(SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
             }
         }
-    }
-
-    /**
-     * This method will get the x axis of the element
-     *
-     * @param element
-     * @return int
-     */
-    private int getElementLocationX(WebElement element) {
-        return element.getLocation().getX() + element.getRect().getWidth() / 2;
-    }
-
-    /**
-     * This method will get the y axis of the element
-     *
-     * @param element
-     * @return int
-     */
-    private int getElementLocationY(WebElement element) {
-        return element.getLocation().getY() + element.getRect().getHeight() / 2;
     }
 
     /**

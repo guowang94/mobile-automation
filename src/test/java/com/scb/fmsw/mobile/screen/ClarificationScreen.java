@@ -42,10 +42,8 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
 
-            if (isToggle) {
-                toggleSwitch(FORM_LABEL_DISPUTE, isToggle);
-                toggleSwitch(FORM_LABEL_ESCALATE, isToggle);
-            }
+            toggleSwitch(FORM_LABEL_DISPUTE, isToggle);
+            toggleSwitch(FORM_LABEL_ESCALATE, isToggle);
 
             if (userID != null) {
                 searchForUser(FORM_LABEL_PSID_OR_NAME, userID);
@@ -54,7 +52,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
             if (WORKFLOW_VE.equals(workflowType)) {
                 enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
             } else {
-                enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+                enterComments(FORM_LABEL_COMMENTS_COMPLUSORY, MSG_ENTER_COMMENT);
             }
             selectLateCode(lateCode);
 
@@ -132,6 +130,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
             }
         } catch (Exception e) {
             switch (clarificationScreen.alertMessage.getText()) {
+                case ALERT_MSG_SELECT_LATE_CODE_COMPULSORY:
                 case ALERT_MSG_SELECT_LATE_CODE:
                     clarificationScreen.alertOkButton.click();
                     selectLateCode(LATE_CODE_DEADLINE_MISSED);

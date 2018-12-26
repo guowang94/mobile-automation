@@ -2,7 +2,7 @@
 
 <suite name="Test Suite Mobile" configfailurepolicy="continue">
 
-    <test name="CNA Workflow Regression" enabled="false">
+    <test name="CNA Workflow Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -14,16 +14,16 @@
                 <exclude name="CE"/>
 
                 <!--Clarification Option-->
-                <exclude name="OTHERS"/>
+                <include name="OTHERS"/>
                 <include name="LM"/>
                 <include name="PERFORMER"/>
                 <include name="MO"/>
-                <exclude name="PC"/>
+                <include name="PC"/>
             </run>
         </groups>
         <classes>
-            <class name="com.scb.fmsw.mobile.test.ClarificationTest"/>
-            <!--<class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>-->
+            <!--<class name="com.scb.fmsw.mobile.test.ClarificationTest"/>-->
+            <class name="com.scb.fmsw.mobile.test.ExplicitDelegationTest"/>
             <!--<class name="com.scb.fmsw.mobile.test.AcknowledgeTest"/>-->
         </classes>
     </test>

@@ -5,11 +5,16 @@ import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.text.Normalizer;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +134,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     /**
      * This method will tap on the workflow based on the workflow id
      *
-     * @param workflowID of the workflow that need to be tapped
+     * @param workflowID  of the workflow that need to be tapped
      * @param isException
      * @return InboxDetailViewScreen
      */
@@ -481,7 +486,14 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 try {
                     loop = (!waitForElementByXpath(loadMoreResultsCell, 10, true).isDisplayed());
                 } catch (Exception e) {
-                    action.press(180, 620).moveTo(0, -620).release().perform();
+                    Dimension size = iosDriver.manage().window().getSize();
+                    int startY = (int) (size.height * 0.9);
+                    int endY = (int) (size.height * 0.2);
+                    int startX = (int) (size.width / 2.2);
+                    //Logging purpose
+//                    System.out.println("Trying to swipe from x:" + startX + " y:" + startY + ", to x:" + startX + " y:" + endY);
+                    action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                            .moveTo(PointOption.point(startX, endY)).release().perform();
                 }
             }
             inboxScreen.loadMoreResultsButton.click();
@@ -564,10 +576,8 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 }
                 loop = tapOnLoadMoreResultsButton();
             }
-            List<WebElement> workflowIdElementList;
-            try {
-                workflowIdElementList = waitForElementsByXpath(workflowList, true);
-            } catch (NoSuchElementException e) {
+            List<WebElement> workflowIdElementList = waitForElementsByXpath(cnaWorkflowList, false);
+            if (workflowIdElementList == null) {
                 screenshot(ERROR_MSG_NO_WORKFLOW_FOUND);
                 throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
             }
@@ -601,13 +611,12 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 }
                 loop = tapOnLoadMoreResultsButton();
             }
-            List<WebElement> workflowIdElementList;
-            try {
-                workflowIdElementList = waitForElementsByXpath(cnaWorkflowList, true);
-            } catch (NoSuchElementException e) {
+            List<WebElement> workflowIdElementList = waitForElementsByXpath(cnaWorkflowList, false);
+            if (workflowIdElementList == null) {
                 screenshot(ERROR_MSG_NO_WORKFLOW_FOUND);
                 throw new RuntimeException(ERROR_MSG_NO_WORKFLOW_FOUND);
             }
+
             System.out.println("Begin to add each workflow id to the list");
             System.out.println("size: " + workflowIdElementList.size());
             for (WebElement element : workflowIdElementList) {
@@ -946,8 +955,19 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private void swipeLeft(String workflowID) {
         WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
         scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
-        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement),
-                getElementLocationY(workflowCellElement)).moveTo(-100, 0).release().perform();
+
+        //Logging purpose
+//        System.out.println("Trying to swipe from x:" + getElementLocationX(workflowCellElement)
+//                + " y:" + getElementLocationY(workflowCellElement)
+//                + ", to x:" + (getElementLocationX(workflowCellElement) - 100)
+//                + " y:" + getElementLocationY(workflowCellElement));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(workflowCellElement),
+                        getElementLocationY(workflowCellElement)))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(workflowCellElement) - 100),
+                        getElementLocationY(workflowCellElement))).release().perform();
     }
 
     /**
@@ -958,8 +978,18 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private void swipeRight(String workflowID) {
         WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
         scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
-        new TouchAction(iosDriver).press(getElementLocationX(workflowCellElement),
-                getElementLocationY(workflowCellElement)).moveTo(100, 0).release().perform();
+        //Logging purpose
+//        System.out.println("Trying to swipe from x:" + getElementLocationX(workflowCellElement)
+//                + " y:" + getElementLocationY(workflowCellElement)
+//                + ", to x:" + (getElementLocationX(workflowCellElement) + 100)
+//                + " y:" + getElementLocationY(workflowCellElement));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(workflowCellElement),
+                        getElementLocationY(workflowCellElement)))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(workflowCellElement) + 100),
+                        getElementLocationY(workflowCellElement))).release().perform();
     }
 
     /**
@@ -968,6 +998,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForAcknowledgementSubTab() {
         hasLoadingCompleted();
         inboxScreen.forAcknowledgementSubTab.click();
+        System.out.println("Navigate to For Acknowledge Tab");
     }
 
     /**
@@ -976,6 +1007,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForReviewSubTab() {
         hasLoadingCompleted();
         inboxScreen.forReviewSubTab.click();
+        System.out.println("Navigate to For Review Tab");
     }
 
     /**
@@ -984,6 +1016,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForApprovalSubTab() {
         hasLoadingCompleted();
         inboxScreen.forApprovalSubTab.click();
+        System.out.println("Navigate to For Approval Tab");
     }
 
     /**
@@ -992,14 +1025,16 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForReviewAndAcceptanceSubTab() {
         hasLoadingCompleted();
         inboxScreen.forReviewAndAcceptanceSubTab.click();
+        System.out.println("Navigate to For Review & Acceptance Tab");
     }
 
     /**
-     * This method will tap on For Clarification Sub Tab
+     * This method will tap on For Clarification & Comments Sub Tab
      */
     public void tapOnForClarificationSubTab() {
         hasLoadingCompleted();
         inboxScreen.forClarificationSubTab.click();
+        System.out.println("Navigate to For Clarification & Comments Tab");
     }
 
     /**
@@ -1008,6 +1043,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForVerificationSubTab() {
         hasLoadingCompleted();
         inboxScreen.forVerificationSubTab.click();
+        System.out.println("Navigate to For Verification Tab");
     }
 
     /**
@@ -1016,6 +1052,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForExceptionSubTab() {
         hasLoadingCompleted();
         inboxScreen.forExceptionSubTab.click();
+        System.out.println("Navigate to For Exception Tab");
     }
 
     /**
@@ -1024,6 +1061,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForReviewAndAssessmentSubTab() {
         hasLoadingCompleted();
         inboxScreen.forReviewAndAssessmentSubTab.click();
+        System.out.println("Navigate to For Review & Assessment Tab");
     }
 
     /**
@@ -1032,6 +1070,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public void tapOnForReviewAndActionSubTab() {
         hasLoadingCompleted();
         inboxScreen.forReviewAndActionSubTab.click();
+        System.out.println("Navigate to For Review & Action Tab");
     }
 
     class PageObjects {
@@ -1056,7 +1095,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         @FindBy(id = "FOR APPROVAL")
         WebElement forApprovalSubTab;
 
-        @FindBy(id = "FOR CLARIFICATION")
+        @FindBy(id = "FOR CLARIFICATION & COMMENTS")
         WebElement forClarificationSubTab;
 
         @FindBy(id = "FOR VERIFICATION")

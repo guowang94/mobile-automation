@@ -64,7 +64,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_PERFORMER})
+//    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_PERFORMER})
     public void swipeToSendCNAWorkflowToCNAPerformerForClarificationTest() {
         System.out.println("Method: swipeToSendCNAWorkflowToCNAPerformerForClarificationTest()");
         String workflowID;
@@ -114,7 +114,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS})
+    /*@Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS})*/
     public void sendCNAWorkflowToAnyoneForClarificationDetailViewTest() {
         System.out.println("Method: sendCNAWorkflowToAnyoneForClarificationDetailViewTest()");
         boolean hasEscalate = true;
@@ -245,8 +245,8 @@ public class ClarificationTest extends BaseTest {
     }
 
     @Test(groups = {TEST_GRP_CLARIFICATION_SELECTED, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS},
-            dependsOnMethods = {"swipeToSendCNAWorkflowToAnyoneForClarificationTest",
-                    "sendCNAWorkflowToAnyoneForClarificationDetailViewTest"})
+            dependsOnMethods = {"swipeToSendCNAWorkflowToAnyoneForClarificationTest"/*,
+                    "sendCNAWorkflowToAnyoneForClarificationDetailViewTest"*/})
     public void clarifySelectedCNAWorkflowToAnyoneTest() {
         System.out.println("Method: clarifySelectedCNAWorkflowToAnyoneTest()");
         boolean hasEscalate = true;
@@ -308,8 +308,9 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS}/*,
-            dependsOnMethods = {"clarifySelectedCNAWorkflowToAnyoneTest"}*/)
+    //This test has been removed as Submit All is no longer available in the application
+    /*@Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_CNA, TEST_GRP_CLARIFICATION_OTHERS},
+            dependsOnMethods = {"clarifySelectedCNAWorkflowToAnyoneTest"})
     public void clarifyAllCNAWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllCNAWorkflowToAnyoneTest()");
         List<String> workflowIDList;
@@ -360,7 +361,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- PNL ---------------------------------
 
@@ -1134,8 +1135,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE}/*,
-            dependsOnMethods = {"mtcrClarifySelectedCEWorkflowTest"}*/)
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
+            dependsOnMethods = {"mtcrClarifySelectedCEWorkflowTest"})
     public void mtcrClarifyAllCEWorkflowTest() {
         System.out.println("Method: mtcrClarifyAllCEWorkflowTest()");
         List<String> workflowIDList;
@@ -1375,8 +1376,8 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE}/*,
-            dependsOnMethods = {"dealerClarifySelectedCEWorkflowTest"}*/)
+    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
+            dependsOnMethods = {"dealerClarifySelectedCEWorkflowTest"})
     public void dealerClarifyAllCEWorkflowTest() {
         System.out.println("Method: dealerClarifyAllCEWorkflowTest()");
         List<String> workflowIDList;

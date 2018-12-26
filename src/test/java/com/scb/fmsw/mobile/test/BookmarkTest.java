@@ -128,8 +128,8 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_OMR}/*,
-            dependsOnMethods = {"omrSwipeBookmarkTest", "omrBookmarkDetailViewTest"}*/)
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_OMR},
+            dependsOnMethods = {"omrSwipeBookmarkTest", "omrBookmarkDetailViewTest"})
     public void omrBookmarkSelectedTest() {
         System.out.println("Method: omrBookmarkSelectedTest");
         List<String> workflowIDList;
@@ -286,8 +286,8 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_GT_GMR}/*,
-            dependsOnMethods = {"gmrSwipeBookmarkTest", "gmrBookmarkDetailViewTest"}*/)
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_GT_GMR},
+            dependsOnMethods = {"gmrSwipeBookmarkTest", "gmrBookmarkDetailViewTest"})
     public void gmrBookmarkSelectedTest() {
         System.out.println("Method: gmrBookmarkSelectedTest");
         List<String> workflowIDList;
@@ -364,8 +364,8 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_IPV_FVA}/*,
-            dependsOnMethods = {"fvaSwipeBookmarkTest", "fvaBookmarkDetailViewTest"}*/)
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_IPV_FVA},
+            dependsOnMethods = {"fvaSwipeBookmarkTest", "fvaBookmarkDetailViewTest"})
     public void fvaBookmarkSelectedTest() {
         System.out.println("Method: fvaBookmarkSelectedTest");
         List<String> workflowIDList;
@@ -442,8 +442,8 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_VE}/*,
-            dependsOnMethods = {"veSwipeBookmarkTest", "veBookmarkDetailViewTest"}*/)
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_VE},
+            dependsOnMethods = {"veSwipeBookmarkTest", "veBookmarkDetailViewTest"})
     public void veBookmarkSelectedTest() {
         System.out.println("Method: veBookmarkSelectedTest");
         List<String> workflowIDList;
@@ -521,8 +521,8 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CE}/*,
-            dependsOnMethods = {"ceBookmarkSelectedDealerTest"}*/)
+    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CE},
+            dependsOnMethods = {"ceBookmarkSelectedDealerTest"})
     public void ceBookmarkAllDealerTest() {
         System.out.println("Method: ceBookmarkAllDealerTest");
         List<String> workflowIDList;

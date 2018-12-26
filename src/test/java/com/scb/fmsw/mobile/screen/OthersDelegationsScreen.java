@@ -4,11 +4,15 @@ import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.List;
 
 public class OthersDelegationsScreen extends BaseScreen {
@@ -84,8 +88,18 @@ public class OthersDelegationsScreen extends BaseScreen {
     public void acceptDelegation(int index) {
         //scroll till element is visible then swipe left
         scrollDownUntilElementIsDisplayed(othersDelegationsScreen.delegatorIDList.get(index));
-        new TouchAction(iosDriver).press(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
-                getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))).moveTo(-100, 0).release().perform();
+        //Logging purpose
+//        System.out.println("Trying to swipe from x:" + getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index))
+//                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))
+//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100)
+//                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
+                        getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100),
+                        getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)))).release().perform();
 
         othersDelegationsScreen.acceptButton.click();
         if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_ACCEPT_DELEGATION)) {
@@ -109,8 +123,18 @@ public class OthersDelegationsScreen extends BaseScreen {
     public void rejectDelegation(int index) {
         //scroll till element is visible then swipe left
         scrollDownUntilElementIsDisplayed(othersDelegationsScreen.delegatorIDList.get(index));
-        new TouchAction(iosDriver).press(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
-                getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))).moveTo(-100, 0).release().perform();
+        //Logging purpose
+//        System.out.println("Trying to swipe from x:" + getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index))
+//                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))
+//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100)
+//                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
+                        getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100),
+                        getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)))).release().perform();
 
         othersDelegationsScreen.rejectButton.click();
         if (othersDelegationsScreen.alertMessage.getText().equals(ALERT_MSG_REJECT_DELEGATION)) {

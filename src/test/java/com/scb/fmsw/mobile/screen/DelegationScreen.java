@@ -5,12 +5,16 @@ import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.List;
 
 public class DelegationScreen extends BaseScreen {
@@ -34,6 +38,7 @@ public class DelegationScreen extends BaseScreen {
 
     /**
      * This method will navigate to Others Delegations Screen
+     *
      * @return
      */
     public OthersDelegationsScreen navigateToOthersDelegation() {
@@ -71,8 +76,18 @@ public class DelegationScreen extends BaseScreen {
     public void deleteDelegation(int index) {
         //scroll till element is visible then swipe left
         scrollDownUntilElementIsDisplayed(delegationScreen.delegateeIDList.get(index));
-        new TouchAction(iosDriver).press(getElementLocationX(delegationScreen.delegateeIDList.get(index)),
-                getElementLocationY(delegationScreen.delegateeIDList.get(index))).moveTo(-100, 0).release().perform();
+        //Logging purpose
+//        System.out.println("Trying to swipe up from x:" + getElementLocationX(delegationScreen.delegateeIDList.get(index))
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index))
+//                + ", to x:" + (getElementLocationX(delegationScreen.delegateeIDList.get(index)) + 100)
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index)));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(delegationScreen.delegateeIDList.get(index)),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index))))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(delegationScreen.delegateeIDList.get(index)) + 100),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index)))).release().perform();
 
         delegationScreen.deleteButton.click();
         if (delegationScreen.alertMessage.getText().equals(ALERT_MSG_DELETE_DELEGATION)) {

@@ -4,6 +4,7 @@ import com.scb.fmsw.mobile.screen.LandingScreen;
 import com.scb.fmsw.mobile.screen.LoginScreen;
 import com.scb.fmsw.mobile.screen.OverviewScreen;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
 import org.testng.annotations.AfterMethod;
 
 import java.io.FileInputStream;
@@ -37,7 +38,7 @@ public class BaseTest extends BaseDriver implements Runnable {
 			try {
 				Thread.sleep(35000); // sleep for 35 sec
 //				Thread.sleep(240000); // sleep for 4min
-				new TouchAction(iosDriver).tap(180, 40).perform();
+				new TouchAction(iosDriver).tap(PointOption.point(180, 40)).perform();
 //				System.out.println("Separate thread " + Thread.currentThread().getId() + ": tap on screen to prevent it from sleeping");
 			} catch (Exception e) {
 				Thread.currentThread().interrupt();

@@ -96,6 +96,7 @@ public interface WorkflowConstants {
     //Alert Message
     String ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED = "The workflow status has been updated, you can no longer perform any actions on the workflow";
     String ALERT_MSG_SELECT_LATE_CODE = "Please select value of Late Code";
+    String ALERT_MSG_SELECT_LATE_CODE_COMPULSORY = "Please select value of Late Code*";
     String ALERT_MSG_SELECT_LATE_RESPONSE_CODE = "Please select value of Late Response Code";
     String ALERT_MSG_UNEXPECTED_ERROR_OCCURRED = "Unexpected error occured";
     String ALERT_MSG_STAFF_NOT_AVAILABLE = "Selected staff is not available in the system or does not have a valid role.Please select another option";
@@ -367,11 +368,12 @@ public interface WorkflowConstants {
     String PC_GRP_PC_GBS = "PC GBS";
 
     //Form's Label
-    String FORM_LABEL_LATE_CODE = "Late Code";
+    String FORM_LABEL_LATE_CODE = "Late Code*";
     String FORM_LABEL_COMMENTS = "Comments";
+    String FORM_LABEL_COMMENTS_COMPLUSORY = "Comments*";
     String FORM_LABEL_VDO_COMMENTS = "VDO Comments*";
     String FORM_LABEL_RESPONSE_COMMENTS = "Response Comments";
-    String FORM_LABEL_LATE_COMMENTS = "Late Comments";
+    String FORM_LABEL_LATE_COMMENTS = "Late Comments*";
     String FORM_LABEL_LATE_RESPONSE_CODE = "Late Response Code";
     String FORM_LABEL_VE_LATE_RESPONSE_CODE = "Late Response Code*";
     String FORM_LABEL_LATE_RESPONSE_COMMENTS = "Late Response Comments";
@@ -394,7 +396,7 @@ public interface WorkflowConstants {
     String FORM_LABEL_HOW_TO_PREVENT_RECURRENCE = "How to prevent recurrence";
     String FORM_LABEL_REMEDIATION_ACTION = "Remediation Action*";
     String FORM_LABEL_SUPERVISOR_COMMENTS = "Supervisor Comments (Optional)";
-    String FORM_LABEL_PSID_OR_NAME = "PSID/Name";
+    String FORM_LABEL_PSID_OR_NAME = "PSID/Name*";
     String FORM_LABEL_ESCALATE = "Escalate";
     String FORM_LABEL_DISPUTE = "Dispute";
     String FORM_LABEL_TO_GROUP = "To Group";
@@ -440,7 +442,7 @@ public interface WorkflowConstants {
     //Capability Value
     String CAPABILITY_VALUE_DEVICE_NAME = "iPhone";
     String CAPABILITY_VALUE_PLATFORM_NAME = "iOS";
-    String CAPABILITY_VALUE_PLATFORM_VERSION = "11.1.1";
+    String CAPABILITY_VALUE_PLATFORM_VERSION = "11.4.1";
     String CAPABILITY_VALUE_UDID_IPHONE6 = "55bd37ddcebbd54dbac0af44a34e2815a841e6b2";
     String CAPABILITY_VALUE_UDID_IPHONE7 = "68a77c4e8ca8c34fa0957c8d39f1f445f664cb18";
     String CAPABILITY_VALUE_UDID_IPHONE7_NEW = "453c0f8d6c435754717bb056e5fe46220c2e7ef0";

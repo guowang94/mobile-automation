@@ -7,8 +7,11 @@ import com.scb.fmsw.mobile.screen.DelegationScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -276,7 +280,14 @@ public class BaseScreen implements WorkflowConstants {
     public WebElement scrollDownUntilElementIsDisplayed(WebElement element) {
         TouchAction action = new TouchAction(iosDriver);
         while (!element.isDisplayed()) {
-            action.press(180, 580).moveTo(0, -400).release().perform();
+            Dimension size = iosDriver.manage().window().getSize();
+            int startY = (int) (size.height * 0.7);
+            int endY = (int) (size.height * 0.2);
+            int startX = (int) (size.width / 2.2);
+            //Logging purpose
+//            System.out.println("Trying to swipe up from x:" + startX + " y:" + startY + ", to x:" + startX + " y:" + endY);
+            action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                    .moveTo(PointOption.point(startX, endY)).release().perform();
             try {
                 waitForElementUntilClickable(element, 15, true);
             } catch (Exception e) {
@@ -295,7 +306,14 @@ public class BaseScreen implements WorkflowConstants {
     public WebElement scrollUpUntilElementIsDisplayed(WebElement element) {
         TouchAction action = new TouchAction(iosDriver);
         while (!element.isDisplayed()) {
-            action.press(180, 200).moveTo(0, 450).release().perform();
+            Dimension size = iosDriver.manage().window().getSize();
+            int startY = (int) (size.height * 0.3);
+            int endY = (int) (size.height * 0.9);
+            int startX = (int) (size.width / 2.2);
+            //Logging purpose
+//            System.out.println("Trying to swipe from x:" + startX + " y:" + startY + ", to x:" + startX + " y:" + endY);
+            action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                    .moveTo(PointOption.point(startX, endY)).release().perform();
             try {
                 waitForElementUntilClickable(element, true);
             } catch (Exception e) {
@@ -318,7 +336,13 @@ public class BaseScreen implements WorkflowConstants {
     public WebElement scrollToElement(WebElement element) {
         TouchAction action = new TouchAction(iosDriver);
         if (!element.isDisplayed()) {
-            action.press(200, 180).moveTo(element).release().perform();
+            Dimension size = iosDriver.manage().window().getSize();
+            int startY = (int) (size.height * 0.2);
+            int startX = (int) (size.width / 2.2);
+            //Logging purpose
+//            System.out.println("Trying to swipe from x:" + startX + " y:" + startY + ", to x:" + element.getLocation().getX() + " y:" + element.getLocation().getY());
+            action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                    .moveTo(PointOption.point(element.getLocation().getX(), element.getLocation().getY())).release().perform();
         }
         return element;
     }
@@ -767,7 +791,7 @@ public class BaseScreen implements WorkflowConstants {
         TouchAction action = new TouchAction(iosDriver);
         scrollDownUntilElementIsDisplayed(element);
         if (!element.getText().isEmpty()) {
-            action.tap(element).perform();
+            action.tap(PointOption.point(element.getLocation().getX(), element.getLocation().getY())).perform();
         }
     }
 

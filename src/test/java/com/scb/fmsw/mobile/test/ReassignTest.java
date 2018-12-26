@@ -64,8 +64,8 @@ public class ReassignTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = TEST_GRP_REASSIGN_SELECTED/*,
-            dependsOnMethods = {"pcGBSSwipeToReassignCNAWorkflowTest", "pcGBSReassignCNAWorkflowDetailViewTest"}*/)
+    @Test(groups = TEST_GRP_REASSIGN_SELECTED,
+            dependsOnMethods = {"pcGBSSwipeToReassignCNAWorkflowTest", "pcGBSReassignCNAWorkflowDetailViewTest"})
     public void pcGBSReassignSelectedCNAWorkflowTest() {
         System.out.println("Method: pcGBSReassignSelectedCNAWorkflowTest()");
         List<String> workflowIDList;
@@ -187,8 +187,8 @@ public class ReassignTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = TEST_GRP_REASSIGN_SELECTED/*,
-            dependsOnMethods = {"foAdminReassignCNAWorkflowDetailViewTest", "foAdminSwipeToReassignCNAWorkflowTest"}*/)
+    @Test(groups = TEST_GRP_REASSIGN_SELECTED,
+            dependsOnMethods = {"foAdminReassignCNAWorkflowDetailViewTest", "foAdminSwipeToReassignCNAWorkflowTest"})
     public void foAdminReassignSelectedCNAWorkflowTest() {
         System.out.println("Method: foAdminReassignSelectedCNAWorkflowTest()");
         List<String> workflowIDList;

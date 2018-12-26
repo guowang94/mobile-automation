@@ -105,20 +105,28 @@ public class SubmitScreen extends BaseScreen {
                 throw new RuntimeException(FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1 ", workflowType));
             }
         } catch (Exception e) {
-            if (ALERT_MSG_SELECT_LATE_CODE.equalsIgnoreCase(submitScreen.alertMessage.getText())) {
-                submitScreen.alertOkButton.click();
-                selectLateCode(LATE_CODE_DEADLINE_MISSED);
-            } else if (ALERT_MSG_SELECT_LATE_RESPONSE_CODE.equalsIgnoreCase(submitScreen.alertMessage.getText())) {
-                submitScreen.alertOkButton.click();
-                selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
-            } else if (ALERT_MSG_UNEXPECTED_ERROR_OCCURRED.equalsIgnoreCase(submitScreen.alertMessage.getText())) {
-                screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-                throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
-            } else if (ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED.equalsIgnoreCase(submitScreen.alertMessage.getText())) {
-                throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
-            } else {
-                screenshot("None of Alert Message are matched");
-                throw new RuntimeException("None of Alert Message are matched");
+            switch (submitScreen.alertMessage.getText()) {
+                case ALERT_MSG_SELECT_LATE_CODE_COMPULSORY:
+                case ALERT_MSG_SELECT_LATE_CODE:
+                    submitScreen.alertOkButton.click();
+                    selectLateCode(LATE_CODE_DEADLINE_MISSED);
+                    break;
+                case ALERT_MSG_SELECT_LATE_RESPONSE_CODE:
+                    submitScreen.alertOkButton.click();
+                    selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
+                    break;
+                case ALERT_MSG_NETWORK_CONNECTION_WAS_LOST:
+                    submitScreen.alertOkButton.click();
+                    tapOnFormDoneButton();
+                    break;
+                case ALERT_MSG_UNEXPECTED_ERROR_OCCURRED:
+                    screenshot(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                    throw new RuntimeException(ALERT_MSG_UNEXPECTED_ERROR_OCCURRED);
+                case ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED:
+                    throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
+                default:
+                    screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
+                    throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
             }
             tapOnFormDoneButton();
             verifySubmitStatus(workflowType, workflowCount);

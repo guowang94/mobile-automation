@@ -184,12 +184,12 @@ public class BaseScreen implements WorkflowConstants {
      */
     public void selectLateResponseCode(String lateResponseCode, String workflowType) {
         if (lateResponseCode != null) {
+            selectPickerValue(FORM_LABEL_LATE_RESPONSE_CODE_COMPULSORY, lateResponseCode);
             if (WORKFLOW_VE.equals(workflowType)) {
-                selectPickerValue(FORM_LABEL_VE_LATE_RESPONSE_CODE, lateResponseCode);
+                enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS, MSG_ENTER_LATE_COMMENT);
             } else {
-                selectPickerValue(FORM_LABEL_LATE_RESPONSE_CODE, lateResponseCode);
+                enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS_COMPULSORY, MSG_ENTER_LATE_COMMENT);
             }
-            enterComments(FORM_LABEL_LATE_RESPONSE_COMMENTS, MSG_ENTER_LATE_COMMENT);
         }
     }
 

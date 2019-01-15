@@ -359,6 +359,27 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     }
 
     /**
+     * This method compare Sub Workflow Status
+     *
+     * @param workflowStatus
+     * @return boolean
+     */
+    public boolean compareSubWorkflowStatus(String workflowStatus) {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "Sub Workflow Status"), true));
+            if (workflowStatus.equals(waitForElementByXpath(cellValue.replace("$1", "Sub Workflow Status")
+                    .replace("$2", workflowStatus), true).getText().trim())) {
+                System.out.println("Verified Sub Workflow Status");
+                return true;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_STATUS_ELEMENT);
+        }
+        return false;
+    }
+
+    /**
      * This method compare Curr Actor Type
      *
      * @param currActorType

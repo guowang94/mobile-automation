@@ -7,6 +7,7 @@ import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class ClarificationScreen extends BaseScreen implements WorkflowConstants {
 
@@ -52,7 +53,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
             if (WORKFLOW_VE.equals(workflowType)) {
                 enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
             } else {
-                enterComments(FORM_LABEL_COMMENTS_COMPLUSORY, MSG_ENTER_COMMENT);
+                enterComments(FORM_LABEL_COMMENTS_COMPULSORY, MSG_ENTER_COMMENT);
             }
             selectLateCode(lateCode);
 
@@ -77,21 +78,22 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
             //Need to check for Navigation bar title. ONLY FOR CE WORKFLOW.
-            if ("MTCR".equals(toUser)) {
-                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_MTCR)) {
-                    System.out.println("Verified Navigation title");
-                } else {
-                    throw new RuntimeException("Navigation Bar title does not match");
-                }
-            } else if ("Limit Monitoring".equals(toUser)) {
-                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_LIMIT_MONITORING)) {
-                    System.out.println("Verified Navigation title");
-                } else {
-                    throw new RuntimeException("Navigation Bar title does not match");
-                }
-            }
+            //todo The developer has change the navigation bar title back to Request Clarification
+//            if ("MTCR".equals(toUser)) {
+//                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_MTCR)) {
+//                    System.out.println("Verified Navigation title");
+//                } else {
+//                    throw new RuntimeException("Navigation Bar title does not match");
+//                }
+//            } else if ("Limit Monitoring".equals(toUser)) {
+//                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_LIMIT_MONITORING)) {
+//                    System.out.println("Verified Navigation title");
+//                } else {
+//                    throw new RuntimeException("Navigation Bar title does not match");
+//                }
+//            }
 
-            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            enterComments(FORM_LABEL_COMMENTS_COMPULSORY, MSG_ENTER_COMMENT);
             selectLateCode(lateCode);
 
             tapOnFormDoneButton();
@@ -136,6 +138,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
                     selectLateCode(LATE_CODE_DEADLINE_MISSED);
                     break;
                 case ALERT_MSG_SELECT_LATE_RESPONSE_CODE:
+                case ALERT_MSG_SELECT_LATE_RESPONSE_CODE_COMPULSORY:
                     clarificationScreen.alertOkButton.click();
                     selectLateResponseCode(CE_LATE_CODE_OTHERS, workflowType);
                     break;
@@ -149,6 +152,9 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
                     throw new RuntimeException(ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED);
                 case ALERT_MSG_STAFF_NOT_AVAILABLE:
                     throw new RuntimeException(ALERT_MSG_STAFF_NOT_AVAILABLE);
+                case ALERT_MSG_CANNOT_REQUEST_FOR_CLARIFICATION_TO_SELF:
+                    System.out.println("Alert message is : " + ALERT_MSG_CANNOT_REQUEST_FOR_CLARIFICATION_TO_SELF);
+                    throw new RuntimeException(ALERT_MSG_CANNOT_REQUEST_FOR_CLARIFICATION_TO_SELF);
                 default:
                     screenshot(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);
                     throw new RuntimeException(ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED);

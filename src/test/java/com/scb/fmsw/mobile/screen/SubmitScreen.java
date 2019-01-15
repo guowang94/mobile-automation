@@ -35,7 +35,9 @@ public class SubmitScreen extends BaseScreen {
             if (WORKFLOW_VE.equals(workflowType)) {
                 enterComments(FORM_LABEL_VDO_COMMENTS, MSG_ENTER_COMMENT);
             } else if (WORKFLOW_CE.equals(workflowType) && ceToDealer) {
-                enterComments(FORM_LABEL_RESPONSE_COMMENTS, MSG_ENTER_COMMENT);
+                enterComments(FORM_LABEL_RESPONSE_COMMENTS_COMPULSORY, MSG_ENTER_COMMENT);
+            } else if (WORKFLOW_CE.equals(workflowType) && !ceToDealer) {
+                enterComments(FORM_LABEL_COMMENTS_COMPULSORY, MSG_ENTER_COMMENT);
             } else {
                 enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
             }

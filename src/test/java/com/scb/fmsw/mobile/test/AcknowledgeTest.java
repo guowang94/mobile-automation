@@ -10,11 +10,9 @@ import java.util.List;
 
 public class AcknowledgeTest extends BaseTest {
 
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, CE, VE
-
     //-------------------------------- CNA ---------------------------------
 
-    /*@Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CNA})*/
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CNA})
     public void acknowledgeCNAWorkflowDetailViewTest() {
         System.out.println("Method: acknowledgeCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -35,7 +33,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    /*@Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CNA})*/
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CNA})
     public void swipeToAcknowledgeCNAWorkflowTest() {
         System.out.println("Method: swipeToAcknowledgeCNAWorkflowTest()");
         String workflowID;
@@ -55,7 +53,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    /*@Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_CNA})*/
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_CNA})
     public void acknowledgeSelectedCNAWorkflowTest() {
         System.out.println("Method: acknowledgeSelectedCNAWorkflowTest()");
         int workflowCount = 1;
@@ -79,8 +77,8 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CNA}/*,
-            dependsOnMethods = {"acknowledgeSelectedCNAWorkflowTest", "swipeToAcknowledgeCNAWorkflowTest", "acknowledgeCNAWorkflowDetailViewTest"}*/)
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CNA},
+            dependsOnMethods = {"acknowledgeSelectedCNAWorkflowTest", "swipeToAcknowledgeCNAWorkflowTest", "acknowledgeCNAWorkflowDetailViewTest"})
     public void acknowledgeAllCNAWorkflowTest() {
         System.out.println("Method: acknowledgeAllCNAWorkflowTest()");
         List<String> workflowIDList;
@@ -102,68 +100,68 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    //-------------------------------- OMR ---------------------------------
+    //-------------------------------- TRR ---------------------------------
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_OMR})
-    public void acknowledgeOMRWorkflowDetailViewTest() {
-        System.out.println("Method: acknowledgeOMRWorkflowDetailViewTest()");
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TRR})
+    public void acknowledgeTRRWorkflowDetailViewTest() {
+        System.out.println("Method: acknowledgeTRRWorkflowDetailViewTest()");
         String workflowID;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_DO);
-        inboxScreen.tapOnForAcknowledgementSubTab();
-        workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
-        AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
-        inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(LATE_CODE_DEADLINE_MISSED,
-                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, 1);
-        inboxScreen.navigateToBucket(BUCKET_CLOSED);
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
-                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_OMR, workflowID),
-                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        System.out.println("Complete!");
-    }
-
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_OMR})
-    public void swipeToAcknowledgeOMRWorkflowTest() {
-        System.out.println("Method: swipeToAcknowledgeOMRWorkflowTest()");
-        String workflowID;
-
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
-        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_OMR);
-        inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(null,
-                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, 1);
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+        AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
+        inboxScreen = acknowledgeScreen.acknowledgeTRRWorkflow(LATE_CODE_DEADLINE_MISSED,
+                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_TRR, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_OMR, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_TRR, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_OMR})
-    public void acknowledgeSelectedOMRWorkflowTest() {
-        System.out.println("Method: acknowledgeSelectedOMRWorkflowTest()");
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TRR})
+    public void swipeToAcknowledgeTRRWorkflowTest() {
+        System.out.println("Method: swipeToAcknowledgeTRRWorkflowTest()");
+        String workflowID;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
+        inboxScreen.navigateToBucket(BUCKET_TO_DO);
+        inboxScreen.tapOnForAcknowledgementSubTab();
+        workflowID = inboxScreen.getFirstCNAWorkflowId();
+        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_TRR);
+        inboxScreen = acknowledgeScreen.acknowledgeTRRWorkflow(null,
+                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_TRR, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_TRR, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        System.out.println("Complete!");
+    }
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_SELECTED, TEST_GRP_TRR})
+    public void acknowledgeSelectedTRRWorkflowTest() {
+        System.out.println("Method: acknowledgeSelectedTRRWorkflowTest()");
         int workflowCount = 1;
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO, MORE_OPTION_ACKNOWLEDGE_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         AcknowledgeScreen acknowledgeScreen = selectMultipleWorkflowScreen
                 .tapOnAcknowledgeSelectedScreenDoneButton();
-        inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(null,
-                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, workflowCount);
+        inboxScreen = acknowledgeScreen.acknowledgeTRRWorkflow(null,
+                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_TRR, workflowCount);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
         workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
@@ -171,21 +169,21 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_OMR},
-            dependsOnMethods = {"acknowledgeSelectedOMRWorkflowTest", "acknowledgeOMRWorkflowDetailViewTest", "swipeToAcknowledgeOMRWorkflowTest"})
-    public void acknowledgeAllOMRWorkflowTest() {
-        System.out.println("Method: acknowledgeAllOMRWorkflowTest()");
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_TRR},
+            dependsOnMethods = {"acknowledgeSelectedTRRWorkflowTest", "acknowledgeTRRWorkflowDetailViewTest", "swipeToAcknowledgeTRRWorkflowTest"})
+    public void acknowledgeAllTRRWorkflowTest() {
+        System.out.println("Method: acknowledgeAllTRRWorkflowTest()");
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.OMRUsername"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OPEN);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         AcknowledgeScreen acknowledgeScreen = inboxScreen.acknowledgeAllWorkflow(MORE_OPTION_ACKNOWLEDGE_ALL);
-        inboxScreen = acknowledgeScreen.acknowledgeOMRWorkflow(null,
-                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_OMR, workflowIDList.size());
+        inboxScreen = acknowledgeScreen.acknowledgeTRRWorkflow(null,
+                ACKNOWLEDGEMENT_CODE_HRR_DEAL, WORKFLOW_TRR, workflowIDList.size());
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
         workflowIDInClosedBucket = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),

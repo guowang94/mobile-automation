@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BookmarkTest extends BaseTest {
 
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, VE, CE
+    //create test method for CNA, TRR, PNL, GT/GMR, IPV/FVA, VE, CE
 
     //-------------------------------- CNA ---------------------------------
 
@@ -93,80 +93,80 @@ public class BookmarkTest extends BaseTest {
         }
     }
 
-    //-------------------------------- OMR ---------------------------------
+    //-------------------------------- TRR ---------------------------------
 
-    @Test(groups = {TEST_GRP_BOOKMARK, TEST_GRP_OMR})
-    public void omrBookmarkDetailViewTest() {
-        System.out.println("Method: omrBookmarkDetailViewTest");
+    @Test(groups = {TEST_GRP_BOOKMARK, TEST_GRP_TRR})
+    public void TRRBookmarkDetailViewTest() {
+        System.out.println("Method: TRRBookmarkDetailViewTest");
         String workflowID;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         BookmarkScreen bookmarkScreen = detailViewScreen.tapOnBookmarkButton();
-        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, 1);
+        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_TRR, 1);
         detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
-        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
+        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_TRR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK, TEST_GRP_OMR})
-    public void omrSwipeBookmarkTest() {
-        System.out.println("Method: omrSwipeBookmarkTest");
+    @Test(groups = {TEST_GRP_BOOKMARK, TEST_GRP_TRR})
+    public void TRRSwipeBookmarkTest() {
+        System.out.println("Method: TRRSwipeBookmarkTest");
         String workflowID;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
-        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, 1);
+        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_TRR, 1);
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
-        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
+        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_TRR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_OMR},
-            dependsOnMethods = {"omrSwipeBookmarkTest", "omrBookmarkDetailViewTest"})
-    public void omrBookmarkSelectedTest() {
-        System.out.println("Method: omrBookmarkSelectedTest");
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_TRR},
+            dependsOnMethods = {"TRRSwipeBookmarkTest", "TRRBookmarkDetailViewTest"})
+    public void TRRBookmarkSelectedTest() {
+        System.out.println("Method: TRRBookmarkSelectedTest");
         List<String> workflowIDList;
         int workflowCount = 1;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO,
                         MORE_OPTION_BOOKMARK_SELECTED);
         workflowIDList = selectMultipleWorkflowScreen.selectNumberOfCNAWorkflow(workflowCount);
         BookmarkScreen bookmarkScreen = selectMultipleWorkflowScreen.tapOnBookmarkSelectedScreenDoneButton();
-        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, workflowCount);
+        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_TRR, workflowCount);
 
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowIDList.get(0), true);
-        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
+        Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_TRR), "Y",
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_OMR},
-            dependsOnMethods = {"omrBookmarkSelectedTest"})
-    public void omrBookmarkAllTest() {
-        System.out.println("Method: omrBookmarkAllTest");
+    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_TRR},
+            dependsOnMethods = {"TRRBookmarkSelectedTest"})
+    public void TRRBookmarkAllTest() {
+        System.out.println("Method: TRRBookmarkAllTest");
         List<String> workflowIDList;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_OMR, STATUS_OVERDUE);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
         inboxScreen.navigateToBucket(BUCKET_TO_DO);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.bookmarkAllWorkflow();
-        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_OMR, workflowIDList.size());
+        inboxScreen = bookmarkScreen.bookmarkWorkflow(WORKFLOW_TRR, workflowIDList.size());
 
         for (String workflowID : workflowIDList) {
             InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
-            Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_OMR), "Y",
+            Assert.assertEquals(detailViewScreen.getBookmarkValue(WORKFLOW_TRR), "Y",
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }

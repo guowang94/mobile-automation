@@ -49,7 +49,7 @@ public class OverviewScreen extends BaseScreen {
             while (!workflowTypeElement.isDisplayed()) {
                 Dimension size = iosDriver.manage().window().getSize();
                 int startY = (int) (size.height * 0.9);
-                int endY = (int) (size.height * 0.7);
+                int endY = (int) (size.height * 0.6);
                 int startX = (int) (size.width / 2.2);
                 //Logging purpose
 //                System.out.println("Trying to swipe from x:" + startX + " y:" + startY + ", to x:" + startX + " y:" + endY);

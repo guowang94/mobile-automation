@@ -8,12 +8,10 @@ import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.text.Normalizer;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private String swipeClarificationButton = "Clarification";
     private String swipeNewClarificationButton = "Request for Clarification";
     private String swipeDelegateButton = "Delegate";
-    private String swipeSubmitButton = "Submit";
+    private String swipeSubmitButton = "submit";
     private String swipeRespondButton = "Respond";
     private String swipeReassignButton = "Reassign";
     private String loadMoreResultsButton = "Load More Results";
@@ -313,8 +311,8 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
             }
         }
-        //---------------------------- OMR WORKFLOW's Acknowledged ------------------------------
-        else if (workflowType.equals(WORKFLOW_OMR) && WORKFLOW_STATUS_ACKNOWLEDGED.equals(workflowStatus)) {
+        //---------------------------- TRR WORKFLOW's Acknowledged ------------------------------
+        else if (workflowType.equals(WORKFLOW_TRR) && WORKFLOW_STATUS_ACKNOWLEDGED.equals(workflowStatus)) {
             if (inboxDetailViewScreen.compareComment(INBOX_DETAIL_ACKNOWLEDGEMENT_COMMENTS_CELL) &&
                     verifyWorkflowStatus(inboxDetailViewScreen, workflowStatus, workflowType)) {
                 return true;
@@ -376,14 +374,14 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 } else {
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                 }
-            case CLARIFICATION_OPTION_OMR_LM:
-                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_OMR_PERFORMER_LM)) {
+            case CLARIFICATION_OPTION_TRR_LM:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_TRR_PERFORMER_LM)) {
                     break;
                 } else {
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                 }
-            case CLARIFICATION_OPTION_OMR_PERFORMER:
-                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_OMR_PERFORMER)) {
+            case CLARIFICATION_OPTION_TRR_PERFORMER:
+                if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_TRR_PERFORMER)) {
                     break;
                 } else {
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
@@ -395,7 +393,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
                 }
             case CLARIFICATION_OPTION_PC:
-                if (WORKFLOW_PNL.equals(workflowType)) {
+                if (WORKFLOW_PNL.equals(workflowType) || WORKFLOW_TRR.equals(workflowType)) {
                     if (inboxDetailViewScreen.compareCurrActorType(CURR_ACTOR_TYPE_PC_USER)) {
                         break;
                     } else {
@@ -453,10 +451,12 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                                          String workflowType) {
         boolean result;
         //TODO need to find out which workflow type also does not have Response Grid
-        if (workflowType.equalsIgnoreCase(WORKFLOW_CNA) || workflowType.equalsIgnoreCase(WORKFLOW_OMR) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_PNL) || workflowType.equalsIgnoreCase(WORKFLOW_VE) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_CE) || workflowType.equalsIgnoreCase(WORKFLOW_TM)) {
+        if (workflowType.equalsIgnoreCase(WORKFLOW_CNA) || workflowType.equalsIgnoreCase(WORKFLOW_PNL) ||
+                workflowType.equalsIgnoreCase(WORKFLOW_VE) || workflowType.equalsIgnoreCase(WORKFLOW_CE) ||
+                workflowType.equalsIgnoreCase(WORKFLOW_TM)) {
             result = inboxDetailViewScreen.compareWorkflowStatus(workflowStatus);
+        } else if (workflowType.equalsIgnoreCase(WORKFLOW_TRR)) {
+            result = inboxDetailViewScreen.compareSubWorkflowStatus(workflowStatus);
         } else {
             //Navigate to Response Grid Screen and validate Workflow Status
             InboxDetailsOptionScreen inboxDetailsOptionScreen = inboxDetailViewScreen.navigateToInboxDetailsOptionScreen();
@@ -629,7 +629,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will tap on Acknowledge Selected for CNA, IPV, FVA and OMR, Review & Accept Selected for PNL,
+     * This method will tap on Acknowledge Selected for CNA, IPV, FVA and TRR, Review & Accept Selected for PNL,
      * Approve Selected for GMR and GT, Review and Assess Selected for CE and Clarify Selected
      *
      * @param numbersOfWorkflowToBeSelected number of workflow to be selected
@@ -652,7 +652,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will tap on Acknowledge All for CNA, IPV, FVA and OMR, Review & Accept All for PNL,
+     * This method will tap on Acknowledge All for CNA, IPV, FVA and TRR, Review & Accept All for PNL,
      * Review and Assess All for CE and Approve All for GMR, GT
      *
      * @param action Acknowledge All, Review & Accept All, Review and Assess All or Approve All
@@ -766,7 +766,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will swipe right on a workflow and tap on Acknowledge for CNA, IPV, FVA and OMR, Review & Accept for PNL,
+     * This method will swipe right on a workflow and tap on Acknowledge for CNA, IPV, FVA and TRR, Review & Accept for PNL,
      * Approve for GMR, GT
      *
      * @param workflowID
@@ -1029,11 +1029,20 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will tap on For Clarification & Comments Sub Tab
+     * This method will tap on For Clarification Sub Tab
      */
     public void tapOnForClarificationSubTab() {
         hasLoadingCompleted();
         inboxScreen.forClarificationSubTab.click();
+        System.out.println("Navigate to For Clarification Tab");
+    }
+
+    /**
+     * This method will tap on For Clarification & Comments Sub Tab
+     */
+    public void tapOnForClarificationAndCommentsSubTab() {
+        hasLoadingCompleted();
+        inboxScreen.forClarificationAndCommentsSubTab.click();
         System.out.println("Navigate to For Clarification & Comments Tab");
     }
 
@@ -1095,8 +1104,11 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         @FindBy(id = "FOR APPROVAL")
         WebElement forApprovalSubTab;
 
-        @FindBy(id = "FOR CLARIFICATION & COMMENTS")
+        @FindBy(id = "FOR CLARIFICATION")
         WebElement forClarificationSubTab;
+
+        @FindBy(id = "FOR CLARIFICATION & COMMENTS")
+        WebElement forClarificationAndCommentsSubTab;
 
         @FindBy(id = "FOR VERIFICATION")
         WebElement forVerificationSubTab;

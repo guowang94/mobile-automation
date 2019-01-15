@@ -8,7 +8,7 @@
                 <!--Workflow Type-->
                 <include name="CNA"/>
                 <exclude name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -28,13 +28,13 @@
         </classes>
     </test>
 
-    <test name="OMR Workflow Regression" enabled="false">
+    <test name="TRR Workflow Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <exclude name="PNL"/>
-                <include name="OMR"/>
+                <include name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -60,7 +60,7 @@
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <include name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -89,7 +89,7 @@
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <exclude name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <include name="CE"/>
@@ -115,7 +115,7 @@
                 <!--Workflow Type-->
                 <include name="CNA"/>
                 <exclude name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -126,13 +126,13 @@
         </classes>
     </test>
 
-    <test name="OMR Delegation Regression" enabled="false">
+    <test name="TRR Delegation Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <exclude name="PNL"/>
-                <include name="OMR"/>
+                <include name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -149,7 +149,7 @@
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <include name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -166,7 +166,7 @@
                 <!--Workflow Type-->
                 <exclude name="CNA"/>
                 <exclude name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <include name="CE"/>
@@ -184,7 +184,7 @@
                 <include name="MULTIPLE WORKFLOW"/>
                 <exclude name="CNA"/>
                 <exclude name="PNL"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="IPV/FVA"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="CE"/>
@@ -206,7 +206,7 @@
                 <exclude name="USERS DELEGATION"/>
                 <include name="DEFAULT DELEGATION"/>
                 <exclude name="CNA"/>
-                <exclude name="OMR"/>
+                <exclude name="TRR"/>
                 <exclude name="PNL"/>
                 <exclude name="GT/GMR"/>
                 <exclude name="IPV/FVA"/>

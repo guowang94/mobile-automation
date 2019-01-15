@@ -1,6 +1,5 @@
 package com.scb.fmsw.mobile.test;
 
-import com.scb.fmsw.mobile.WorkflowConstants;
 import com.scb.fmsw.mobile.base.BaseTest;
 import com.scb.fmsw.mobile.screen.*;
 import org.testng.Assert;
@@ -15,7 +14,7 @@ import java.util.List;
 public class DelegationTest extends BaseTest {
 
     //Note: For manual workflow, in order to create delegation, the user has to be the acknowledger
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, VE, CE
+    //create test method for CNA, TRR, PNL, GT/GMR, IPV/FVA, VE, CE
 
     //-------------------------------- MULTIPLE WORKFLOW TYPE ---------------------------------
 
@@ -370,14 +369,14 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    //-------------------------------- OMR ---------------------------------
+    //-------------------------------- TRR ---------------------------------
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptAndDeleteAndDeleteDefaultOMRDeskOrCountryDelegation() {
-        System.out.println("Method: omrAcceptAndDeleteAndDeleteDefaultOMRDeskOrCountryDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void TRRAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -422,13 +421,13 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation() {
-        System.out.println("Method: omrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -473,11 +472,11 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptAndDeleteAndDeleteUserDelegation() {
-        System.out.println("Method: omrAcceptAndDeleteAndDeleteUserDelegation");
+    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void trrAcceptAndDeleteAndDeleteUserDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         //The duration of the delegation cannot be for more than 1 year
         DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
         String fromDate = dateFormat.format(new Date());
@@ -521,12 +520,12 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectAndDeleteDefaultOMRDeskOrCountryDelegation() {
-        System.out.println("Method: omrRejectAndDeleteDefaultOMRDeskOrCountryDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -571,13 +570,13 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectAndDeleteDefaultPortfolioDelegation() {
-        System.out.println("Method: omrRejectAndDeleteDefaultPortfolioDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: trrRejectAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -622,11 +621,11 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectAndDeleteUserDelegation() {
-        System.out.println("Method: omrRejectAndDeleteUserDelegation");
+    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteUserDelegation() {
+        System.out.println("Method: trrRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         //The duration of the delegation cannot be for more than 1 year
         DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
         String fromDate = dateFormat.format(new Date());

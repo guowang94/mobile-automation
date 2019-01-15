@@ -29,9 +29,10 @@ public interface WorkflowConstants {
     String TEST_GRP_IPV_FVA = "IPV/FVA";
     String TEST_GRP_PNL = "PNL";
     String TEST_GRP_GT_GMR = "GT/GMR";
-    String TEST_GRP_OMR = "OMR";
+    String TEST_GRP_TRR = "TRR";
     String TEST_GRP_CE = "CE";
     String TEST_GRP_VE = "VE";
+    String TEST_GRP_TM = "TM";
     String TEST_GRP_MULTIPLE_WORKFLOW = "MULTIPLE WORKFLOW";
     String TEST_GRP_CLARIFICATION_OTHERS = "OTHERS";
     String TEST_GRP_CLARIFICATION_PERFORMER = "PERFORMER";
@@ -44,6 +45,7 @@ public interface WorkflowConstants {
     String TEST_GRP_CLARIFICATION_VDO = "VDO";
     String TEST_GRP_ACCEPT_DELEGATION = "ACCEPT DELEGATION";
     String TEST_GRP_REJECT_DELEGATION = "REJECT DELEGATION";
+    String TEST_GRP_TRR_LM = "TRR LM";
 
     //Navigation Bar
     String NAV_BAR_TITLE_TO_LIMIT_MONITORING = "Request for Clarification - To Limit Monitoring";
@@ -64,6 +66,7 @@ public interface WorkflowConstants {
     String WORKFLOW_STATUS_ACKNOWLEDGED = "Acknowledged";
     String WORKFLOW_STATUS_PENDING_CLARIFICATION = "Pending Clarification";
     String WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION = "Pending Ack-Post Clarification";
+    String WORKFLOW_STATUS_PENDING_LM_ACK_POST_CLARIFICATION = "Pending LM Ack-Post Clarification";
 
     //PNL Workflow
     String WORKFLOW_STATUS_PENDING_REVIEW_AND_ACCEPTANCE_POST_CLARIFICATION = "Pending Review & Acceptance Post Clarification";
@@ -81,6 +84,11 @@ public interface WorkflowConstants {
     String WORKFLOW_STATUS_APPROVED = "Approved";
     String WORKFLOW_STATUS_PENDING_APPROVAL_POST_CLARIFICATION = "Pending Approval Post Clarification";
 
+    //TM Workflow
+    String WORKFLOW_STATUS_PENDING_TRADER_APPROVAL = "Pending Trader Approval";
+    String WORKFLOW_STATUS_PENDING_FM_HEAD_APPROVAL = "Pending FM Head Approval";
+    String WORKFLOW_STATUS_PENDING_SUPERVISOR_APPROVAL = "Pending Supervisor Approval";
+
     //-------------------------------------------------------------------------
 
     //Alert Title
@@ -90,7 +98,9 @@ public interface WorkflowConstants {
     //Alert Message
     String ALERT_MSG_WORKFLOW_STATUS_HAS_BEEN_UPDATED = "The workflow status has been updated, you can no longer perform any actions on the workflow";
     String ALERT_MSG_SELECT_LATE_CODE = "Please select value of Late Code";
+    String ALERT_MSG_SELECT_LATE_CODE_COMPULSORY = "Please select value of Late Code*";
     String ALERT_MSG_SELECT_LATE_RESPONSE_CODE = "Please select value of Late Response Code";
+    String ALERT_MSG_SELECT_LATE_RESPONSE_CODE_COMPULSORY = "Please select value of Late Response Code*";
     String ALERT_MSG_UNEXPECTED_ERROR_OCCURRED = "Unexpected error occured";
     String ALERT_MSG_STAFF_NOT_AVAILABLE = "Selected staff is not available in the system or does not have a valid role.Please select another option";
     String ALERT_MSG_WORKFLOW_CANNOT_SELF_DELEGATE = "Workflow cannot be self delegated";
@@ -100,11 +110,14 @@ public interface WorkflowConstants {
     String ALERT_MSG_EXISTING_ACTIVE_DELEGATION = "You already have an existing active delegation in the period/date selected so you cannot create another delegation";
     String ALERT_MSG_ACCEPT_DELEGATION = "You are about to accept all the selected pending delegations. Do you wish to continue? Only pending delegations will be accepted.";
     String ALERT_MSG_REJECT_DELEGATION = "You are about to reject all the selected pending delegations. Do you wish to continue? Only pending delegations will be rejected.";
+    String ALERT_MSG_DELETE_DELEGATION = "You are about to delete delegation. Do you wish to continue?";
     String ALERT_MSG_CAN_ONLY_ACCEPT_PENDING_DELEGATION = "None of the selected delegations are pending so no action has been taken.";
     String ALERT_MSG_ACCEPTED_SUCCESSFULLY = "1 delegation accepted successfully";
     String ALERT_MSG_REJECTED_SUCCESSFULLY = "1 delegation rejected successfully";
+    String ALERT_MSG_DELETED_SUCCESSFULLY = "1 delegation deleted successfully";
     String ALERT_MSG_NONE_OF_THE_MSG_ARE_MATCHED = "None of Alert Message are matched";
     String ALERT_MSG_NETWORK_CONNECTION_WAS_LOST = "The network connection was lost.";
+    String ALERT_MSG_CANNOT_REQUEST_FOR_CLARIFICATION_TO_SELF = "Query/Request for clarification cannot be sent to self";
 
     //Message
     String MSG_NO_MORE_LOAD_RESULTS_BUTTON = "There is no more Load More Results Button";
@@ -160,6 +173,7 @@ public interface WorkflowConstants {
     String FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION = "Failed to create Users Delegation";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_ASSESS_WORKFLOW = "Failed to Review and Assess Workflow";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_APPROVE_WORKFLOW = "Failed to Review and Approve Workflow";
+    String FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW = "Failed to Approve Workflow";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_ACTION_WORKFLOW = "Failed to Review and Action Workflow";
     String FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS = "Failed to match Comments/Workflow Status";
 
@@ -176,6 +190,7 @@ public interface WorkflowConstants {
     String ERROR_MSG_NOT_ENOUGH_WORKFLOW = "There are not enough workflow or there is no workflow";
     String ERROR_MSG_UNABLE_TO_FIND_BOOKMARK_ELEMENT = "Unable to find Bookmark element";
     String ERROR_MSG_UNABLE_TO_FIND_PREV_ACTOR_TYPE_ELEMENT = "Unable to find Prev Actor Type element";
+    String ERROR_MSG_UNABLE_TO_FIND_CURR_ACTOR_ELEMENT = "Unable to find Curr Actor element";
     String ERROR_MSG_UNABLE_TO_FIND_COMMENT_ELEMENT = "Unable to find $1 element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_STATUS_ELEMENT = "Unable to find Workflow Status element";
     String ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_EVENT_STATUS_ELEMENT = "Unable to find Workflow Event Status element";
@@ -215,8 +230,10 @@ public interface WorkflowConstants {
     String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Created Users Delegation";
     String SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION = "Failed to accept Delegation";
     String SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION = "Failed to reject Delegation";
-    String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPT_DELEGATION = "Successfully accepted Delegation";
-    String SCREENSHOT_MSG_SUCCESSFULLY_REJECT_DELEGATION = "Successfully rejected Delegation";
+    String SCREENSHOT_MSG_FAILED_TO_DELETE_DELEGATION = "Failed to delete Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_ACCEPTED_DELEGATION = "Successfully accepted Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_REJECTED_DELEGATION = "Successfully rejected Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_DELETED_DELEGATION = "Successfully deleted Delegation";
 
     //------------------Inbox Screen---------------------
 
@@ -283,8 +300,8 @@ public interface WorkflowConstants {
 
     String CURR_ACTOR_TYPE_CNA_PERFORMER_LM = "CNAPERFORMERLM";
     String CURR_ACTOR_TYPE_CNA_PERFORMER = "CNAPERFORMER";
-    String CURR_ACTOR_TYPE_OMR_PERFORMER_LM = "OMRPERFORMERLM";
-    String CURR_ACTOR_TYPE_OMR_PERFORMER = "OMRPERFORMER";
+    String CURR_ACTOR_TYPE_TRR_PERFORMER_LM = "TRRPERFORMERLM";
+    String CURR_ACTOR_TYPE_TRR_PERFORMER = "TRRPERFORMER";
     String CURR_ACTOR_TYPE_PC_USER = "PCUSER";
     String CURR_ACTOR_TYPE_MO_USER = "MOUSER";
     String CURR_ACTOR_TYPE_OTHER_USER = "OTHERUSER";
@@ -327,7 +344,7 @@ public interface WorkflowConstants {
 
     //Workflow Type
     String WORKFLOW_CNA = "Cancel & Amend";
-    String WORKFLOW_OMR = "Off Market Rate";
+    String WORKFLOW_TRR = "Transaction Rate Review";
     String WORKFLOW_PNL = "Profit & Loss";
     String WORKFLOW_GT = "Group Treasury";
     String WORKFLOW_GMR = "Group Market Risk";
@@ -335,6 +352,7 @@ public interface WorkflowConstants {
     String WORKFLOW_FVA = "Fair Value Adjustment";
     String WORKFLOW_CE = "Credit Excess";
     String WORKFLOW_VE = "Volcker RENTD Excess";
+    String WORKFLOW_TM = "Trader Mandate";
 
     //------------------- Action Screen --------------------------------
 
@@ -354,15 +372,17 @@ public interface WorkflowConstants {
     String PC_GRP_PC_GBS = "PC GBS";
 
     //Form's Label
-    String FORM_LABEL_LATE_CODE = "Late Code";
+    String FORM_LABEL_LATE_CODE = "Late Code*";
     String FORM_LABEL_COMMENTS = "Comments";
+    String FORM_LABEL_COMMENTS_COMPULSORY = "Comments*";
     String FORM_LABEL_VDO_COMMENTS = "VDO Comments*";
-    String FORM_LABEL_RESPONSE_COMMENTS = "Response Comments";
-    String FORM_LABEL_LATE_COMMENTS = "Late Comments";
+    String FORM_LABEL_RESPONSE_COMMENTS_COMPULSORY = "Response Comments*";
+    String FORM_LABEL_LATE_COMMENTS = "Late Comments*";
     String FORM_LABEL_LATE_RESPONSE_CODE = "Late Response Code";
-    String FORM_LABEL_VE_LATE_RESPONSE_CODE = "Late Response Code*";
+    String FORM_LABEL_LATE_RESPONSE_CODE_COMPULSORY = "Late Response Code*";
     String FORM_LABEL_LATE_RESPONSE_COMMENTS = "Late Response Comments";
-    String FORM_LABEL_ACKNOWLEDGE_CODE = "Acknowledgement Code";
+    String FORM_LABEL_LATE_RESPONSE_COMMENTS_COMPULSORY = "Late Response Comments*";
+    String FORM_LABEL_ACKNOWLEDGE_CODE = "Acknowledgement Code*";
     String FORM_LABEL_ACKNOWLEDGEMENT_COMMENTS = "Acknowledgement Comments";
     String FORM_LABEL_CE_SEVERITY = "Severity*";
     String FORM_LABEL_CE_ISSUE_FLAGGED_BY_MTCR = "Issue Flagged By (MTCR)*";
@@ -381,7 +401,7 @@ public interface WorkflowConstants {
     String FORM_LABEL_HOW_TO_PREVENT_RECURRENCE = "How to prevent recurrence";
     String FORM_LABEL_REMEDIATION_ACTION = "Remediation Action*";
     String FORM_LABEL_SUPERVISOR_COMMENTS = "Supervisor Comments (Optional)";
-    String FORM_LABEL_PSID_OR_NAME = "PSID/Name";
+    String FORM_LABEL_PSID_OR_NAME = "PSID/Name*";
     String FORM_LABEL_ESCALATE = "Escalate";
     String FORM_LABEL_DISPUTE = "Dispute";
     String FORM_LABEL_TO_GROUP = "To Group";
@@ -390,8 +410,8 @@ public interface WorkflowConstants {
 
     String CLARIFICATION_OPTION_CNA_LM = "Cancel & Amend Performer Line Manager";
     String CLARIFICATION_OPTION_CNA_PERFORMER = "Cancel & Amend Performer";
-    String CLARIFICATION_OPTION_OMR_LM = "Off Market Rate Performer Line Manager";
-    String CLARIFICATION_OPTION_OMR_PERFORMER = "Off Market Rate Performer";
+    String CLARIFICATION_OPTION_TRR_LM = "Transaction Rate Review Performer Line Manager";
+    String CLARIFICATION_OPTION_TRR_PERFORMER = "Transaction Rate Review Performer";
     String CLARIFICATION_OPTION_PC = "Product Control";
     String CLARIFICATION_OPTION_MO = "Middle Office";
     String CLARIFICATION_OPTION_SEND_TO = "Send to";
@@ -402,6 +422,8 @@ public interface WorkflowConstants {
     String CLARIFICATION_OPTION_MTCR_OR_MRO_UPLOADER = "MTCR/MRO Uploader";
     String CLARIFICATION_OPTION_SEND_TO_OTHERS_VE = "Send To Others";
     String CLARIFICATION_OPTION_VOLCKER_COMPLIANCE = "Volcker Compliance";
+    String CLARIFICATION_OPTION_MTCR_USER = "MTCR User";
+    String CLARIFICATION_OPTION_STAFF_RESPONSIBLE_FOR_CE = "Staff Responsible(for Credit Excess)";
 
     //------------------ Clarification Option Screen ----------------
     String RESPOND_OPTION_RESPOND_SELECTED = "Respond Selected";
@@ -427,7 +449,7 @@ public interface WorkflowConstants {
     //Capability Value
     String CAPABILITY_VALUE_DEVICE_NAME = "iPhone";
     String CAPABILITY_VALUE_PLATFORM_NAME = "iOS";
-    String CAPABILITY_VALUE_PLATFORM_VERSION = "11.1.1";
+    String CAPABILITY_VALUE_PLATFORM_VERSION = "11.4.1";
     String CAPABILITY_VALUE_UDID_IPHONE6 = "55bd37ddcebbd54dbac0af44a34e2815a841e6b2";
     String CAPABILITY_VALUE_UDID_IPHONE7 = "68a77c4e8ca8c34fa0957c8d39f1f445f664cb18";
     String CAPABILITY_VALUE_UDID_IPHONE7_NEW = "453c0f8d6c435754717bb056e5fe46220c2e7ef0";
@@ -437,6 +459,6 @@ public interface WorkflowConstants {
     String CAPABILITY_VALUE_APP_SIT = "/Users/optimum/Desktop/SIT Build/FMDashboard.app";
     int CAPABILITY_VALUE_NEW_COMMAND_TIMEOUT = 100000;
     String CAPABILITY_VALUE_BUNDLE_ID = "com.ops.ios.supervisorydashboard";
-    String CAPABILITY_VALUE_BUNDLE_ID_ARI = "com.ops.fms.supervisorydashboard";
+    String CAPABILITY_VALUE_BUNDLE_ID_TEMP = "com.ops.ios.supervisorydashboard1";
     boolean CAPABILITY_VALUE_USE_NEW_WDA = false; // so that it wont reinstall WDA every time
 }

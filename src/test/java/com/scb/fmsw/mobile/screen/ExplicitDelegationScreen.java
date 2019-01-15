@@ -31,7 +31,7 @@ public class ExplicitDelegationScreen extends BaseScreen {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
             searchForUser(FORM_LABEL_PSID_OR_NAME, userID);
-            enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+            enterComments(FORM_LABEL_COMMENTS_COMPULSORY, MSG_ENTER_COMMENT);
             tapOnFormDoneButton();
             verifyDelegateStatus(workflowType);
         } else {

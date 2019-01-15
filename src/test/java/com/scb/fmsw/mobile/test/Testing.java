@@ -65,7 +65,7 @@ public class Testing extends BaseTest {
         OverviewScreen overviewScreen = login(prop.getProperty("sit.MTCRUsername"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CE, STATUS_OPEN);
         String workflowID = inboxScreen.getFirstCNAWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         AcknowledgeScreen acknowledgeScreen = inboxDetailViewScreen.tapOnAcknowledgeButton();
         inboxScreen = acknowledgeScreen.reviewAndAssessWorkflow(null, "High",
                 "Yes", WORKFLOW_CE, 1);

@@ -1,6 +1,5 @@
 package com.scb.fmsw.mobile.test;
 
-import com.scb.fmsw.mobile.WorkflowConstants;
 import com.scb.fmsw.mobile.base.BaseTest;
 import com.scb.fmsw.mobile.screen.*;
 import org.testng.Assert;
@@ -15,7 +14,7 @@ import java.util.List;
 public class DelegationTest extends BaseTest {
 
     //Note: For manual workflow, in order to create delegation, the user has to be the acknowledger
-    //create test method for CNA, OMR, PNL, GT/GMR, IPV/FVA, VE, CE
+    //create test method for CNA, TRR, PNL, GT/GMR, IPV/FVA, VE, CE
 
     //-------------------------------- MULTIPLE WORKFLOW TYPE ---------------------------------
 
@@ -72,13 +71,14 @@ public class DelegationTest extends BaseTest {
     //-------------------------------- CNA ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CNA, TEST_GRP_ACCEPT_DELEGATION})
-    public void cnaAcceptDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: cnaAcceptDefaultDeskOrCountryDelegation");
+    public void cnaAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: cnaAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CNA);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
@@ -102,17 +102,28 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_DEFAULT,
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_DEFAULT,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CNA, TEST_GRP_ACCEPT_DELEGATION})
-    public void cnaAcceptDefaultPortfolioDelegation() {
-        System.out.println("Method: cnaAcceptDefaultPortfolioDelegation");
+    public void cnaAcceptAndDeleteAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: cnaAcceptAndDeleteAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -147,12 +158,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_CNA, TEST_GRP_ACCEPT_DELEGATION})
-    public void cnaAcceptUserDelegation() {
-        System.out.println("Method: cnaAcceptUserDelegation");
+    public void cnaAcceptAndDeleteAndDeleteUserDelegation() {
+        System.out.println("Method: cnaAcceptAndDeleteAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CNA);
         //The duration of the delegation cannot be for more than 1 year
@@ -184,12 +206,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CNA, TEST_GRP_REJECT_DELEGATION})
-    public void cnaRejectDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: cnaRejectDefaultDeskOrCountryDelegation");
+    public void cnaRejectAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: cnaRejectAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CNA);
@@ -212,7 +245,7 @@ public class DelegationTest extends BaseTest {
                 DELEGATION_TYPE_DEFAULT, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
         delegationScreen.logout();
 
-        //-----------------------login as the Delegatee to Reject the delegation------------------
+        //-----------------------login as the Delegatee to RejectAndDelete the delegation------------------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
         overviewScreen.tapOnMenuButton();
@@ -223,12 +256,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CNA, TEST_GRP_REJECT_DELEGATION})
-    public void cnaRejectDefaultPortfolioDelegation() {
-        System.out.println("Method: cnaRejectDefaultPortfolioDelegation");
+    public void cnaRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: cnaRejectAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -252,7 +296,7 @@ public class DelegationTest extends BaseTest {
                 workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
         delegationScreen.logout();
 
-        //-----------------------login as the Delegatee to Reject the delegation------------------
+        //-----------------------login as the Delegatee to RejectAndDelete the delegation------------------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
         overviewScreen.tapOnMenuButton();
@@ -263,12 +307,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_CNA, TEST_GRP_REJECT_DELEGATION})
-    public void cnaRejectUserDelegation() {
-        System.out.println("Method: cnaRejectUserDelegation");
+    public void cnaRejectAndDeleteUserDelegation() {
+        System.out.println("Method: cnaRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CNA);
         //The duration of the delegation cannot be for more than 1 year
@@ -289,7 +344,7 @@ public class DelegationTest extends BaseTest {
                 DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
         delegationScreen.logout();
 
-        //-----------------------login as the Delegatee to Reject the delegation------------------
+        //-----------------------login as the Delegatee to RejectAndDelete the delegation------------------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
         overviewScreen.tapOnMenuButton();
@@ -300,17 +355,28 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    //-------------------------------- OMR ---------------------------------
+    //-------------------------------- TRR ---------------------------------
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptDefaultOMRDeskOrCountryDelegation() {
-        System.out.println("Method: omrAcceptDefaultOMRDeskOrCountryDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void TRRAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -341,16 +407,27 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptDefaultPortfolioDelegation() {
-        System.out.println("Method: omrAcceptDefaultPortfolioDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -381,14 +458,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_OMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void omrAcceptUserDelegation() {
-        System.out.println("Method: omrAcceptUserDelegation");
+    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void trrAcceptAndDeleteAndDeleteUserDelegation() {
+        System.out.println("Method: trrAcceptAndDeleteAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         //The duration of the delegation cannot be for more than 1 year
         DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
         String fromDate = dateFormat.format(new Date());
@@ -418,15 +506,26 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectDefaultOMRDeskOrCountryDelegation() {
-        System.out.println("Method: omrRejectDefaultOMRDeskOrCountryDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -457,16 +556,27 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectDefaultPortfolioDelegation() {
-        System.out.println("Method: omrRejectDefaultPortfolioDelegation");
+    @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: trrRejectAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
@@ -497,14 +607,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
-    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_OMR, TEST_GRP_REJECT_DELEGATION})
-    public void omrRejectUserDelegation() {
-        System.out.println("Method: omrRejectUserDelegation");
+    @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrRejectAndDeleteUserDelegation() {
+        System.out.println("Method: trrRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
-        workflowTypeList.add(WORKFLOW_OMR);
+        workflowTypeList.add(WORKFLOW_TRR);
         //The duration of the delegation cannot be for more than 1 year
         DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
         String fromDate = dateFormat.format(new Date());
@@ -534,14 +655,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     //-------------------------------- PNL ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_PNL, TEST_GRP_ACCEPT_DELEGATION})
-    public void pnlAcceptDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: pnlAcceptDefaultDeskOrCountryDelegation");
+    public void pnlAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: pnlAcceptAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_PNL);
@@ -575,12 +707,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_PNL, TEST_GRP_ACCEPT_DELEGATION})
-    public void pnlAcceptDefaultPortfolioDelegation() {
-        System.out.println("Method: pnlAcceptDefaultPortfolioDelegation");
+    public void pnlAcceptAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: pnlAcceptAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -615,12 +758,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_PNL, TEST_GRP_ACCEPT_DELEGATION})
-    public void pnlAcceptUserDelegation() {
-        System.out.println("Method: pnlAcceptUserDelegation");
+    public void pnlAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: pnlAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_PNL);
         //The duration of the delegation cannot be for more than 1 year
@@ -652,12 +806,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_PNL, TEST_GRP_REJECT_DELEGATION})
-    public void pnlRejectDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: pnlRejectDefaultDeskOrCountryDelegation");
+    public void pnlRejectAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: pnlRejectAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_PNL);
@@ -691,12 +856,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_PNL, TEST_GRP_REJECT_DELEGATION})
-    public void pnlRejectDefaultPortfolioDelegation() {
-        System.out.println("Method: pnlRejectDefaultPortfolioDelegation");
+    public void pnlRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: pnlRejectAndDeleteDefaultPortfolioDelegation");
         int count = 3;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -731,12 +907,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_PNL, TEST_GRP_REJECT_DELEGATION})
-    public void pnlRejectUserDelegation() {
-        System.out.println("Method: pnlRejectUserDelegation");
+    public void pnlRejectAndDeleteUserDelegation() {
+        System.out.println("Method: pnlRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_PNL);
         //The duration of the delegation cannot be for more than 1 year
@@ -768,14 +955,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     //-------------------------------- GT/GMR ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void gmrAcceptDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: gmrAcceptDefaultDeskOrCountryDelegation");
+    public void gmrAcceptAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: gmrAcceptAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_GMR);
@@ -809,12 +1007,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void gmrAcceptDefaultPortfolioDelegation() {
-        System.out.println("Method: gmrAcceptDefaultPortfolioDelegation");
+    public void gmrAcceptAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: gmrAcceptAndDeleteDefaultPortfolioDelegation");
         int count = 1;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -849,12 +1058,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_ACCEPT_DELEGATION})
-    public void gmrAcceptUserDelegation() {
-        System.out.println("Method: gmrAcceptUserDelegation");
+    public void gmrAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: gmrAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_GMR);
         //The duration of the delegation cannot be for more than 1 year
@@ -886,12 +1106,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_REJECT_DELEGATION})
-    public void gmrRejectDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: gmrRejectDefaultDeskOrCountryDelegation");
+    public void gmrRejectAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: gmrRejectAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_GMR);
@@ -925,12 +1156,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_REJECT_DELEGATION})
-    public void gmrRejectDefaultPortfolioDelegation() {
-        System.out.println("Method: gmrRejectDefaultPortfolioDelegation");
+    public void gmrRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: gmrRejectAndDeleteDefaultPortfolioDelegation");
         int count = 1;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -965,12 +1207,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_REJECT_DELEGATION})
-    public void gmrRejectUserDelegation() {
-        System.out.println("Method: gmrRejectUserDelegation");
+    public void gmrRejectAndDeleteUserDelegation() {
+        System.out.println("Method: gmrRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_GMR);
         //The duration of the delegation cannot be for more than 1 year
@@ -1002,6 +1255,17 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
@@ -1009,8 +1273,8 @@ public class DelegationTest extends BaseTest {
     //-------------------------------- IPV/FVA ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_ACCEPT_DELEGATION})
-    public void fvaAcceptDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: fvaAcceptDefaultDeskOrCountryDelegation");
+    public void fvaAcceptAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: fvaAcceptAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_FVA);
@@ -1044,12 +1308,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_ACCEPT_DELEGATION})
-    public void fvaAcceptDefaultPortfolioDelegation() {
-        System.out.println("Method: fvaAcceptDefaultPortfolioDelegation");
+    public void fvaAcceptAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: fvaAcceptAndDeleteDefaultPortfolioDelegation");
         int count = 1;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -1084,12 +1359,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_ACCEPT_DELEGATION})
-    public void fvaAcceptUserDelegation() {
-        System.out.println("Method: cnaAcceptUserDelegation");
+    public void fvaAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: cnaAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_FVA);
         //The duration of the delegation cannot be for more than 1 year
@@ -1121,12 +1407,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_REJECT_DELEGATION})
-    public void fvaRejectDefaultDeskOrCountryDelegation() {
-        System.out.println("Method: fvaRejectDefaultDeskOrCountryDelegation");
+    public void fvaRejectAndDeleteDefaultDeskOrCountryDelegation() {
+        System.out.println("Method: fvaRejectAndDeleteDefaultDeskOrCountryDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_FVA);
@@ -1160,12 +1457,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_REJECT_DELEGATION})
-    public void fvaRejectDefaultPortfolioDelegation() {
-        System.out.println("Method: fvaRejectDefaultPortfolioDelegation");
+    public void fvaRejectAndDeleteDefaultPortfolioDelegation() {
+        System.out.println("Method: fvaRejectAndDeleteDefaultPortfolioDelegation");
         int count = 1;
         List<String> workflowTypeList = new ArrayList<>();
         List<String> countryList = new ArrayList<>();
@@ -1200,12 +1508,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_REJECT_DELEGATION})
-    public void fvaRejectUserDelegation() {
-        System.out.println("Method: fvaRejectUserDelegation");
+    public void fvaRejectAndDeleteUserDelegation() {
+        System.out.println("Method: fvaRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_FVA);
         //The duration of the delegation cannot be for more than 1 year
@@ -1237,14 +1556,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     //-------------------------------- CE ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CE, TEST_GRP_ACCEPT_DELEGATION})
-    public void ceAcceptDefaultDelegation() {
-        System.out.println("Method: ceAcceptDefaultDelegation");
+    public void ceAcceptAndDeleteDefaultDelegation() {
+        System.out.println("Method: ceAcceptAndDeleteDefaultDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CE);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
@@ -1274,12 +1604,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_CE, TEST_GRP_ACCEPT_DELEGATION})
-    public void ceAcceptUserDelegation() {
-        System.out.println("Method: ceAcceptUserDelegation");
+    public void ceAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: ceAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CE);
         //The duration of the delegation cannot be for more than 1 year
@@ -1311,12 +1652,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_CE, TEST_GRP_REJECT_DELEGATION})
-    public void ceRejectDefaultDelegation() {
-        System.out.println("Method: ceRejectDefaultDelegation");
+    public void ceRejectAndDeleteDefaultDelegation() {
+        System.out.println("Method: ceRejectAndDeleteDefaultDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CE);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
@@ -1346,12 +1698,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_CE, TEST_GRP_REJECT_DELEGATION})
-    public void ceRejectUserDelegation() {
-        System.out.println("Method: ceRejectUserDelegation");
+    public void ceRejectAndDeleteUserDelegation() {
+        System.out.println("Method: ceRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_CE);
         //The duration of the delegation cannot be for more than 1 year
@@ -1383,14 +1746,25 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     //-------------------------------- VE ---------------------------------
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_VE, TEST_GRP_ACCEPT_DELEGATION})
-    public void veAcceptDefaultDelegation() {
-        System.out.println("Method: veAcceptDefaultDelegation");
+    public void veAcceptAndDeleteDefaultDelegation() {
+        System.out.println("Method: veAcceptAndDeleteDefaultDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_VE);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
@@ -1420,12 +1794,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_VE, TEST_GRP_ACCEPT_DELEGATION})
-    public void veAcceptUserDelegation() {
-        System.out.println("Method: veAcceptUserDelegation");
+    public void veAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: veAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_VE);
         //The duration of the delegation cannot be for more than 1 year
@@ -1457,12 +1842,23 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
                 SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_DEFAULT_DELEGATION, TEST_GRP_VE, TEST_GRP_REJECT_DELEGATION})
-    public void veRejectDefaultDelegation() {
-        System.out.println("Method: veRejectDefaultDelegation");
+    public void veRejectAndDeleteDefaultDelegation() {
+        System.out.println("Method: veRejectAndDeleteDefaultDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_VE);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
@@ -1492,13 +1888,24 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_DEFAULT,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 
     @Test(groups = {TEST_GRP_USERS_DELEGATION, TEST_GRP_VE, TEST_GRP_REJECT_DELEGATION},
-            dependsOnMethods = {"veRejectDefaultDelegation"})
-    public void veRejectUserDelegation() {
-        System.out.println("Method: veRejectUserDelegation");
+            dependsOnMethods = {"veRejectAndDeleteDefaultDelegation"})
+    public void veRejectAndDeleteUserDelegation() {
+        System.out.println("Method: veRejectAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_VE);
         //The duration of the delegation cannot be for more than 1 year
@@ -1530,6 +1937,17 @@ public class DelegationTest extends BaseTest {
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
                 SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
         System.out.println("Complete");
     }
 }

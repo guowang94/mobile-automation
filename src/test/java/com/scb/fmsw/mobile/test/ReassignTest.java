@@ -11,7 +11,9 @@ public class ReassignTest extends BaseTest {
 
     //------------------- PC GBS ----------------------
 
-    @Test(groups = TEST_GRP_REASSIGN)
+    //PC user is not suppose to user mobile
+
+    /*@Test(groups = TEST_GRP_REASSIGN)
     public void pcGBSReassignCNAWorkflowDetailViewTest() {
         System.out.println("Method: pcGBSReassignCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -22,7 +24,7 @@ public class ReassignTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
         inboxScreen = reassignScreen.reassignWorkflow(PC_GRP_PC_ALM, WORKFLOW_CNA, 1, true);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -64,8 +66,8 @@ public class ReassignTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = TEST_GRP_REASSIGN_SELECTED/*,
-            dependsOnMethods = {"pcGBSSwipeToReassignCNAWorkflowTest", "pcGBSReassignCNAWorkflowDetailViewTest"}*/)
+    @Test(groups = TEST_GRP_REASSIGN_SELECTED,
+            dependsOnMethods = {"pcGBSSwipeToReassignCNAWorkflowTest", "pcGBSReassignCNAWorkflowDetailViewTest"})
     public void pcGBSReassignSelectedCNAWorkflowTest() {
         System.out.println("Method: pcGBSReassignSelectedCNAWorkflowTest()");
         List<String> workflowIDList;
@@ -128,11 +130,13 @@ public class ReassignTest extends BaseTest {
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_REASSIGN_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //------------------- FO ADMIN ----------------------
 
-    @Test(groups = TEST_GRP_REASSIGN)
+    //Admin is not suppose to use mobile
+
+    /*@Test(groups = TEST_GRP_REASSIGN)
     public void foAdminReassignCNAWorkflowDetailViewTest() {
         System.out.println("Method: foAdminReassignCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -143,7 +147,7 @@ public class ReassignTest extends BaseTest {
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.tapOnForExceptionSubTab();
         workflowID = inboxScreen.getFirstWorkflowId();
-        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID);
+        InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
         ReassignScreen reassignScreen = inboxDetailViewScreen.tapOnReassignButton();
         inboxScreen = reassignScreen.reassignWorkflow(prop.getProperty("uat.DelegateUsername"), WORKFLOW_CNA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
@@ -187,8 +191,8 @@ public class ReassignTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = TEST_GRP_REASSIGN_SELECTED/*,
-            dependsOnMethods = {"foAdminReassignCNAWorkflowDetailViewTest", "foAdminSwipeToReassignCNAWorkflowTest"}*/)
+    @Test(groups = TEST_GRP_REASSIGN_SELECTED,
+            dependsOnMethods = {"foAdminReassignCNAWorkflowDetailViewTest", "foAdminSwipeToReassignCNAWorkflowTest"})
     public void foAdminReassignSelectedCNAWorkflowTest() {
         System.out.println("Method: foAdminReassignSelectedCNAWorkflowTest()");
         List<String> workflowIDList;
@@ -252,6 +256,6 @@ public class ReassignTest extends BaseTest {
         allWorkflowIDList = inboxScreen.getAllWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_REASSIGN_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
 }

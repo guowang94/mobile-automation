@@ -45,7 +45,7 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will acknowledge OMR workflow
+     * This method will acknowledge TRR workflow
      *
      * @param lateCode        null if workflow is not late
      * @param acknowledgeCode
@@ -53,7 +53,7 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
      * @param count
      * @return InboxScreen
      */
-    public InboxScreen acknowledgeOMRWorkflow(String lateCode, String acknowledgeCode, String workflowType, int count) {
+    public InboxScreen acknowledgeTRRWorkflow(String lateCode, String acknowledgeCode, String workflowType, int count) {
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
             selectLateCode(lateCode);
@@ -184,7 +184,8 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
             } else {
                 switch (acknowledgeScreen.alertMessage.getText()) {
                     case ALERT_MSG_SELECT_LATE_CODE:
-                        if (WORKFLOW_OMR.equals(workflowType)) {
+                    case ALERT_MSG_SELECT_LATE_CODE_COMPULSORY:
+                        if (WORKFLOW_TRR.equals(workflowType)) {
                             acknowledgeScreen.alertOkButton.click();
                             selectLateCode(LATE_CODE_DEADLINE_MISSED);
                         }

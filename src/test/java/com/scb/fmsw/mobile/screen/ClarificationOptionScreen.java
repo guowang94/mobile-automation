@@ -3,7 +3,6 @@ package com.scb.fmsw.mobile.screen;
 import com.scb.fmsw.mobile.WorkflowConstants;
 import com.scb.fmsw.mobile.base.BaseScreen;
 
-import com.sun.jndi.ldap.Ber;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
@@ -57,9 +56,9 @@ public class ClarificationOptionScreen extends BaseScreen implements WorkflowCon
                     screenshot(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
                     throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
                 }
-            case WORKFLOW_OMR:
-                if (waitForElementById(CLARIFICATION_OPTION_OMR_LM, true).isDisplayed() &&
-                        waitForElementById(CLARIFICATION_OPTION_OMR_PERFORMER, true).isDisplayed() &&
+            case WORKFLOW_TRR:
+                if (waitForElementById(CLARIFICATION_OPTION_TRR_LM, true).isDisplayed() &&
+                        waitForElementById(CLARIFICATION_OPTION_TRR_PERFORMER, true).isDisplayed() &&
                         waitForElementById(CLARIFICATION_OPTION_PC, true).isDisplayed() &&
                         waitForElementById(CLARIFICATION_OPTION_SEND_TO, true).isDisplayed()) {
                     System.out.println(MSG_VERIFIED_CLARIFICATION_OPTIONS);
@@ -121,6 +120,15 @@ public class ClarificationOptionScreen extends BaseScreen implements WorkflowCon
                 }
             case WORKFLOW_VE:
                 if (waitForElementById(CLARIFICATION_OPTION_VOLCKER_COMPLIANCE, true).isDisplayed()) {
+                    System.out.println(MSG_VERIFIED_CLARIFICATION_OPTIONS);
+                    break;
+                } else {
+                    screenshot(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
+                }
+            case WORKFLOW_CE:
+                if (waitForElementById(CLARIFICATION_OPTION_MTCR_USER, true).isDisplayed() &&
+                        waitForElementById(CLARIFICATION_OPTION_STAFF_RESPONSIBLE_FOR_CE, true).isDisplayed()) {
                     System.out.println(MSG_VERIFIED_CLARIFICATION_OPTIONS);
                     break;
                 } else {

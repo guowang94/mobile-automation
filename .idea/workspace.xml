@@ -1,46 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="272a2b70-c3e1-4714-8b9b-077253353d82" name="Default" comment="commit">
+    <list default="true" id="272a2b70-c3e1-4714-8b9b-077253353d82" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/config.properties" afterPath="$PROJECT_DIR$/config.properties" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseDriver.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseDriver.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ExplicitDelegationScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ExplicitDelegationScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationTest.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/WorkflowConstants.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/WorkflowConstants.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseDriver.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseDriver.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/base/BaseScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen$PageObjects.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/AcknowledgeScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen$PageObjects.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/ClarificationScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen$PageObjects.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen$PageObjects.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/InboxScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/OverviewScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/OverviewScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen$PageObjects.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen$PageObjects.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/screen/SubmitScreen.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/AcknowledgeTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/AcknowledgeTest.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/BookmarkTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/BookmarkTest.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ClarificationTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ClarificationTest.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/DelegationTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/DelegationTest.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ExplicitDelegationTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/scb/fmsw/mobile/test/ExplicitDelegationTest.class" />
-      <change beforePath="$PROJECT_DIR$/testng.xml" afterPath="$PROJECT_DIR$/testng.xml" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/UserLandingScreenTest.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,8 +26,8 @@
       <file leaf-file-name="ClarificationTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1061" column="0" lean-forward="false" selection-start-line="1061" selection-start-column="0" selection-end-line="1061" selection-end-column="0" />
+            <state relative-caret-position="1305">
+              <caret line="1066" column="67" lean-forward="true" selection-start-line="1066" selection-start-column="67" selection-end-line="1066" selection-end-column="67" />
               <folding>
                 <element signature="e#302#394#0" expanded="false" />
                 <element signature="method#swipeToSendCNAWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
@@ -75,28 +43,27 @@
                 <element signature="method#swipeToSendPNLWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="e#34262#34520#0" expanded="false" />
                 <element signature="method#clarifySelectedPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#38028#38192#0" expanded="false" />
-                <element signature="method#clarifyAllPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#swipeToSendTRRWorkflowToLMForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToSendTRRWorkflowToTRRPerformerForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToSendTRRWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#sendTRRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#54999#55257#0" expanded="false" />
+                <element signature="method#swipeToSendTRRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#55003#55261#0" expanded="false" />
                 <element signature="method#clarifySelectedTRRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#58683#58847#0" expanded="false" />
-                <element signature="method#clarifyAllTRRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendTRRWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendTRRWorkflowToSelfForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="method#sendTRRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#68193#68254#0" expanded="false" />
+                <element signature="method#sendTRRWorkflowToTRRPerformerForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+                <element signature="e#72847#72908#0" expanded="false" />
                 <element signature="method#mtcrClarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#mtcrSwipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#81846#82007#0" expanded="false" />
+                <element signature="e#81854#82015#0" expanded="false" />
                 <element signature="method#mtcrClarifySelectedCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#85192#85315#0" expanded="false" />
-                <element signature="method#mtcrClarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#dealerClarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#dealerSwipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#96490#96675#0" expanded="false" />
+                <element signature="e#96502#96687#0" expanded="false" />
                 <element signature="method#dealerClarifySelectedCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#100003#100128#0" expanded="false" />
-                <element signature="method#dealerClarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#101735#101811#0" expanded="false" />
                 <element signature="method#clarifyVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToClarifyVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#clarifyVEWorkflowToComplianceSelectedTest#0;class#ClarificationTest#0" expanded="false" />
@@ -106,48 +73,248 @@
                 <element signature="method#swipeToSendIPVWorkflowToVCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#sendIPVWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToSendIPVWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#127001#127263#0" expanded="false" />
+                <element signature="e#127017#127279#0" expanded="false" />
                 <element signature="method#clarifySelectedIPVWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#130719#130887#0" expanded="false" />
-                <element signature="method#clarifyAllIPVWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToSendGMRWorkflowToMROOrMTCROrGTForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#sendGMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
                 <element signature="method#swipeToSendGMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#144383#144644#0" expanded="false" />
+                <element signature="e#144403#144664#0" expanded="false" />
                 <element signature="method#clarifySelectedGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-                <element signature="e#148121#148288#0" expanded="false" />
-                <element signature="method#clarifyAllGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+                <marker date="1547522311096" expanded="false" signature="20485:23323" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="38247:41048" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="58906:61711" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="85373:87924" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="100192:103012" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="101749:101941" ph="//..." />
+                <marker date="1547522311096" expanded="false" signature="130958:133793" ph="{...}" />
+                <marker date="1547522311096" expanded="false" signature="148363:151187" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseScreen.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java">
+      <file leaf-file-name="BookmarkTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="185" column="39" lean-forward="false" selection-start-line="185" selection-start-column="39" selection-end-line="185" selection-end-column="39" />
+            <state relative-caret-position="1515">
+              <caret line="521" column="5" lean-forward="true" selection-start-line="521" selection-start-column="5" selection-end-line="521" selection-end-column="5" />
+              <folding>
+                <element signature="e#251#314#0" expanded="false" />
+                <element signature="method#cnaBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#cnaSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#2389#2533#0" expanded="false" />
+                <element signature="method#cnaBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#TRRBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#TRRSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#6956#7100#0" expanded="false" />
+                <element signature="method#TRRBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#pnlBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#pnlSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#11477#11621#0" expanded="false" />
+                <element signature="method#pnlBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#gmrBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#gmrSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#15993#16140#0" expanded="false" />
+                <element signature="method#gmrBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#fvaBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#fvaSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#20511#20659#0" expanded="false" />
+                <element signature="method#fvaBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#veBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#veSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#25010#25151#0" expanded="false" />
+                <element signature="method#veBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#ceBookmarkDetailViewDealerTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="method#ceSwipeBookmarkDealerTest#0;class#BookmarkTest#0" expanded="false" />
+                <element signature="e#28326#28479#0" expanded="false" />
+                <element signature="method#ceBookmarkSelectedDealerTest#0;class#BookmarkTest#0" expanded="false" />
+                <marker date="1547522311100" expanded="false" signature="3970:4985" ph="{...}" />
+                <marker date="1547522311100" expanded="false" signature="8480:9498" ph="{...}" />
+                <marker date="1547522311100" expanded="false" signature="13005:14027" ph="{...}" />
+                <marker date="1547522311100" expanded="false" signature="17569:18528" ph="{...}" />
+                <marker date="1547522311100" expanded="false" signature="22096:23062" ph="{...}" />
+                <marker date="1547522311100" expanded="false" signature="29867:30827" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DelegationTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="123" column="91" lean-forward="true" selection-start-line="123" selection-start-column="91" selection-end-line="123" selection-end-column="91" />
+              <folding>
+                <element signature="e#368#463#0" expanded="false" />
+                <element signature="method#defaultMultipleWorkflowTypeDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaAcceptAndDeleteAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaAcceptAndDeleteAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#cnaRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#TRRAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#trrAcceptAndDeleteAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#trrRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#trrRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#pnlRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrAcceptAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#gmrRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaAcceptAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#fvaRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#ceAcceptAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#ceAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#ceRejectAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#ceRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#veAcceptAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#veAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="method#veRejectAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+                <element signature="e#122772#122927#0" expanded="false" />
+                <element signature="method#veRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExplicitDelegationTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1485">
+              <caret line="758" column="0" lean-forward="true" selection-start-line="758" selection-start-column="0" selection-end-line="758" selection-end-column="0" />
+              <folding>
+                <element signature="e#261#324#0" expanded="false" />
+                <element signature="method#delegateCNAWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#3817#3990#0" expanded="false" />
+                <element signature="method#delegateSelectedCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegateTRRWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateTRRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#11001#11174#0" expanded="false" />
+                <element signature="method#delegateSelectedTRRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegatePNLWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegatePNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#18038#18211#0" expanded="false" />
+                <element signature="method#delegateSelectedPNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegateGMRWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateGMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#24952#25128#0" expanded="false" />
+                <element signature="method#delegateSelectedGMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegateFVAWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateFVAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#31864#32041#0" expanded="false" />
+                <element signature="method#delegateSelectedFVAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegateVEWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateVEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#38765#38935#0" expanded="false" />
+                <element signature="method#delegateSelectedVEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#delegateCEWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="method#swipeToDelegateCEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <element signature="e#43986#44156#0" expanded="false" />
+                <element signature="method#delegateSelectedCEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+                <marker date="1547522311078" expanded="false" signature="6109:7717" ph="..." />
+                <marker date="1547522311078" expanded="false" signature="13175:14746" ph="..." />
+                <marker date="1547522311078" expanded="false" signature="20219:21696" ph="{...}" />
+                <marker date="1547522311078" expanded="false" signature="27117:28577" ph="{...}" />
+                <marker date="1547522311078" expanded="false" signature="34045:35519" ph="{...}" />
+                <marker date="1547522311078" expanded="false" signature="46215:47687" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReassignTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+              <folding>
+                <marker date="1547522311086" expanded="false" signature="446:1919" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="2013:3390" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="3396:3552" ph="@{...}" />
+                <marker date="1547522311086" expanded="false" signature="3608:5512" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="5706:7283" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="7487:9078" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="9174:10670" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="10676:10836" ph="@{...}" />
+                <marker date="1547522311086" expanded="false" signature="10894:12855" ph="{...}" />
+                <marker date="1547522311086" expanded="false" signature="12861:12973" ph="@{...}" />
+                <marker date="1547522311086" expanded="false" signature="13026:14657" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Testing.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClarificationScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java">
+      <file leaf-file-name="AcknowledgeTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="153" column="70" lean-forward="false" selection-start-line="153" selection-start-column="70" selection-end-line="153" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="43" column="30" lean-forward="true" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
-              <folding />
+            <state relative-caret-position="315">
+              <caret line="102" column="71" lean-forward="false" selection-start-line="102" selection-start-column="71" selection-end-line="102" selection-end-column="71" />
+              <folding>
+                <element signature="method#acknowledgeCNAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToAcknowledgeCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#acknowledgeSelectedCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#acknowledgeTRRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToAcknowledgeTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#acknowledgeSelectedTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="e#11426#11497#0" expanded="false" />
+                <element signature="method#reviewAndAssessCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToReviewAndAssessCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#reviewAndAssessSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="e#17227#17347#0" expanded="false" />
+                <element signature="method#reviewAndApproveCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="e#18783#18903#0" expanded="false" />
+                <element signature="method#swipeToReviewAndApproveCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="e#20239#20368#0" expanded="false" />
+                <element signature="method#reviewAndApproveSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#acknowledgeFVAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToAcknowledgeFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#acknowledgeSelectedFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#reviewAndAcceptPNLWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToReviewAndAcceptPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#approveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToApproveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#approveSelectedGMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#reviewAndActionWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToReviewAndActionWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#reviewAndActionSelectedWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#approveTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#swipeToApproveTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <element signature="method#approveSelectedTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+                <marker date="1547522311091" expanded="false" signature="4680:5826" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="10335:11418" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="16108:17179" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="22084:23153" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="27438:28472" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="32771:33805" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="40139:41150" ph="{...}" />
+                <marker date="1547522311091" expanded="false" signature="60507:65065" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -163,7 +330,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Accept</find>
       <find>TEST_GRP_CNA</find>
       <find>null</find>
       <find>limit moni</find>
@@ -193,6 +359,7 @@
       <find>read</find>
       <find>driver.prop</find>
       <find>confi</find>
+      <find>TEST_GRP_CLARIFICATION_ALL</find>
     </findStrings>
     <replaceStrings>
       <replace>fva</replace>
@@ -265,7 +432,6 @@
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ResponsesDetailViewScreen.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/scb/fmsw/mobile/App.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/BookmarkScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationCountrySearchScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxResponsesGridScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ReassignScreen.java" />
@@ -278,22 +444,23 @@
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/DelegationScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OthersDelegationsScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ExplicitDelegationScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" />
         <option value="$PROJECT_DIR$/testng.xml" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseDriver.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailViewScreen.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/OverviewScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/SubmitScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationOptionScreen.java" />
         <option value="$PROJECT_DIR$/config.properties" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/WorkflowConstants.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/ClarificationScreen.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java" />
       </list>
     </option>
   </component>
@@ -711,7 +878,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545795489792</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="commit">
+      <created>1547521490639</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1547521490639</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -856,7 +1030,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="318" />
+      <option name="time" value="319" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -930,13 +1104,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-345">
           <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1032,13 +1199,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="4" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/InboxDetailsOptionScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1067,14 +1227,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27405">
-          <caret line="1840" column="81" lean-forward="false" selection-start-line="1840" selection-start-column="81" selection-end-line="1840" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/lib/jconsole.jar!/sun/tools/jconsole/inspector/XOpenTypeViewer.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -1086,13 +1238,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
           <caret line="659" column="0" lean-forward="false" selection-start-line="659" selection-start-column="0" selection-end-line="659" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/UserLandingScreenTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="32" column="28" lean-forward="false" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1168,14 +1313,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="74" column="6" lean-forward="false" selection-start-line="74" selection-start-column="4" selection-end-line="75" selection-end-column="105" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testng.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1195,57 +1332,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="106" column="2" lean-forward="false" selection-start-line="106" selection-start-column="2" selection-end-line="106" selection-end-column="2" />
-          <folding>
-            <element signature="method#swipeToAcknowledgeTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#acknowledgeSelectedTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#10076#10280#0" expanded="false" />
-            <element signature="method#acknowledgeAllTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndAssessCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToReviewAndAssessCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndAssessSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndAssessAllCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndApproveCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToReviewAndApproveCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndApproveSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndApproveAllCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#acknowledgeFVAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToAcknowledgeFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#acknowledgeSelectedFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#27163#27371#0" expanded="false" />
-            <element signature="method#acknowledgeAllFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndAcceptPNLWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToReviewAndAcceptPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#32480#32696#0" expanded="false" />
-            <element signature="method#reviewAndAcceptAllPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#approveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToApproveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#approveSelectedGMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#39863#40068#0" expanded="false" />
-            <element signature="method#approveAllGMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndActionWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToReviewAndActionWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#reviewAndActionSelectedWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#swipeToApproveTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="method#approveSelectedTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-            <element signature="e#60173#60423#0" expanded="false" />
-            <element signature="method#approveAllTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="117" column="62" lean-forward="true" selection-start-line="117" selection-start-column="62" selection-end-line="117" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/screen/AcknowledgeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
@@ -1258,6 +1344,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="51" column="51" lean-forward="false" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1281,6 +1368,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
           <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1316,10 +1404,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="794">
+          <caret line="230" column="7" lean-forward="true" selection-start-line="230" selection-start-column="7" selection-end-line="230" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/AcknowledgeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="102" column="71" lean-forward="false" selection-start-line="102" selection-start-column="71" selection-end-line="102" selection-end-column="71" />
+          <folding>
+            <element signature="method#acknowledgeCNAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedCNAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeTRRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedTRRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#11426#11497#0" expanded="false" />
+            <element signature="method#reviewAndAssessCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndAssessCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndAssessSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#17227#17347#0" expanded="false" />
+            <element signature="method#reviewAndApproveCEWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#18783#18903#0" expanded="false" />
+            <element signature="method#swipeToReviewAndApproveCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="e#20239#20368#0" expanded="false" />
+            <element signature="method#reviewAndApproveSelectedCEWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeFVAWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToAcknowledgeFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#acknowledgeSelectedFVAWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndAcceptPNLWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndAcceptPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndAcceptSelectedPNLWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#approveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToApproveGMRWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#approveSelectedGMRWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndActionWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToReviewAndActionWorkflowTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#reviewAndActionSelectedWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#approveTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#swipeToApproveTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <element signature="method#approveSelectedTMWorkflowDetailViewTest#0;class#AcknowledgeTest#0" expanded="false" />
+            <marker date="1547522311091" expanded="false" signature="4680:5826" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="10335:11418" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="16108:17179" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="22084:23153" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="27438:28472" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="32771:33805" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="40139:41150" ph="{...}" />
+            <marker date="1547522311091" expanded="false" signature="60507:65065" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ClarificationTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1061" column="0" lean-forward="false" selection-start-line="1061" selection-start-column="0" selection-end-line="1061" selection-end-column="0" />
+        <state relative-caret-position="1305">
+          <caret line="1066" column="67" lean-forward="true" selection-start-line="1066" selection-start-column="67" selection-end-line="1066" selection-end-column="67" />
           <folding>
             <element signature="e#302#394#0" expanded="false" />
             <element signature="method#swipeToSendCNAWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
@@ -1335,28 +1479,27 @@
             <element signature="method#swipeToSendPNLWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="e#34262#34520#0" expanded="false" />
             <element signature="method#clarifySelectedPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#38028#38192#0" expanded="false" />
-            <element signature="method#clarifyAllPNLWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#swipeToSendTRRWorkflowToLMForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToSendTRRWorkflowToTRRPerformerForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToSendTRRWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#sendTRRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#54999#55257#0" expanded="false" />
+            <element signature="method#swipeToSendTRRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#55003#55261#0" expanded="false" />
             <element signature="method#clarifySelectedTRRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#58683#58847#0" expanded="false" />
-            <element signature="method#clarifyAllTRRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendTRRWorkflowToPCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendTRRWorkflowToSelfForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="method#sendTRRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#68193#68254#0" expanded="false" />
+            <element signature="method#sendTRRWorkflowToTRRPerformerForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
+            <element signature="e#72847#72908#0" expanded="false" />
             <element signature="method#mtcrClarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#mtcrSwipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#81846#82007#0" expanded="false" />
+            <element signature="e#81854#82015#0" expanded="false" />
             <element signature="method#mtcrClarifySelectedCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#85192#85315#0" expanded="false" />
-            <element signature="method#mtcrClarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#dealerClarifyCEWorkflowDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#dealerSwipeToClarifyCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#96490#96675#0" expanded="false" />
+            <element signature="e#96502#96687#0" expanded="false" />
             <element signature="method#dealerClarifySelectedCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#100003#100128#0" expanded="false" />
-            <element signature="method#dealerClarifyAllCEWorkflowTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#101735#101811#0" expanded="false" />
             <element signature="method#clarifyVEWorkflowToComplianceDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToClarifyVEWorkflowToComplianceTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#clarifyVEWorkflowToComplianceSelectedTest#0;class#ClarificationTest#0" expanded="false" />
@@ -1366,25 +1509,195 @@
             <element signature="method#swipeToSendIPVWorkflowToVCForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#sendIPVWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToSendIPVWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#127001#127263#0" expanded="false" />
+            <element signature="e#127017#127279#0" expanded="false" />
             <element signature="method#clarifySelectedIPVWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#130719#130887#0" expanded="false" />
-            <element signature="method#clarifyAllIPVWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToSendGMRWorkflowToMROOrMTCROrGTForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#sendGMRWorkflowToAnyoneForClarificationDetailViewTest#0;class#ClarificationTest#0" expanded="false" />
             <element signature="method#swipeToSendGMRWorkflowToAnyoneForClarificationTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#144383#144644#0" expanded="false" />
+            <element signature="e#144403#144664#0" expanded="false" />
             <element signature="method#clarifySelectedGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
-            <element signature="e#148121#148288#0" expanded="false" />
-            <element signature="method#clarifyAllGMRWorkflowToAnyoneTest#0;class#ClarificationTest#0" expanded="false" />
+            <marker date="1547522311096" expanded="false" signature="20485:23323" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="38247:41048" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="58906:61711" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="85373:87924" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="100192:103012" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="101749:101941" ph="//..." />
+            <marker date="1547522311096" expanded="false" signature="130958:133793" ph="{...}" />
+            <marker date="1547522311096" expanded="false" signature="148363:151187" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/base/BaseScreen.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/BookmarkTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="185" column="39" lean-forward="false" selection-start-line="185" selection-start-column="39" selection-end-line="185" selection-end-column="39" />
+        <state relative-caret-position="1515">
+          <caret line="521" column="5" lean-forward="true" selection-start-line="521" selection-start-column="5" selection-end-line="521" selection-end-column="5" />
+          <folding>
+            <element signature="e#251#314#0" expanded="false" />
+            <element signature="method#cnaBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#cnaSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#2389#2533#0" expanded="false" />
+            <element signature="method#cnaBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#TRRBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#TRRSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#6956#7100#0" expanded="false" />
+            <element signature="method#TRRBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#pnlBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#pnlSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#11477#11621#0" expanded="false" />
+            <element signature="method#pnlBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#gmrBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#gmrSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#15993#16140#0" expanded="false" />
+            <element signature="method#gmrBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#fvaBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#fvaSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#20511#20659#0" expanded="false" />
+            <element signature="method#fvaBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#veBookmarkDetailViewTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#veSwipeBookmarkTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#25010#25151#0" expanded="false" />
+            <element signature="method#veBookmarkSelectedTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#ceBookmarkDetailViewDealerTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="method#ceSwipeBookmarkDealerTest#0;class#BookmarkTest#0" expanded="false" />
+            <element signature="e#28326#28479#0" expanded="false" />
+            <element signature="method#ceBookmarkSelectedDealerTest#0;class#BookmarkTest#0" expanded="false" />
+            <marker date="1547522311100" expanded="false" signature="3970:4985" ph="{...}" />
+            <marker date="1547522311100" expanded="false" signature="8480:9498" ph="{...}" />
+            <marker date="1547522311100" expanded="false" signature="13005:14027" ph="{...}" />
+            <marker date="1547522311100" expanded="false" signature="17569:18528" ph="{...}" />
+            <marker date="1547522311100" expanded="false" signature="22096:23062" ph="{...}" />
+            <marker date="1547522311100" expanded="false" signature="29867:30827" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/DelegationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="123" column="91" lean-forward="true" selection-start-line="123" selection-start-column="91" selection-end-line="123" selection-end-column="91" />
+          <folding>
+            <element signature="e#368#463#0" expanded="false" />
+            <element signature="method#defaultMultipleWorkflowTypeDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaAcceptAndDeleteAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaAcceptAndDeleteAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#cnaRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#TRRAcceptAndDeleteAndDeleteDefaultTRRDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#trrAcceptAndDeleteAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#trrAcceptAndDeleteAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#trrRejectAndDeleteDefaultTRRDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#trrRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#trrRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlAcceptAndDeleteAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#pnlRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrAcceptAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#gmrRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaAcceptAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaAcceptAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaRejectAndDeleteDefaultDeskOrCountryDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaRejectAndDeleteDefaultPortfolioDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#fvaRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#ceAcceptAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#ceAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#ceRejectAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#ceRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#veAcceptAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#veAcceptAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="method#veRejectAndDeleteDefaultDelegation#0;class#DelegationTest#0" expanded="false" />
+            <element signature="e#122772#122927#0" expanded="false" />
+            <element signature="method#veRejectAndDeleteUserDelegation#0;class#DelegationTest#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ExplicitDelegationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1485">
+          <caret line="758" column="0" lean-forward="true" selection-start-line="758" selection-start-column="0" selection-end-line="758" selection-end-column="0" />
+          <folding>
+            <element signature="e#261#324#0" expanded="false" />
+            <element signature="method#delegateCNAWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#3817#3990#0" expanded="false" />
+            <element signature="method#delegateSelectedCNAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegateTRRWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateTRRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#11001#11174#0" expanded="false" />
+            <element signature="method#delegateSelectedTRRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegatePNLWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegatePNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#18038#18211#0" expanded="false" />
+            <element signature="method#delegateSelectedPNLWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegateGMRWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateGMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#24952#25128#0" expanded="false" />
+            <element signature="method#delegateSelectedGMRWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegateFVAWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateFVAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#31864#32041#0" expanded="false" />
+            <element signature="method#delegateSelectedFVAWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegateVEWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateVEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#38765#38935#0" expanded="false" />
+            <element signature="method#delegateSelectedVEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#delegateCEWorkflowDetailViewTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="method#swipeToDelegateCEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <element signature="e#43986#44156#0" expanded="false" />
+            <element signature="method#delegateSelectedCEWorkflowTest#0;class#ExplicitDelegationTest#0" expanded="false" />
+            <marker date="1547522311078" expanded="false" signature="6109:7717" ph="..." />
+            <marker date="1547522311078" expanded="false" signature="13175:14746" ph="..." />
+            <marker date="1547522311078" expanded="false" signature="20219:21696" ph="{...}" />
+            <marker date="1547522311078" expanded="false" signature="27117:28577" ph="{...}" />
+            <marker date="1547522311078" expanded="false" signature="34045:35519" ph="{...}" />
+            <marker date="1547522311078" expanded="false" signature="46215:47687" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/ReassignTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding>
+            <marker date="1547522311086" expanded="false" signature="446:1919" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="2013:3390" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="3396:3552" ph="@{...}" />
+            <marker date="1547522311086" expanded="false" signature="3608:5512" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="5706:7283" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="7487:9078" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="9174:10670" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="10676:10836" ph="@{...}" />
+            <marker date="1547522311086" expanded="false" signature="10894:12855" ph="{...}" />
+            <marker date="1547522311086" expanded="false" signature="12861:12973" ph="@{...}" />
+            <marker date="1547522311086" expanded="false" signature="13026:14657" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/UserLandingScreenTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/scb/fmsw/mobile/test/Testing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
           <folding />
         </state>
       </provider>

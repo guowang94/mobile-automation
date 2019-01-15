@@ -11,7 +11,9 @@ public class ReassignTest extends BaseTest {
 
     //------------------- PC GBS ----------------------
 
-    @Test(groups = TEST_GRP_REASSIGN)
+    //PC user is not suppose to user mobile
+
+    /*@Test(groups = TEST_GRP_REASSIGN)
     public void pcGBSReassignCNAWorkflowDetailViewTest() {
         System.out.println("Method: pcGBSReassignCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -128,11 +130,13 @@ public class ReassignTest extends BaseTest {
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_REASSIGN_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //------------------- FO ADMIN ----------------------
 
-    @Test(groups = TEST_GRP_REASSIGN)
+    //Admin is not suppose to use mobile
+
+    /*@Test(groups = TEST_GRP_REASSIGN)
     public void foAdminReassignCNAWorkflowDetailViewTest() {
         System.out.println("Method: foAdminReassignCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -252,6 +256,6 @@ public class ReassignTest extends BaseTest {
         allWorkflowIDList = inboxScreen.getAllWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_REASSIGN_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
 }

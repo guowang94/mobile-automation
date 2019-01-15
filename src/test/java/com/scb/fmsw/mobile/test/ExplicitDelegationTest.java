@@ -13,7 +13,7 @@ public class ExplicitDelegationTest extends BaseTest {
 
     //-------------------------------- CNA ---------------------------------
 
-    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION, TEST_GRP_CNA})*/
+    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION, TEST_GRP_CNA})
     public void delegateCNAWorkflowDetailViewTest() {
         System.out.println("Method: delegateCNAWorkflowDetailViewTest()");
         String workflowID;
@@ -43,7 +43,7 @@ public class ExplicitDelegationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_DELEGATE_WORKFLOW.replace("$1", workflowID));
     }
 
-    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION, TEST_GRP_CNA})*/
+    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION, TEST_GRP_CNA})
     public void swipeToDelegateCNAWorkflowTest() {
         System.out.println("Method: swipeToDelegateCNAWorkflowTest()");
         String workflowID;
@@ -72,8 +72,8 @@ public class ExplicitDelegationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_DELEGATE_WORKFLOW.replace("$1", workflowID));
     }
 
-    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_CNA},
-            dependsOnMethods = {"delegateCNAWorkflowDetailViewTest", "swipeToDelegateCNAWorkflowTest"})*/
+    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_CNA},
+            dependsOnMethods = {"delegateCNAWorkflowDetailViewTest", "swipeToDelegateCNAWorkflowTest"})
     public void delegateSelectedCNAWorkflowTest() {
         System.out.println("Method: delegateSelectedCNAWorkflowTest()");
         int count = 1;
@@ -106,8 +106,8 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_CNA}/*,
-            dependsOnMethods = {"delegateSelectedCNAWorkflowTest"}*/)
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_CNA}*//*,
+            dependsOnMethods = {"delegateSelectedCNAWorkflowTest"}*//*)
     public void delegateAllCNAWorkflowTest() {
         System.out.println("Method: delegateSelectedCNAWorkflowTest()");
         List<String> workflowIDList;
@@ -121,7 +121,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowIDList = inboxScreen.getAllCNAWorkflowId();
         ExplicitDelegationScreen explicitDelegationScreen = inboxScreen.delegateAllWorkflow();
-        inboxScreen = explicitDelegationScreen.delegateWorkflow(/*prop.getProperty("uat.FOUsername02")*/"1213714", WORKFLOW_CNA);
+        inboxScreen = explicitDelegationScreen.delegateWorkflow(*//*prop.getProperty("uat.FOUsername02")*//*"1213714", WORKFLOW_CNA);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
@@ -129,13 +129,13 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //---------Login as Delegate user to check if workflow is there-------
 
-        overviewScreen = login(/*prop.getProperty("uat.FOUsername02")*/"1213714");
+        overviewScreen = login(*//*prop.getProperty("uat.FOUsername02")*//*"1213714");
         inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
         inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 
     //-------------------------------- TRR ---------------------------------
 
@@ -226,7 +226,7 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_TRR},
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_TRR},
             dependsOnMethods = {"delegateSelectedTRRWorkflowTest"})
     public void delegateAllTRRWorkflowTest() {
         System.out.println("Method: delegateAllTRRWorkflowTest()");
@@ -255,7 +255,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 
     //-------------------------------- PNL ---------------------------------
 
@@ -346,7 +346,7 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_PNL},
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_PNL},
             dependsOnMethods = {"delegateSelectedPNLWorkflowTest"})
     public void delegateAllPNLWorkflowTest() {
         System.out.println("Method: delegateAllPNLWorkflowTest()");
@@ -373,7 +373,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForReviewAndAcceptanceSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 
     //-------------------------------- GT/GMR ---------------------------------
 
@@ -464,7 +464,7 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_GT_GMR},
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_GT_GMR},
             dependsOnMethods = {"delegateSelectedGMRWorkflowTest"})
     public void delegateAllGMRWorkflowTest() {
         System.out.println("Method: delegateSelectedGMRWorkflowTest()");
@@ -491,7 +491,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForApprovalSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 
     //-------------------------------- IPV/FVA ---------------------------------
 
@@ -582,7 +582,7 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_IPV_FVA},
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_IPV_FVA},
             dependsOnMethods = {"delegateSelectedFVAWorkflowTest"})
     public void delegateAllFVAWorkflowTest() {
         System.out.println("Method: delegateSelectedFVAWorkflowTest()");
@@ -609,7 +609,7 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 
     //-------------------------------- VE ---------------------------------
 
@@ -789,7 +789,7 @@ public class ExplicitDelegationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_CE},
+    /*@Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_ALL, TEST_GRP_CE},
             dependsOnMethods = {"delegateSelectedCEWorkflowTest", "delegateCEWorkflowDetailViewTest", "swipeToDelegateCEWorkflowTest"})
     public void delegateAllCEWorkflowTest() {
         System.out.println("Method: delegateSelectedCEWorkflowTest()");
@@ -816,5 +816,5 @@ public class ExplicitDelegationTest extends BaseTest {
         inboxScreen.tapOnForReviewAndActionSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_ALL_WORKFLOW);
-    }
+    }*/
 }

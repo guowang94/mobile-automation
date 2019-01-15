@@ -588,7 +588,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_OTHERS},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_PNL, TEST_GRP_CLARIFICATION_OTHERS},
             dependsOnMethods = {"clarifySelectedPNLWorkflowToAnyoneTest"})
     public void clarifyAllPNLWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllPNLWorkflowToAnyoneTest()");
@@ -638,7 +638,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- TRR ---------------------------------
 
@@ -903,7 +903,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_TRR, TEST_GRP_CLARIFICATION_OTHERS},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_TRR, TEST_GRP_CLARIFICATION_OTHERS},
             dependsOnMethods = {"clarifySelectedTRRWorkflowToAnyoneTest"})
     public void clarifyAllTRRWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllTRRWorkflowToAnyoneTest()");
@@ -953,7 +953,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //--------TRR LM-------
     @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_TRR, TEST_GRP_TRR_LM, TEST_GRP_CLARIFICATION_PC})
@@ -1311,7 +1311,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
             dependsOnMethods = {"mtcrClarifySelectedCEWorkflowTest"})
     public void mtcrClarifyAllCEWorkflowTest() {
         System.out.println("Method: mtcrClarifyAllCEWorkflowTest()");
@@ -1359,7 +1359,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //------------ Dealer ------------
 
@@ -1553,7 +1553,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION, TEST_GRP_CE},
             dependsOnMethods = {"dealerClarifySelectedCEWorkflowTest"})
     public void dealerClarifyAllCEWorkflowTest() {
         System.out.println("Method: dealerClarifyAllCEWorkflowTest()");
@@ -1604,7 +1604,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- VE ---------------------------------
 
@@ -2026,7 +2026,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_IPV_FVA, TEST_GRP_CLARIFICATION_OTHERS},
             dependsOnMethods = {"clarifySelectedIPVWorkflowToAnyoneTest"})
     public void clarifyAllIPVWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllIPVWorkflowToAnyoneTest()");
@@ -2078,7 +2078,7 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 
     //--------------------------- GMR/GT ------------------------------
 
@@ -2298,7 +2298,7 @@ public class ClarificationTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_GT_GMR, TEST_GRP_CLARIFICATION_OTHERS},
+/*    @Test(groups = {TEST_GRP_CLARIFICATION_ALL, TEST_GRP_GT_GMR, TEST_GRP_CLARIFICATION_OTHERS},
             dependsOnMethods = {"clarifySelectedGMRWorkflowToAnyoneTest"})
     public void clarifyAllGMRWorkflowToAnyoneTest() {
         System.out.println("Method: clarifyAllGMRWorkflowToAnyoneTest()");
@@ -2350,5 +2350,5 @@ public class ClarificationTest extends BaseTest {
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_SUBMIT_ALL_WORKFLOW);
 
         System.out.println("Complete!");
-    }
+    }*/
 }

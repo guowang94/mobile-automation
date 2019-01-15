@@ -77,7 +77,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CNA},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CNA},
             dependsOnMethods = {"acknowledgeSelectedCNAWorkflowTest", "swipeToAcknowledgeCNAWorkflowTest", "acknowledgeCNAWorkflowDetailViewTest"})
     public void acknowledgeAllCNAWorkflowTest() {
         System.out.println("Method: acknowledgeAllCNAWorkflowTest()");
@@ -98,7 +98,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- TRR ---------------------------------
 
@@ -169,7 +169,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_TRR},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_TRR},
             dependsOnMethods = {"acknowledgeSelectedTRRWorkflowTest", "acknowledgeTRRWorkflowDetailViewTest", "swipeToAcknowledgeTRRWorkflowTest"})
     public void acknowledgeAllTRRWorkflowTest() {
         System.out.println("Method: acknowledgeAllTRRWorkflowTest()");
@@ -189,7 +189,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- CE ---------------------------------
 
@@ -262,7 +262,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CE},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CE},
             dependsOnMethods = {"reviewAndAssessSelectedCEWorkflowTest", "reviewAndAssessCEWorkflowDetailViewTest", "swipeToReviewAndAssessCEWorkflowTest"})
     public void reviewAndAssessAllCEWorkflowTest() {
         System.out.println("Method: reviewAndAssessAllCEWorkflowTest()");
@@ -281,7 +281,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_SELECTED_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //------ DEALER SUPERVISOR -------
 
@@ -358,7 +358,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CE},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_CE},
             dependsOnMethods = {"reviewAndApproveSelectedCEWorkflowTest", "swipeToReviewAndApproveCEWorkflowTest", "reviewAndApproveCEWorkflowDetailViewTest"})
     public void reviewAndApproveAllCEWorkflowTest() {
         System.out.println("Method: reviewAndApproveAllCEWorkflowTest()");
@@ -377,7 +377,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_SELECTED_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- IPV/FVA ---------------------------------
 
@@ -442,7 +442,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_IPV_FVA},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_IPV_FVA},
             dependsOnMethods = {"acknowledgeSelectedFVAWorkflowTest", "swipeToAcknowledgeFVAWorkflowTest", "acknowledgeFVAWorkflowDetailViewTest"})
     public void acknowledgeAllFVAWorkflowTest() {
         System.out.println("Method: acknowledgeAllFVAWorkflowTest()");
@@ -461,7 +461,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- PNL ---------------------------------
 
@@ -526,7 +526,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_PNL},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_PNL},
             dependsOnMethods = {"reviewAndAcceptSelectedPNLWorkflowTest", "swipeToReviewAndAcceptPNLWorkflowTest", "reviewAndAcceptPNLWorkflowDetailViewTest"})
     public void reviewAndAcceptAllPNLWorkflowTest() {
         System.out.println("Method: reviewAndAcceptAllPNLWorkflowTest()");
@@ -546,7 +546,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- GT/GMR ---------------------------------
 
@@ -638,7 +638,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_GT_GMR},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE_ALL, TEST_GRP_GT_GMR},
             dependsOnMethods = {"approveSelectedGMRWorkflowTest", "approveGMRWorkflowDetailViewTest", "swipeToApproveGMRWorkflowDetailViewTest"})
     public void approveAllGMRWorkflowTest() {
         System.out.println("Method: approveAllGMRWorkflowTest()");
@@ -658,7 +658,7 @@ public class AcknowledgeTest extends BaseTest {
         Assert.assertTrue(compareLists(workflowIDInClosedBucket, workflowIDList),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_ALL_WORKFLOW);
         System.out.println("Complete!");
-    }
+    }*/
 
     //-------------------------------- VE ---------------------------------
 
@@ -991,7 +991,7 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Complete!");
     }
 
-    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM, TEST_GRP_ACKNOWLEDGE_ALL},
+/*    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_TM, TEST_GRP_ACKNOWLEDGE_ALL},
             dependsOnMethods = {"approveTMWorkflowDetailViewTest", "swipeToApproveTMWorkflowDetailViewTest",
                     "approveSelectedTMWorkflowDetailViewTest"})
     public void approveAllTMWorkflowDetailViewTest() {
@@ -1075,5 +1075,5 @@ public class AcknowledgeTest extends BaseTest {
 
 
         System.out.println("Complete!");
-    }
+    }*/
 }

@@ -71,7 +71,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CNA},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CNA},
             dependsOnMethods = {"cnaBookmarkSelectedTest"})
     public void cnaBookmarkAllTest() {
         System.out.println("Method: cnaBookmarkAllTest");
@@ -91,7 +91,7 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 
     //-------------------------------- TRR ---------------------------------
 
@@ -150,7 +150,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_TRR},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_TRR},
             dependsOnMethods = {"TRRBookmarkSelectedTest"})
     public void TRRBookmarkAllTest() {
         System.out.println("Method: TRRBookmarkAllTest");
@@ -170,7 +170,7 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 
     //-------------------------------- PNL ---------------------------------
 
@@ -229,7 +229,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_PNL},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_PNL},
             dependsOnMethods = {"pnlBookmarkSelectedTest"})
     public void pnlBookmarkAllTest() {
         System.out.println("Method: pnlBookmarkAllTest");
@@ -249,7 +249,7 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 
     //-------------------------------- GT/GMR ---------------------------------
 
@@ -308,7 +308,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_GT_GMR},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_GT_GMR},
             dependsOnMethods = {"gmrBookmarkSelectedTest", "gmrSwipeBookmarkTest", "gmrBookmarkDetailViewTest"})
     public void gmrBookmarkAllTest() {
         System.out.println("Method: gmrBookmarkAllTest");
@@ -327,7 +327,7 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 
     //-------------------------------- IPV/FVA ---------------------------------
 
@@ -386,7 +386,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_IPV_FVA},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_IPV_FVA},
             dependsOnMethods = {"fvaBookmarkSelectedTest", "fvaSwipeBookmarkTest", "fvaBookmarkDetailViewTest"})
     public void fvaBookmarkAllTest() {
         System.out.println("Method: fvaBookmarkAllTest");
@@ -405,7 +405,7 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 
     //-------------------------------- VE ---------------------------------
 
@@ -521,7 +521,7 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW.replace("$1", workflowIDList.get(0)));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CE},
+/*    @Test(groups = {TEST_GRP_BOOKMARK_ALL, TEST_GRP_CE},
             dependsOnMethods = {"ceBookmarkSelectedDealerTest"})
     public void ceBookmarkAllDealerTest() {
         System.out.println("Method: ceBookmarkAllDealerTest");
@@ -540,5 +540,5 @@ public class BookmarkTest extends BaseTest {
                     FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW.replace("$1", workflowID));
             inboxScreen = detailViewScreen.tapOnBackButton();
         }
-    }
+    }*/
 }

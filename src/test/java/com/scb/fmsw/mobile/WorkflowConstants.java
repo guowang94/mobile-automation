@@ -22,9 +22,8 @@ public interface WorkflowConstants {
     String TEST_GRP_BOOKMARK = "BOOKMARK";
     String TEST_GRP_BOOKMARK_SELECTED = "BOOKMARK SELECTED";
     String TEST_GRP_BOOKMARK_ALL = "BOOKMARK ALL";
-    String TEST_GRP_DEFAULT_DELEGATION = "DEFAULT DELEGATION";
-    String TEST_GRP_USERS_DELEGATION = "USERS DELEGATION";
-    String TEST_GRP_HIERARCHY_DELEGATION = "HIERARCHY DELEGATION";
+    String TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION = "AUTO OUT OF OFFICE DELEGATION";
+    String TEST_GRP_PERIOD_DELEGATION = "PERIOD DELEGATION";
     String TEST_GRP_CNA = "CNA";
     String TEST_GRP_IPV_FVA = "IPV/FVA";
     String TEST_GRP_PNL = "PNL";
@@ -147,7 +146,7 @@ public interface WorkflowConstants {
     String SUCCESS_MSG_SUCCESSFULLY_SUBMIT_WORKFLOW = "Successfully Submit Workflow";
     String SUCCESS_MSG_SUCCESSFULLY_DELEGATE_WORKFLOW = "Successfully Delegate Workflow";
     String SUCCESS_MSG_SUCCESSFULLY_BOOKMARK_WORKFLOW = "Successfully Bookmark Workflow";
-    String SUCCESS_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Successfully created Default Delegation";
+    String SUCCESS_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Successfully created Auto Out of Office Delegation";
     String SUCCESS_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Successfully created Users Delegation";
 
     //Failed Message
@@ -169,7 +168,7 @@ public interface WorkflowConstants {
     String FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW = "Failed to Bookmark $1 Workflow";
     String FAILED_MSG_FAILED_TO_BOOKMARK_SELECTED_WORKFLOW = "Failed to Bookmark Selected Workflow";
     String FAILED_MSG_FAILED_TO_BOOKMARK_ALL_WORKFLOW = "Failed to Bookmark All Workflow";
-    String FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION = "Failed to create Default Delegation";
+    String FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION = "Failed to create Auto Out of Office Delegation";
     String FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION = "Failed to create Users Delegation";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_ASSESS_WORKFLOW = "Failed to Review and Assess Workflow";
     String FAILED_MSG_FAILED_TO_REVIEW_AND_APPROVE_WORKFLOW = "Failed to Review and Approve Workflow";
@@ -224,8 +223,8 @@ public interface WorkflowConstants {
     String SCREENSHOT_MSG_NO_USER_FOUND = "No User found";
     String SCREENSHOT_MSG_NO_GROUP_FOUND = "No Group found";
     String SCREENSHOT_MSG_NO_RESULT_FOUND = "No Result found";
-    String SCREENSHOT_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION = "Failed to create Default Delegation";
-    String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Created Default Delegation";
+    String SCREENSHOT_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION = "Failed to create Auto Out of Office Delegation";
+    String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_DEFAULT_DELEGATION = "Created Auto Out of Office Delegation";
     String SCREENSHOT_MSG_FAILED_TO_CREATE_USERS_DELEGATION = "Failed to create Users Delegation";
     String SCREENSHOT_MSG_SUCCESSFULLY_CREATE_USERS_DELEGATION = "Created Users Delegation";
     String SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION = "Failed to accept Delegation";
@@ -313,7 +312,7 @@ public interface WorkflowConstants {
 
     //----------------- Delegation Screen ---------------------
 
-    String DELEGATION_TYPE_DEFAULT = "Default";
+    String DELEGATION_TYPE_AUTO_OUT_OF_OFFICE = "Auto Out of Office";
     String DELEGATION_TYPE_USER = "User";
     String DELEGATION_TYPE_HIERARCHY = "Hierarchy";
     String DELEGATION_TYPE_DESK_OR_COUNTRY = "Desk/Country";
@@ -327,6 +326,8 @@ public interface WorkflowConstants {
     String DELEGATION_OPTION_CMS = "CMS";
     String DELEGATION_OPTION_ABS_STRUCTURED = "ABS - Structured";
     String DELEGATION_OPTION_ABS_STRUCTERED_MTM = "ABS - Structured - MTM";
+    String DELEGATION_OPTION_Y = "Y";
+    String DELEGATION_OPTION_N = "";
 
     String DELEGATION_STATUS_PENDING = "Pending";
     String DELEGATION_STATUS_ACCEPTED = "Accepted";

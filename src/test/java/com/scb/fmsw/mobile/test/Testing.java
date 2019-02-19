@@ -38,24 +38,24 @@ public class Testing extends BaseTest {
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
-        DelegationDefaultScreen delegationDefaultScreen = delegationOptionScreen.tapOnDefaultDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
 
-//        delegationDefaultScreen.selectType("Portfolio");
-//        delegationDefaultScreen.selectBusinessGroup("FXRC");
-//        delegationDefaultScreen.selectBusiness("FX");
-//        delegationDefaultScreen.selectSubBusiness("FX Cash");
-//		delegationDefaultScreen.selectDesk("FX ASA");
+//        delegationAutoOutOfOfficeScreen.selectType("Portfolio");
+//        delegationAutoOutOfOfficeScreen.selectBusinessGroup("FXRC");
+//        delegationAutoOutOfOfficeScreen.selectBusiness("FX");
+//        delegationAutoOutOfOfficeScreen.selectSubBusiness("FX Cash");
+//		delegationAutoOutOfOfficeScreen.selectDesk("FX ASA");
 
-        delegationDefaultScreen.selectType("Desk/Country");
-//        delegationDefaultScreen.selectType("Portfolio");
-        delegationDefaultScreen.selectBusinessGroup("ALL");
-//        delegationDefaultScreen.selectBusinessGroup("FXRC");
-        delegationDefaultScreen.selectBusiness("ALL");
-//        delegationDefaultScreen.selectBusiness("FX");
-        delegationDefaultScreen.selectSubBusiness("ALL");
-//        delegationDefaultScreen.selectSubBusiness("FX Cash");
-        delegationDefaultScreen.selectDesk("ALL");
-//        delegationDefaultScreen.selectDesk("FX ASA");
+        delegationAutoOutOfOfficeScreen.selectType("Desk/Country");
+//        delegationAutoOutOfOfficeScreen.selectType("Portfolio");
+        delegationAutoOutOfOfficeScreen.selectBusinessGroup("ALL");
+//        delegationAutoOutOfOfficeScreen.selectBusinessGroup("FXRC");
+        delegationAutoOutOfOfficeScreen.selectBusiness("ALL");
+//        delegationAutoOutOfOfficeScreen.selectBusiness("FX");
+        delegationAutoOutOfOfficeScreen.selectSubBusiness("ALL");
+//        delegationAutoOutOfOfficeScreen.selectSubBusiness("FX Cash");
+        delegationAutoOutOfOfficeScreen.selectDesk("ALL");
+//        delegationAutoOutOfOfficeScreen.selectDesk("FX ASA");
         Thread.sleep(20000);
     }
 

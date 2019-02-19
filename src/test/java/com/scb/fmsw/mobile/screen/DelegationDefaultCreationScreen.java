@@ -28,7 +28,7 @@ public class DelegationDefaultCreationScreen extends BaseScreen {
     }
 
     /**
-     * This method will create Default Delegation
+     * This method will create Auto Out of Office Delegation
      *
      * @param priority
      * @param delegateeID
@@ -83,7 +83,7 @@ public class DelegationDefaultCreationScreen extends BaseScreen {
     }
 
     /**
-     * This method will verify Default Delegation Status
+     * This method will verify Auto Out of Office Delegation Status
      */
     private void verifyDefaultDelegationStatus() {
         hasLoadingCompleted();

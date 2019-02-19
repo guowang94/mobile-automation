@@ -91,14 +91,14 @@ public class OthersDelegationsScreen extends BaseScreen {
         //Logging purpose
 //        System.out.println("Trying to swipe from x:" + getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index))
 //                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))
-//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100)
+//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) - 100)
 //                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)));
 
         new TouchAction(iosDriver)
                 .press(PointOption.point(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
                         getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))))
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100),
+                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) - 100),
                         getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)))).release().perform();
 
         othersDelegationsScreen.acceptButton.click();
@@ -126,14 +126,14 @@ public class OthersDelegationsScreen extends BaseScreen {
         //Logging purpose
 //        System.out.println("Trying to swipe from x:" + getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index))
 //                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))
-//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100)
+//                + ", to x:" + (getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) - 100)
 //                + " y:" + getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)));
 
         new TouchAction(iosDriver)
                 .press(PointOption.point(getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)),
                         getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index))))
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) + 100),
+                .moveTo(PointOption.point((getElementLocationX(othersDelegationsScreen.delegatorIDList.get(index)) - 100),
                         getElementLocationY(othersDelegationsScreen.delegatorIDList.get(index)))).release().perform();
 
         othersDelegationsScreen.rejectButton.click();
@@ -158,6 +158,9 @@ public class OthersDelegationsScreen extends BaseScreen {
      * @return boolean
      */
     public boolean verifyDelegationStatus(int index, String status) {
+        hasLoadingCompleted();
+        System.out.println("Actual: " + othersDelegationsScreen.statusList.get(index).getText());
+        System.out.println("Expected: " + status + ", index: " + index);
         return scrollDownUntilElementIsDisplayed(othersDelegationsScreen.statusList.get(index)).getText().equals(status);
     }
 

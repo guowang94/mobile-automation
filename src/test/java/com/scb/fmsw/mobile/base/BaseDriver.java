@@ -34,7 +34,7 @@ public class BaseDriver implements WorkflowConstants {
             capabilities.setCapability(CAPABILITY_NAME_LAUNCH_TIMEOUT, CAPABILITY_VALUE_LAUNCH_TIMEOUT);
 //			capabilities.setCapability(CAPABILITY_NAME_APP, CAPABILITY_VALUE_APP_UAT);
             capabilities.setCapability(CAPABILITY_NAME_NEW_COMMAND_TIMEOUT, CAPABILITY_VALUE_NEW_COMMAND_TIMEOUT);
-            capabilities.setCapability(CAPABILITY_NAME_BUNDLE_ID, CAPABILITY_VALUE_BUNDLE_ID_TEMP); //TODO need to change this to run the app, depending on the bundle id
+            capabilities.setCapability(CAPABILITY_NAME_BUNDLE_ID, CAPABILITY_VALUE_BUNDLE_ID);
             capabilities.setCapability(CAPABILITY_NAME_USE_NEW_WDA, CAPABILITY_VALUE_USE_NEW_WDA);
 
             iosDriver = new IOSDriver<>(new URL(DRIVER_URL), capabilities);

@@ -79,14 +79,14 @@ public class DelegationScreen extends BaseScreen {
         //Logging purpose
 //        System.out.println("Trying to swipe up from x:" + getElementLocationX(delegationScreen.delegateeIDList.get(index))
 //                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index))
-//                + ", to x:" + (getElementLocationX(delegationScreen.delegateeIDList.get(index)) + 100)
+//                + ", to x:" + (getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100)
 //                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index)));
 
         new TouchAction(iosDriver)
                 .press(PointOption.point(getElementLocationX(delegationScreen.delegateeIDList.get(index)),
                         getElementLocationY(delegationScreen.delegateeIDList.get(index))))
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point((getElementLocationX(delegationScreen.delegateeIDList.get(index)) + 100),
+                .moveTo(PointOption.point((getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100),
                         getElementLocationY(delegationScreen.delegateeIDList.get(index)))).release().perform();
 
         delegationScreen.deleteButton.click();

@@ -9,11 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class DelegationDefaultScreen extends BaseScreen {
+public class DelegationAutoOutOfOfficeScreen extends BaseScreen {
 
     private PageObjects defaultDelegationScreen;
 
-    public DelegationDefaultScreen(IOSDriver<IOSElement> testDriver) {
+    public DelegationAutoOutOfOfficeScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
         defaultDelegationScreen = new PageObjects();
         PageFactory.initElements(iosDriver, defaultDelegationScreen);
@@ -29,7 +29,7 @@ public class DelegationDefaultScreen extends BaseScreen {
     }
 
     /**
-     * This method will select all the value in Default Delegation screen
+     * This method will select all the value in Auto Out of Office Delegation screen
      *
      * @param workflowTypeList
      * @param type
@@ -38,9 +38,12 @@ public class DelegationDefaultScreen extends BaseScreen {
      * @param subBusiness
      * @param desk
      * @param countryList
+     * @param myEntitlement
      * @return DelegationPortfolioScreen
      */
-    public DelegationPortfolioScreen fillInDefaultForm(List<String> workflowTypeList, String type, String businessGroup, String business, String subBusiness, String desk, List<String> countryList) {
+    public DelegationPortfolioScreen fillInDefaultForm(List<String> workflowTypeList, String type, String businessGroup,
+                                                       String business, String subBusiness, String desk,
+                                                       List<String> countryList, String myEntitlement) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
             selectWorkflowType(workflowTypeList);
@@ -52,7 +55,11 @@ public class DelegationDefaultScreen extends BaseScreen {
             selectDesk(desk);
             searchCountry(countryList);
 
-            defaultDelegationScreen.searchButton.click();
+            if (workflowTypeList.contains(WORKFLOW_CNA) || workflowTypeList.contains(WORKFLOW_TRR)) {
+                selectMyEntitlement(myEntitlement);
+            }
+
+            scrollToElement(defaultDelegationScreen.searchButton).click();
             System.out.println("Navigate to Delegation Portfolio Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
@@ -61,7 +68,7 @@ public class DelegationDefaultScreen extends BaseScreen {
     }
 
     /**
-     * This method will select all the value in Default Delegation screen for CE
+     * This method will select all the value in Auto Out of Office Delegation screen for CE
      *
      * @param workflowTypeList
      * @param type
@@ -74,7 +81,7 @@ public class DelegationDefaultScreen extends BaseScreen {
             selectType(type);
 
             defaultDelegationScreen.plusButton.click();
-            System.out.println("Navigate to Default Delegation Creation Screen");
+            System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
@@ -152,12 +159,17 @@ public class DelegationDefaultScreen extends BaseScreen {
      */
     public void selectDesk(String desk) {
         defaultDelegationScreen.deskField.click();
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            //do nothing
-        }
         selectPickerValue(desk);
+    }
+
+    /**
+     * This method will select Sub Business value
+     *
+     * @param myEntitlement
+     */
+    public void selectMyEntitlement(String myEntitlement) {
+        scrollToElement(defaultDelegationScreen.myEntitlementField).click();
+        selectPickerValue(myEntitlement);
     }
 
     /**
@@ -195,6 +207,9 @@ public class DelegationDefaultScreen extends BaseScreen {
 
         @FindBy(xpath = "//XCUIElementTypeTextField[@name='Multiple selection allowed']")
         WebElement countrySearchField;
+
+        @FindBy(id = "Choose My EntitlementsBtn")
+        WebElement myEntitlementField;
 
         @FindBy(id = "search icon sm")
         WebElement searchButton;

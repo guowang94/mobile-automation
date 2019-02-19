@@ -27,44 +27,41 @@ public class DelegationOptionScreen extends BaseScreen {
     }
 
     /**
-     * This method will tap on Default Delegation
+     * This method will tap on Auto Out of Office Delegation
      *
-     * @return DelegationDefaultScreen
+     * @return DelegationAutoOutOfOfficeScreen
      */
-    public DelegationDefaultScreen tapOnDefaultDelegation() {
+    public DelegationAutoOutOfOfficeScreen tapOnAutoOutOfOfficeDelegation() {
         if (hasTableContainerLoaded()) {
-            delegationOptionScreen.defaultButton.click();
-            System.out.println("Navigate to Default Delegation Screen");
+            delegationOptionScreen.autoOutOfOfficeButton.click();
+            System.out.println("Navigate to Auto Out of Office Delegation Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
-        return new DelegationDefaultScreen(iosDriver);
+        return new DelegationAutoOutOfOfficeScreen(iosDriver);
     }
 
     /**
-     * This method will tap on Users Delegation
+     * This method will tap on Period Delegation
      *
-     * @return DelegationUsersScreen
+     * @return DelegationPeriodScreen
      */
-    public DelegationUsersScreen tapOnUsersDelegation() {
+    public DelegationPeriodScreen tapOnPeriodDelegation() {
         if (hasTableContainerLoaded()) {
-            delegationOptionScreen.usersButton.click();
-            System.out.println("Navigate to Users Delegation Screen");
+            delegationOptionScreen.periodButton.click();
+            System.out.println("Navigate to Period Delegation Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
-        return new DelegationUsersScreen(iosDriver);
+        return new DelegationPeriodScreen(iosDriver);
     }
 
     class PageObjects {
-        @FindBy(id = "Default")
-        WebElement defaultButton;
+        @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Auto Out of Office']")
+        WebElement autoOutOfOfficeButton;
 
-        @FindBy(id = "Users")
-        WebElement usersButton;
-
-        @FindBy(id = "Hierarchy")
-        WebElement hierarchyButton;
+        @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Period']")
+        WebElement periodButton;
 
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;

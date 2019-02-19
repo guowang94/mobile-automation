@@ -267,7 +267,24 @@ public class BaseScreen implements WorkflowConstants {
      */
     public DelegationScreen navigationToDelegationScreen() {
         hasLoadingCompleted();
-        scrollToElement(waitForElementById(delegation, true)).click();
+        TouchAction action = new TouchAction(iosDriver);
+
+        while (!waitForElementById(delegation, true).isDisplayed()) {
+            Dimension size = iosDriver.manage().window().getSize();
+            int startY = (int) (size.height * 0.8);
+            int endY = (int) (size.height * 0.0);
+            int startX = (int) (size.width / 2.2);
+            //Logging purpose
+//            System.out.println("Trying to swipe up from x:" + startX + " y:" + startY + ", to x:" + startX + " y:" + endY);
+            action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                    .moveTo(PointOption.point(startX, endY)).release().perform();
+            try {
+                waitForElementUntilClickable(waitForElementById(delegation, true), 15, true);
+            } catch (Exception e) {
+                //Do nothing
+            }
+        }
+        waitForElementById(delegation, true).click();
         System.out.println("Navigate to Delegation Screen");
         return new DelegationScreen(iosDriver);
     }

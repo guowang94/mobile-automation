@@ -2,7 +2,7 @@
 
 <suite name="Test Suite Mobile" configfailurepolicy="continue">
 
-    <test name="CNA Workflow Regression" enabled="true">
+    <test name="CNA Workflow Regression" enabled="false">
         <groups>
             <run>
                 <!--Workflow Type-->
@@ -195,23 +195,22 @@
         </classes>
     </test>
 
-    <test name="Test Regression" enabled="false">
+    <test name="Test Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
                 <!--<exclude name="MULTIPLE WORKFLOW"/>-->
-                <exclude name="MULTIPLE WORKFLOW"/>
-                <exclude name="REJECT DELEGATION"/>
+                <include name="REJECT DELEGATION"/>
                 <include name="ACCEPT DELEGATION"/>
                 <exclude name="USERS DELEGATION"/>
-                <include name="DEFAULT DELEGATION"/>
-                <exclude name="CNA"/>
-                <exclude name="TRR"/>
-                <exclude name="PNL"/>
-                <exclude name="GT/GMR"/>
-                <exclude name="IPV/FVA"/>
-                <exclude name="CE"/>
-                <include name="VE"/>
+                <include name="AUTO OUT OF OFFICE DELEGATION"/>
+                <!--<exclude name="CNA"/>-->
+                <!--<exclude name="TRR"/>-->
+                <!--<exclude name="PNL"/>-->
+                <!--<exclude name="GT/GMR"/>-->
+                <!--<exclude name="IPV/FVA"/>-->
+                <!--<exclude name="CE"/>-->
+                <!--<include name="VE"/>-->
 
             </run>
         </groups>

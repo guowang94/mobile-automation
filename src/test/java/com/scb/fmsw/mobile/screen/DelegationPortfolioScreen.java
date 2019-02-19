@@ -11,6 +11,7 @@ public class DelegationPortfolioScreen extends BaseScreen {
 
     private PageObjects delegationPortfolioScreen;
     private String portfolioCell = "//XCUIElementTypeTable[@visible='true']/XCUIElementTypeCell[$1]";
+    private String navigationBarTitleXpath = "//XCUIElementTypeNavigationBar//XCUIElementTypeOther";
 
     public DelegationPortfolioScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
@@ -36,17 +37,20 @@ public class DelegationPortfolioScreen extends BaseScreen {
     public DelegationDefaultCreationScreen selectPortfolio(boolean isDeskOrCountry, int count) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
+            if (!waitForElementByXpath(navigationBarTitleXpath, false).getText()
+                    .equalsIgnoreCase("Create Delegation")) {
 
-            if (!isDeskOrCountry) {
-                for (int i = 1; i < count + 1; i++) {
-                    WebElement element = waitForElementByXpath(portfolioCell.replace("$1", String.valueOf(i)), true);
-                    scrollDownUntilElementIsDisplayed(element);
-                    element.click();
+                if (!isDeskOrCountry) {
+                    for (int i = 1; i < count + 1; i++) {
+                        WebElement element = waitForElementByXpath(portfolioCell.replace("$1", String.valueOf(i)), true);
+                        scrollDownUntilElementIsDisplayed(element);
+                        element.click();
+                    }
                 }
-            }
-            delegationPortfolioScreen.selectButton.click();
-            System.out.println("Navigate to Default Delegation Creation Screen");
+                delegationPortfolioScreen.selectButton.click();
+                System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
 
+            }
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }

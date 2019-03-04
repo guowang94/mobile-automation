@@ -32,7 +32,10 @@ public interface WorkflowConstants {
     String TEST_GRP_CE = "CE";
     String TEST_GRP_VE = "VE";
     String TEST_GRP_TM = "TM";
-    String TEST_GRP_MULTIPLE_WORKFLOW = "MULTIPLE WORKFLOW";
+    String TEST_GRP_AFO = "AFO";
+    String TEST_GRP_BEX = "BEST EX";
+    String TEST_GRP_MT = "MT";
+    String TEST_GRP_BRS = "BRS";
     String TEST_GRP_CLARIFICATION_OTHERS = "OTHERS";
     String TEST_GRP_CLARIFICATION_PERFORMER = "PERFORMER";
     String TEST_GRP_CLARIFICATION_LM = "LM";
@@ -204,6 +207,7 @@ public interface WorkflowConstants {
     String ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW = "Failed to verify workflow";
     String ERROR_MSG_CLARIFICATION_OPTION_NOT_MATCHED = "None of the Clarification option are matched";
     String ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION = "Failed to verify Clarification Options";
+    String ERROR_MSG_FAILED_TO_VERIFY_DEFAULT_SELECTION_FOR_DELEGATION = "Failed to verify default selection for delegation";
 
     //Screenshot Message
     String SCREENSHOT_MSG_NO_WORKFLOW_FOUND = "No Workflow found";
@@ -316,7 +320,6 @@ public interface WorkflowConstants {
     String DELEGATION_TYPE_USER = "User";
     String DELEGATION_TYPE_HIERARCHY = "Hierarchy";
     String DELEGATION_TYPE_DESK_OR_COUNTRY = "Desk/Country";
-    String DELEGATION_TYPE_CE_VE_USER = "User";
     String DELEGATION_TYPE_PORTFOLIO = "Portfolio";
     String DELEGATION_TYPE_REPORT_LABEL = "Report Label";
     String DELEGATION_OPTION_ALL = "ALL";
@@ -354,6 +357,10 @@ public interface WorkflowConstants {
     String WORKFLOW_CE = "Credit Excess";
     String WORKFLOW_VE = "Volcker RENTD Excess";
     String WORKFLOW_TM = "Trader Mandate";
+    String WORKFLOW_AFO = "Against Fix Orders";
+    String WORKFLOW_BEX = "Best Ex Alerts";
+    String WORKFLOW_MT = "Missed Trade";
+    String WORKFLOW_BRS = "Benchmark Rate";
 
     //------------------- Action Screen --------------------------------
 

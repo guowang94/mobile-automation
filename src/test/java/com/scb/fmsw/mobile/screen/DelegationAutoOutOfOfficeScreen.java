@@ -48,19 +48,26 @@ public class DelegationAutoOutOfOfficeScreen extends BaseScreen {
         if (hasTableContainerLoaded()) {
             selectWorkflowType(workflowTypeList);
             hasLoadingCompleted();
-            selectType(type);
-            selectBusinessGroup(businessGroup);
-            selectBusiness(business);
-            selectSubBusiness(subBusiness);
-            selectDesk(desk);
-            searchCountry(countryList);
 
-            if (workflowTypeList.contains(WORKFLOW_CNA) || workflowTypeList.contains(WORKFLOW_TRR)) {
-                selectMyEntitlement(myEntitlement);
+            boolean result = this.verifyDefaultSelectedValue(workflowTypeList.get(0));
+
+            if (result) {
+                selectType(type);
+                selectBusinessGroup(businessGroup);
+                selectBusiness(business);
+                selectSubBusiness(subBusiness);
+                selectDesk(desk);
+                searchCountry(countryList);
+
+                if (workflowTypeList.contains(WORKFLOW_CNA) || workflowTypeList.contains(WORKFLOW_TRR)) {
+                    selectMyEntitlement(myEntitlement);
+                }
+
+                scrollToElement(defaultDelegationScreen.searchButton).click();
+                System.out.println("Navigate to Delegation Portfolio Screen");
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_DEFAULT_SELECTION_FOR_DELEGATION);
             }
-
-            scrollToElement(defaultDelegationScreen.searchButton).click();
-            System.out.println("Navigate to Delegation Portfolio Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
@@ -68,20 +75,29 @@ public class DelegationAutoOutOfOfficeScreen extends BaseScreen {
     }
 
     /**
-     * This method will select all the value in Auto Out of Office Delegation screen for CE
+     * This method will select all the value in Auto Out of Office Delegation screen for CE, VE, AFO, Missed Trade,
+     * Best Ex Alerts and Benchmark Rate
      *
      * @param workflowTypeList
      * @param type
      * @return DelegationDefaultCreationScreen
      */
-    public DelegationDefaultCreationScreen fillInDefaultCEForm(List<String> workflowTypeList, String type) {
+    public DelegationDefaultCreationScreen fillInDefaultForm(List<String> workflowTypeList, String type) {
         hasLoadingCompleted();
         if (hasTableContainerLoaded()) {
             selectWorkflowType(workflowTypeList);
-            selectType(type);
+            hasLoadingCompleted();
 
-            defaultDelegationScreen.plusButton.click();
-            System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
+            boolean result = this.verifyDefaultSelectedValue(workflowTypeList.get(0));
+
+            if (result) {
+                selectType(type);
+
+                defaultDelegationScreen.plusButton.click();
+                System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
+            } else {
+                throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_DEFAULT_SELECTION_FOR_DELEGATION);
+            }
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
         }
@@ -181,6 +197,78 @@ public class DelegationAutoOutOfOfficeScreen extends BaseScreen {
         defaultDelegationScreen.countrySearchField.click();
         System.out.println("Navigate to Delegation Country Search Screen");
         new DelegationCountrySearchScreen(iosDriver).searchCountry(countryList);
+    }
+
+    /**
+     * This method will verify Default Value of Business hierarchy and Type
+     *
+     * @param workflowType
+     * @return boolean
+     */
+    public boolean verifyDefaultSelectedValue(String workflowType) {
+        boolean result = false;
+        String verifiedMsg = "Failed to verify default selected value";
+
+        if (WORKFLOW_CNA.equalsIgnoreCase(workflowType) || WORKFLOW_TRR.equalsIgnoreCase(workflowType) ||
+                WORKFLOW_GMR.equalsIgnoreCase(workflowType) || WORKFLOW_GT.equalsIgnoreCase(workflowType) ||
+                WORKFLOW_IPV.equalsIgnoreCase(workflowType) || WORKFLOW_FVA.equalsIgnoreCase(workflowType) ||
+                WORKFLOW_PNL.equalsIgnoreCase(workflowType)) {
+
+            result = DELEGATION_TYPE_DESK_OR_COUNTRY.equalsIgnoreCase(defaultDelegationScreen.typeField.getText());
+
+            if (result) {
+                verifiedMsg = "Verified Type";
+
+                result = DELEGATION_OPTION_ALL.equalsIgnoreCase(defaultDelegationScreen.businessField.getText());
+
+                if (result) {
+                    verifiedMsg = verifiedMsg + ", Business";
+                }
+            }
+
+            if (result) {
+                result = DELEGATION_OPTION_ALL.equalsIgnoreCase(defaultDelegationScreen.subBusinessField.getText());
+
+                if (result) {
+                    verifiedMsg = verifiedMsg + ", Sub Business";
+                }
+            }
+
+            if (result) {
+                result = DELEGATION_OPTION_ALL.equalsIgnoreCase(defaultDelegationScreen.deskField.getText());
+
+                if (result) {
+                    verifiedMsg = verifiedMsg + ", Desk";
+                }
+            }
+
+            if (result) {
+                result = DELEGATION_OPTION_ALL.equalsIgnoreCase(defaultDelegationScreen.countrySearchField.getText());
+
+                if (result) {
+                    verifiedMsg = verifiedMsg + ", Country";
+                }
+            }
+
+            if (result && WORKFLOW_CNA.equalsIgnoreCase(workflowType) || WORKFLOW_TRR.equalsIgnoreCase(workflowType)) {
+                result = DELEGATION_OPTION_Y.equalsIgnoreCase(defaultDelegationScreen.myEntitlementField.getText());
+
+                if (result) {
+                    verifiedMsg = verifiedMsg + ", My Entitlement";
+                }
+            }
+        } else if (WORKFLOW_CE.equalsIgnoreCase(workflowType) || WORKFLOW_VE.equalsIgnoreCase(workflowType) ||
+                WORKFLOW_AFO.equalsIgnoreCase(workflowType) || WORKFLOW_MT.equalsIgnoreCase(workflowType) ||
+                WORKFLOW_BEX.equalsIgnoreCase(workflowType) || WORKFLOW_BRS.equalsIgnoreCase(workflowType)) {
+            result = DELEGATION_TYPE_USER.equalsIgnoreCase(defaultDelegationScreen.typeField.getText());
+
+            if (result) {
+                verifiedMsg = "Verified Type";
+            }
+        }
+
+        System.out.println(verifiedMsg);
+        return result;
     }
 
     class PageObjects {

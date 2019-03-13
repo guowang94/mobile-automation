@@ -68,7 +68,7 @@ public class DelegationDefaultCreationScreen extends BaseScreen {
         delegationDefaultCreationScreen.delegationToField.sendKeys(delegateeID.substring(0,4));
         hasLoadingCompleted();
         try {
-            waitForElementById(delegateeID, true).click();
+            waitForElementById(delegateeID, 30,true).click();
         } catch (Exception e) {
             screenshot(SCREENSHOT_MSG_NO_RESULT_FOUND);
             throw new RuntimeException(ERROR_MSG_NO_RESULT_FOUND.replace("$1", delegateeID));

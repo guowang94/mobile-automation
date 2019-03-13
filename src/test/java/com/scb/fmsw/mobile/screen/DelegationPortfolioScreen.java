@@ -30,6 +30,7 @@ public class DelegationPortfolioScreen extends BaseScreen {
 
     /**
      * This method will tap on Select button
+     *
      * @param isDeskOrCountry if false, select portfolio based on count
      * @param count
      * @return
@@ -50,6 +51,24 @@ public class DelegationPortfolioScreen extends BaseScreen {
                 delegationPortfolioScreen.selectButton.click();
                 System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
 
+            }
+        } else {
+            throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
+        }
+        return new DelegationDefaultCreationScreen(iosDriver);
+    }
+
+    /**
+     * This method will click on Select button if it is available
+     *
+     * @return DelegationDefaultCreationScreen
+     */
+    public DelegationDefaultCreationScreen selectPortfolioForClone() {
+        hasLoadingCompleted();
+        if (hasTableContainerLoaded()) {
+            if (delegationPortfolioScreen.selectButton.isDisplayed()) {
+                delegationPortfolioScreen.selectButton.click();
+                System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
             }
         } else {
             throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);

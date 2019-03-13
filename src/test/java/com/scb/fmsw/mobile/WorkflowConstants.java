@@ -24,6 +24,7 @@ public interface WorkflowConstants {
     String TEST_GRP_BOOKMARK_ALL = "BOOKMARK ALL";
     String TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION = "AUTO OUT OF OFFICE DELEGATION";
     String TEST_GRP_PERIOD_DELEGATION = "PERIOD DELEGATION";
+    String TEST_GRP_CLONE_DELEGATION = "CLONE DELEGATION";
     String TEST_GRP_CNA = "CNA";
     String TEST_GRP_IPV_FVA = "IPV/FVA";
     String TEST_GRP_PNL = "PNL";
@@ -323,12 +324,6 @@ public interface WorkflowConstants {
     String DELEGATION_TYPE_PORTFOLIO = "Portfolio";
     String DELEGATION_TYPE_REPORT_LABEL = "Report Label";
     String DELEGATION_OPTION_ALL = "ALL";
-    String DELEGATION_OPTION_FX = "FX";
-    String DELEGATION_OPTION_FX_CASH = "FX Cash";
-    String DELEGATION_OPTION_FX_ASA = "FX ASA";
-    String DELEGATION_OPTION_CMS = "CMS";
-    String DELEGATION_OPTION_ABS_STRUCTURED = "ABS - Structured";
-    String DELEGATION_OPTION_ABS_STRUCTERED_MTM = "ABS - Structured - MTM";
     String DELEGATION_OPTION_Y = "Y";
     String DELEGATION_OPTION_N = "";
 

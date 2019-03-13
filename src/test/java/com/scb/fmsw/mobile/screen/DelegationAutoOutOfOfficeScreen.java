@@ -105,6 +105,38 @@ public class DelegationAutoOutOfOfficeScreen extends BaseScreen {
     }
 
     /**
+     * This method will click on the 'Search' button and navigate to Delegation Portfolio Screen
+     *
+     * @return DelegationPortfolioScreen
+     */
+    public DelegationDefaultCreationScreen navigateToDelegationPortfolioScreen() {
+        hasLoadingCompleted();
+        if (hasTableContainerLoaded()) {
+            scrollToElement(defaultDelegationScreen.searchButton).click();
+            System.out.println("Navigate to Delegation Portfolio Screen");
+        } else {
+            throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
+        }
+        return new DelegationDefaultCreationScreen(iosDriver);
+    }
+
+    /**
+     * This method will click on the '+' button and navigate to Delegation Default Creation Screen
+     *
+     * @return DelegationDefaultCreationScreen
+     */
+    public DelegationDefaultCreationScreen navigateToDelegationDefaultCreationScreen() {
+        hasLoadingCompleted();
+        if (hasTableContainerLoaded()) {
+            defaultDelegationScreen.plusButton.click();
+            System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
+        } else {
+            throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
+        }
+        return new DelegationDefaultCreationScreen(iosDriver);
+    }
+
+    /**
      * This method will select Workflow Type
      *
      * @param workflowTypeList

@@ -104,6 +104,56 @@ public class DelegationScreen extends BaseScreen {
     }
 
     /**
+     * This method will clone Auto Out of Office Delegation
+     *
+     * @param index
+     */
+    public DelegationAutoOutOfOfficeScreen cloneAutoOutOfOfficeDelegation(int index) {
+        //scroll till element is visible then swipe left
+        scrollDownUntilElementIsDisplayed(delegationScreen.delegateeIDList.get(index));
+        //Logging purpose
+//        System.out.println("Trying to swipe up from x:" + getElementLocationX(delegationScreen.delegateeIDList.get(index))
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index))
+//                + ", to x:" + (getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100)
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index)));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(delegationScreen.delegateeIDList.get(index)),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index))))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index)))).release().perform();
+
+        delegationScreen.cloneButton.click();
+        return new DelegationAutoOutOfOfficeScreen(iosDriver);
+    }
+
+    /**
+     * This method will clone User Delegation
+     *
+     * @param index
+     */
+    public DelegationPeriodScreen cloneUserDelegation(int index) {
+        //scroll till element is visible then swipe left
+        scrollDownUntilElementIsDisplayed(delegationScreen.delegateeIDList.get(index));
+        //Logging purpose
+//        System.out.println("Trying to swipe up from x:" + getElementLocationX(delegationScreen.delegateeIDList.get(index))
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index))
+//                + ", to x:" + (getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100)
+//                + " y:" + getElementLocationY(delegationScreen.delegateeIDList.get(index)));
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(getElementLocationX(delegationScreen.delegateeIDList.get(index)),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index))))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(PointOption.point((getElementLocationX(delegationScreen.delegateeIDList.get(index)) - 100),
+                        getElementLocationY(delegationScreen.delegateeIDList.get(index)))).release().perform();
+
+        delegationScreen.cloneButton.click();
+        return new DelegationPeriodScreen(iosDriver);
+    }
+
+    /**
      * This method will return the Delegation index
      *
      * @param delegateeID
@@ -135,6 +185,7 @@ public class DelegationScreen extends BaseScreen {
                         if (delegationDetailScreen.verifyWorkflowType(workflowType)) {
                             if (delegationDetailScreen.verifyDelegatorComment(comment)) {
                                 delegationDetailScreen.back();
+                                System.out.println("Current index: " + i);
                                 return i;
                             }
                         } else {
@@ -218,6 +269,9 @@ public class DelegationScreen extends BaseScreen {
 
         @FindBy(id = "Remove")
         WebElement deleteButton;
+
+        @FindBy(id = "Clone")
+        WebElement cloneButton;
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[2]")
         WebElement alertMessage;

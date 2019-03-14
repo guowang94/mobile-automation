@@ -1,7 +1,9 @@
 package com.scb.fmsw.mobile.test;
 
 import com.scb.fmsw.mobile.base.BaseTest;
-import com.scb.fmsw.mobile.screen.*;
+import com.scb.fmsw.mobile.screen.OthersDelegationsScreen;
+import com.scb.fmsw.mobile.screen.OverviewScreen;
+import com.scb.fmsw.mobile.screen.delegation.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -196,7 +198,6 @@ public class DelegationTest extends BaseTest {
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
         delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
-//        delegationDefaultCreationScreen = delegationPortfolioScreen.selectPortfolioForClone();
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
                 prop.getProperty("uat.DelegateUsername"), comment);
         Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),

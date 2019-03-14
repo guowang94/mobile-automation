@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -54,7 +54,7 @@ public class DelegationCountrySearchScreen extends BaseScreen {
         }
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Save")
         WebElement saveButton;
 

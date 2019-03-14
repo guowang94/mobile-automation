@@ -5,7 +5,6 @@ import com.scb.fmsw.mobile.screen.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AcknowledgeTest extends BaseTest {
@@ -286,7 +285,7 @@ public class AcknowledgeTest extends BaseTest {
     //------ DEALER SUPERVISOR -------
 
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CE},
-            dependsOnMethods = {"reviewAndAssessAllCEWorkflowTest"})
+            dependsOnMethods = {"reviewAndAssessSelectedCEWorkflowTest"})
     public void reviewAndApproveCEWorkflowDetailViewTest() {
         System.out.println("Method: reviewAndApproveCEWorkflowDetailViewTest()");
 
@@ -310,7 +309,7 @@ public class AcknowledgeTest extends BaseTest {
     }
 
     @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_CE},
-            dependsOnMethods = {"reviewAndAssessAllCEWorkflowTest"})
+            dependsOnMethods = {"reviewAndAssessSelectedCEWorkflowTest"})
     public void swipeToReviewAndApproveCEWorkflowTest() {
         System.out.println("Method: swipeToReviewAndApproveCEWorkflowTest()");
 

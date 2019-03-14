@@ -31,7 +31,6 @@
 			<version>2.6</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Includes the Sauce JUnit helper libraries -->
 		<dependency>
 			<groupId>com.saucelabs</groupId>
 			<artifactId>sauce_junit</artifactId>

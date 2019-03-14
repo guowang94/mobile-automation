@@ -18,7 +18,7 @@ public class LoginScreen extends BaseScreen {
     }
 
     /**
-     * This method will key the username into the textbox
+     * This method will enter the username into the textbox
      *
      * @param username username
      */
@@ -28,7 +28,7 @@ public class LoginScreen extends BaseScreen {
     }
 
     /**
-     * This method will key the password into the textbox
+     * This method will enter the password into the textbox
      *
      * @param password password
      */
@@ -60,13 +60,15 @@ public class LoginScreen extends BaseScreen {
         return new LandingScreen(iosDriver);
     }
 
-
-    public void clearUsername() {
+    /**
+     * This method will clear username textfield
+     */
+    private void clearUsername() {
         loginScreen.usernameTextbox.clear();
     }
 
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTextField[1]")
         WebElement usernameTextbox;
 

@@ -78,7 +78,7 @@ public class InboxResponsesGridScreen extends BaseScreen implements WorkflowCons
         return new InboxDetailsOptionScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "backButton")
         WebElement backButton;
 

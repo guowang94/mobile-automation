@@ -370,7 +370,6 @@ public interface WorkflowConstants {
     String ACKNOWLEDGEMENT_CODE_HRR_DEAL = "HRR Deal";
 
     //PC Group
-
     String PC_GRP_PC_ALM = "PC ALM - Treasury";
     String PC_GRP_PC_GBS = "PC GBS";
 
@@ -444,7 +443,6 @@ public interface WorkflowConstants {
     String CAPABILITY_NAME_UDID = "udid";
     String CAPABILITY_NAME_AUTOMATION_NAME = "automationName";
     String CAPABILITY_NAME_LAUNCH_TIMEOUT = "launchTimeout";
-    String CAPABILITY_NAME_APP = "app";
     String CAPABILITY_NAME_NEW_COMMAND_TIMEOUT = "newCommandTimeout";
     String CAPABILITY_NAME_BUNDLE_ID = "bundleId";
     String CAPABILITY_NAME_USE_NEW_WDA = "useNewWDA";
@@ -458,10 +456,7 @@ public interface WorkflowConstants {
     String CAPABILITY_VALUE_UDID_IPHONE7_NEW = "453c0f8d6c435754717bb056e5fe46220c2e7ef0";
     String CAPABILITY_VALUE_AUTOMATION_NAME = "XCUITest";
     String CAPABILITY_VALUE_LAUNCH_TIMEOUT = "100000";
-    String CAPABILITY_VALUE_APP_UAT = "/Users/optimum/Desktop/UAT Build/FMDashboard.app";
-    String CAPABILITY_VALUE_APP_SIT = "/Users/optimum/Desktop/SIT Build/FMDashboard.app";
     int CAPABILITY_VALUE_NEW_COMMAND_TIMEOUT = 100000;
     String CAPABILITY_VALUE_BUNDLE_ID = "com.ops.ios.supervisorydashboard";
-    String CAPABILITY_VALUE_BUNDLE_ID_TEMP = "com.ops.ios.supervisorydashboard1";
     boolean CAPABILITY_VALUE_USE_NEW_WDA = false; // so that it wont reinstall WDA every time
 }

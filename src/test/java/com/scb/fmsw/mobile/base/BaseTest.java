@@ -72,7 +72,7 @@ public class BaseTest extends BaseDriver implements Runnable {
 	}
 
 	/**
-	 * This method will consolidate the method from login to navigation to overview screen
+     * This method will login to the application and navigate to overview screen
 	 *
 	 * @param userID username
 	 * @return OverviewScreen

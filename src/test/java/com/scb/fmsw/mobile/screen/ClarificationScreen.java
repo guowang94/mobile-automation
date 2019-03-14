@@ -7,7 +7,6 @@ import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 public class ClarificationScreen extends BaseScreen implements WorkflowConstants {
 
@@ -78,7 +77,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
         hasLoadingCompleted();
         if (hasFormContainerLoaded()) {
             //Need to check for Navigation bar title. ONLY FOR CE WORKFLOW.
-            //todo The developer has change the navigation bar title back to Request Clarification
+            //todo The mobile developer has change the navigation bar title back to Request Clarification
 //            if ("MTCR".equals(toUser)) {
 //                if (clarificationScreen.navigationBar.getAttribute("name").equals(NAV_BAR_TITLE_TO_MTCR)) {
 //                    System.out.println("Verified Navigation title");
@@ -164,7 +163,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
         }
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 

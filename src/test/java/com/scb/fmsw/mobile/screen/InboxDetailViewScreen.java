@@ -1,14 +1,12 @@
 package com.scb.fmsw.mobile.screen;
 
 import com.scb.fmsw.mobile.WorkflowConstants;
+import com.scb.fmsw.mobile.base.BaseScreen;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.scb.fmsw.mobile.base.BaseScreen;
-
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 
 public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstants {
 
@@ -468,7 +466,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         return new InboxDetailsOptionScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Group 7 Copy")
         WebElement acknowledgeButton;
 

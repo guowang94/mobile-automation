@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -44,6 +44,7 @@ public class DelegationDetailScreen extends BaseScreen {
 
     /**
      * This method will verify Workflow Type
+     *
      * @param workflowType
      * @return
      */
@@ -58,6 +59,7 @@ public class DelegationDetailScreen extends BaseScreen {
 
     /**
      * This method will verify Status of Delegation
+     *
      * @param status
      * @return
      */
@@ -77,7 +79,7 @@ public class DelegationDetailScreen extends BaseScreen {
         delegationDetailScreen.backButton.click();
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 

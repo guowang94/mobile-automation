@@ -1,14 +1,12 @@
 package com.scb.fmsw.mobile.screen;
 
 import com.scb.fmsw.mobile.WorkflowConstants;
+import com.scb.fmsw.mobile.base.BaseScreen;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.scb.fmsw.mobile.base.BaseScreen;
-
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 
 public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
 
@@ -223,7 +221,7 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
         acknowledgeScreen.pickerDoneButton.click();
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 

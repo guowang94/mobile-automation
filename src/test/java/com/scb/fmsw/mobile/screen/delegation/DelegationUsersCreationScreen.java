@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -113,7 +113,7 @@ public class DelegationUsersCreationScreen extends BaseScreen {
         }
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 
@@ -128,7 +128,7 @@ public class DelegationUsersCreationScreen extends BaseScreen {
 
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeButton[1]")
         WebElement alertOkButton;
-        
+
         @FindBy(id = "delegatee_empl_idLbl")
         WebElement delegateToTextField;
 

@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -56,7 +56,7 @@ public class DelegationOptionScreen extends BaseScreen {
         return new DelegationPeriodScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Auto Out of Office']")
         WebElement autoOutOfOfficeButton;
 

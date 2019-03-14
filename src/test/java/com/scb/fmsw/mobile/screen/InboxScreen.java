@@ -978,6 +978,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private void swipeRight(String workflowID) {
         WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
         scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
+
         //Logging purpose
 //        System.out.println("Trying to swipe from x:" + getElementLocationX(workflowCellElement)
 //                + " y:" + getElementLocationY(workflowCellElement)
@@ -1082,7 +1083,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         System.out.println("Navigate to For Review & Action Tab");
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Load More Results")
         WebElement loadMoreResultsButton;
 

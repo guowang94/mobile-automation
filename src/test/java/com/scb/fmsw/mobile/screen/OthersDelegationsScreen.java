@@ -1,12 +1,12 @@
 package com.scb.fmsw.mobile.screen;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
+import com.scb.fmsw.mobile.screen.delegation.DelegationDetailScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -164,7 +164,7 @@ public class OthersDelegationsScreen extends BaseScreen {
         return scrollDownUntilElementIsDisplayed(othersDelegationsScreen.statusList.get(index)).getText().equals(status);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 

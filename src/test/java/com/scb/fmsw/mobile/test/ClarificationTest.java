@@ -1906,60 +1906,60 @@ public class ClarificationTest extends BaseTest {
         //--------------Send for Clarification-------------
 
         OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ClarificationOptionScreen clarificationOptionScreen = inboxScreen.swipeLeftAndTapOnClarification(workflowID);
-        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV);
+        ClarificationScreen clarificationScreen = clarificationOptionScreen.selectClarificationOption(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_FVA);
         inboxScreen = clarificationScreen.clarifyWorkflow(null, prop.getProperty("uat.DelegateUsername"),
-                hasEscalate, WORKFLOW_IPV, 1);
+                hasEscalate, WORKFLOW_FVA, 1);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_IPV, workflowID));
+        Assert.assertTrue(inboxScreen.verifyCurrActorTypeOrGroup(CLARIFICATION_OPTION_SEND_TO, WORKFLOW_FVA, workflowID));
         inboxScreen.logout();
 
         //---------Login as Other user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
         inboxScreen.tapOnForClarificationSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SENT_WORKFLOW_FOR_CLARIFICATION.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_IPV, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_CLARIFICATION, WORKFLOW_FVA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Submit the workflow back to user-------------------
 
         SubmitScreen submitScreen = inboxScreen.swipeRightAndTapOnSubmit(workflowID);
-        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_IPV, 1, false);
+        inboxScreen = submitScreen.submitWorkflow(null, WORKFLOW_FVA, 1, false);
         inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
         inboxScreen.logout();
 
         //---------Login as FVA user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.FOUsername01"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_IPV, STATUS_OPEN);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_FVA, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_SUBMIT_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_IPV, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_ACK_POST_CLARIFICATION, WORKFLOW_FVA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         //----------------Acknowledge the workflow-------------------
 
-        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_IPV);
-        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_IPV, 1);
+        AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_FVA);
+        inboxScreen = acknowledgeScreen.acknowledgeWorkflow(null, WORKFLOW_FVA, 1);
         inboxScreen.navigateToBucket(BUCKET_CLOSED);
         Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
                 FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
-        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_IPV, workflowID),
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_ACKNOWLEDGED, WORKFLOW_FVA, workflowID),
                 FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
 
         System.out.println("Complete!");

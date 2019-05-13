@@ -47,6 +47,7 @@ public class ClarificationScreen extends BaseScreen implements WorkflowConstants
 
             if (userID != null) {
                 searchForUser(FORM_LABEL_PSID_OR_NAME, userID);
+                System.out.println("Send to: " + userID);
             }
 
             if (WORKFLOW_VE.equals(workflowType)) {

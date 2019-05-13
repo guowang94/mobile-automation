@@ -30,9 +30,14 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
      */
     public InboxScreen acknowledgeWorkflow(String lateCode, String workflowType, int count) {
         hasLoadingCompleted();
-        if (lateCode != null) {
+        if (!workflowType.equalsIgnoreCase(WORKFLOW_CNA)) {
             if (hasFormContainerLoaded()) {
-                selectLateCode(lateCode);
+                if (lateCode != null) {
+                    selectLateCode(lateCode);
+                    tapOnFormDoneButton();
+                }
+                enterComments(FORM_LABEL_COMMENTS, MSG_ENTER_COMMENT);
+
                 tapOnFormDoneButton();
             } else {
                 throw new RuntimeException(ERROR_MSG_CONTAINER_NOT_LOADED);

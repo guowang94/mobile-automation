@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,9 +11,8 @@ import java.util.List;
 
 public class DelegationPeriodScreen extends BaseScreen {
 
-    private PageObjects delegationUsersScreen;
-
     String typeFieldID = "Choose TypeBtn";
+    private PageObjects delegationUsersScreen;
 
     public DelegationPeriodScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
@@ -87,7 +86,7 @@ public class DelegationPeriodScreen extends BaseScreen {
         delegationUsersScreen.doneButton.click();
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 

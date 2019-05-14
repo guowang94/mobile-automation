@@ -75,7 +75,7 @@ public class ReassignScreen extends BaseScreen implements WorkflowConstants {
         }
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]")
         WebElement alertTitle;
 

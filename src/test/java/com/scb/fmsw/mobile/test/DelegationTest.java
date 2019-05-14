@@ -1,7 +1,9 @@
 package com.scb.fmsw.mobile.test;
 
 import com.scb.fmsw.mobile.base.BaseTest;
-import com.scb.fmsw.mobile.screen.*;
+import com.scb.fmsw.mobile.screen.OthersDelegationsScreen;
+import com.scb.fmsw.mobile.screen.OverviewScreen;
+import com.scb.fmsw.mobile.screen.delegation.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,8 +36,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -85,8 +87,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen
@@ -168,6 +170,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_CNA, TEST_GRP_ACCEPT_DELEGATION})
+    public void cnaCloneAcceptAndDeleteAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: cnaCloneAcceptAndDeleteAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_CNA);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_CNA, TEST_GRP_REJECT_DELEGATION})
     public void cnaRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
         System.out.println("Method: cnaRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
@@ -183,8 +248,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -234,8 +299,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -317,6 +382,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_CNA, TEST_GRP_REJECT_DELEGATION})
+    public void cnaCloneRejectAndDeleteAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: cnaCloneAcceptAndDeleteAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_CNA);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     //-------------------------------- TRR ---------------------------------
 
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
@@ -334,8 +462,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -385,8 +513,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -468,6 +596,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_TRR, TEST_GRP_ACCEPT_DELEGATION})
+    public void trrCloneAcceptAndDeleteAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrAcceptCloneAndDeleteAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_TRR);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
     public void trrRejectAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation() {
         System.out.println("Method: trrRejectAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation");
@@ -483,8 +674,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -534,8 +725,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_PORTFOLIO, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -617,6 +808,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_TRR, TEST_GRP_REJECT_DELEGATION})
+    public void trrCloneRejectAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation() {
+        System.out.println("Method: trrCloneRejectAndDeleteAutoOutOfOfficeTRRDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_TRR);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     //-------------------------------- PNL ---------------------------------
 
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_PNL, TEST_GRP_ACCEPT_DELEGATION})
@@ -634,8 +888,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -685,8 +939,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -768,6 +1022,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_PNL, TEST_GRP_ACCEPT_DELEGATION})
+    public void pnlCloneAcceptAndDeleteAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: pnlCloneAcceptAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_PNL);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_PNL, TEST_GRP_REJECT_DELEGATION})
     public void pnlRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
         System.out.println("Method: pnlRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
@@ -783,8 +1100,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -834,8 +1151,8 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, DELEGATION_OPTION_Y);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -917,6 +1234,69 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_PNL, TEST_GRP_REJECT_DELEGATION})
+    public void pnlCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: pnlCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_PNL);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, DELEGATION_OPTION_Y);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     //-------------------------------- GT/GMR ---------------------------------
 
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_ACCEPT_DELEGATION})
@@ -928,14 +1308,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_JAPAN);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_CMS, DELEGATION_OPTION_ABS_STRUCTURED,
-                DELEGATION_OPTION_ABS_STRUCTERED_MTM, countryList, null);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -950,7 +1330,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -959,7 +1339,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -979,14 +1359,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_JAPAN);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_CMS, DELEGATION_OPTION_ABS_STRUCTURED,
-                DELEGATION_OPTION_ABS_STRUCTERED_MTM, countryList, null);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1001,7 +1381,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -1010,7 +1390,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1031,7 +1411,7 @@ public class DelegationTest extends BaseTest {
         String toDate = dateFormat.format(new Date());
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
@@ -1049,7 +1429,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_USER,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -1058,11 +1438,74 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_ACCEPT_DELEGATION})
+    public void gmrCloneAcceptAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: gmrCloneAcceptAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_GMR);
+        countryList.add(DELEGATION_COUNTRY_JAPAN);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationScreen.deleteDelegation(index);
 
         System.out.println("Complete");
@@ -1077,14 +1520,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_JAPAN);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_CMS, DELEGATION_OPTION_ABS_STRUCTURED,
-                DELEGATION_OPTION_ABS_STRUCTERED_MTM, countryList, null);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1099,7 +1542,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1108,7 +1551,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1128,14 +1571,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_JAPAN);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_CMS, DELEGATION_OPTION_ABS_STRUCTURED,
-                DELEGATION_OPTION_ABS_STRUCTERED_MTM, countryList, null);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1150,7 +1593,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1159,7 +1602,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1180,7 +1623,7 @@ public class DelegationTest extends BaseTest {
         String toDate = dateFormat.format(new Date());
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
@@ -1198,7 +1641,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_USER,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1207,11 +1650,74 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_GT_GMR, TEST_GRP_REJECT_DELEGATION})
+    public void gmrCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: gmrCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_GMR);
+        countryList.add(DELEGATION_COUNTRY_JAPAN);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationScreen.deleteDelegation(index);
 
         System.out.println("Complete");
@@ -1229,14 +1735,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, null);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1251,7 +1757,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -1260,7 +1766,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1280,14 +1786,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_KOREA);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, null);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1302,7 +1808,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -1311,7 +1817,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1332,7 +1838,7 @@ public class DelegationTest extends BaseTest {
         String toDate = dateFormat.format(new Date());
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
@@ -1350,7 +1856,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_USER,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.acceptDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
@@ -1359,11 +1865,74 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_ACCEPT_DELEGATION})
+    public void fvaCloneAcceptAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: fvaCloneAcceptAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_FVA);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationScreen.deleteDelegation(index);
 
         System.out.println("Complete");
@@ -1378,14 +1947,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_OPTION_ALL);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, null);
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(true, 0);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1400,7 +1969,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1409,7 +1978,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1429,14 +1998,14 @@ public class DelegationTest extends BaseTest {
         countryList.add(DELEGATION_COUNTRY_KOREA);
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
-                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_FX, DELEGATION_OPTION_FX_CASH,
-                DELEGATION_OPTION_FX_ASA, countryList, null);
+                DELEGATION_TYPE_REPORT_LABEL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
                 .selectPortfolio(false, count);
         delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
@@ -1451,7 +2020,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1460,7 +2029,7 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
@@ -1481,7 +2050,7 @@ public class DelegationTest extends BaseTest {
         String toDate = dateFormat.format(new Date());
         String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
@@ -1499,7 +2068,7 @@ public class DelegationTest extends BaseTest {
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
-        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.FOUsername02"), DELEGATION_TYPE_USER,
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         othersDelegationsScreen.rejectDelegation(index);
         Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
@@ -1508,11 +2077,75 @@ public class DelegationTest extends BaseTest {
 
         //-----------------------login as the Delegator to delete the delegation------------------
 
-        overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
         overviewScreen.tapOnMenuButton();
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_REJECT_DELEGATION})
+    public void fvaCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation() {
+        System.out.println("Method: fvaCloneRejectAndDeleteAutoOutOfOfficeDeskOrCountryDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        List<String> countryList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_FVA);
+        countryList.add(DELEGATION_OPTION_ALL);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationPortfolioScreen delegationPortfolioScreen = delegationAutoOutOfOfficeScreen.fillInDefaultForm(workflowTypeList,
+                DELEGATION_TYPE_DESK_OR_COUNTRY, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL, DELEGATION_OPTION_ALL,
+                DELEGATION_OPTION_ALL, countryList, null);
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationPortfolioScreen
+                .selectPortfolio(true, 0);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationPortfolioScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationScreen.deleteDelegation(index);
 
         System.out.println("Complete");
@@ -1533,7 +2166,7 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
-                .fillInDefaultCEForm(workflowTypeList, DELEGATION_TYPE_CE_VE_USER);
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
         delegationScreen = delegationDefaultCreationScreen
                 .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
         Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
@@ -1613,6 +2246,64 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_CE, TEST_GRP_ACCEPT_DELEGATION})
+    public void ceCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: ceCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_CE);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_CE, TEST_GRP_REJECT_DELEGATION})
     public void ceRejectAndDeleteAutoOutOfOfficeDelegation() {
         System.out.println("Method: ceRejectAndDeleteAutoOutOfOfficeDelegation");
@@ -1626,7 +2317,7 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
-                .fillInDefaultCEForm(workflowTypeList, DELEGATION_TYPE_CE_VE_USER);
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
         delegationScreen = delegationDefaultCreationScreen
                 .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
         Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
@@ -1707,6 +2398,64 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_CE, TEST_GRP_REJECT_DELEGATION})
+    public void ceCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: ceCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_CE);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     //-------------------------------- VE ---------------------------------
 
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_VE, TEST_GRP_ACCEPT_DELEGATION})
@@ -1722,7 +2471,7 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
-                .fillInDefaultCEForm(workflowTypeList, DELEGATION_TYPE_CE_VE_USER);
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
         delegationScreen = delegationDefaultCreationScreen
                 .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
         Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
@@ -1803,6 +2552,63 @@ public class DelegationTest extends BaseTest {
         System.out.println("Complete");
     }
 
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_VE, TEST_GRP_ACCEPT_DELEGATION})
+    public void veCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: veCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_VE);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
     @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_VE, TEST_GRP_REJECT_DELEGATION})
     public void veRejectAndDeleteAutoOutOfOfficeDelegation() {
         System.out.println("Method: veRejectAndDeleteAutoOutOfOfficeDelegation");
@@ -1816,7 +2622,7 @@ public class DelegationTest extends BaseTest {
         DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
         DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
         DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
-                .fillInDefaultCEForm(workflowTypeList, DELEGATION_TYPE_CE_VE_USER);
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
         delegationScreen = delegationDefaultCreationScreen
                 .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
         Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
@@ -1892,6 +2698,1285 @@ public class DelegationTest extends BaseTest {
         delegationScreen = overviewScreen.navigationToDelegationScreen();
         index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
                 workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_VE, TEST_GRP_REJECT_DELEGATION})
+    public void veCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: veCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_VE);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    //-------------------------------- AFO ---------------------------------
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_AFO, TEST_GRP_ACCEPT_DELEGATION})
+    public void afoAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: afoAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_AFO, TEST_GRP_ACCEPT_DELEGATION})
+    public void afoAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: afoAcceptAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen
+                .fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_AFO, TEST_GRP_ACCEPT_DELEGATION})
+    public void afoCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: afoCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_AFO, TEST_GRP_REJECT_DELEGATION})
+    public void afoRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: afoRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_AFO, TEST_GRP_REJECT_DELEGATION})
+    public void afoRejectAndDeleteUserDelegation() {
+        System.out.println("Method: afoRejectAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen.fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_AFO, TEST_GRP_REJECT_DELEGATION})
+    public void afoCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: afoCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_AFO);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    //-------------------------------- BEX ---------------------------------
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_BEX, TEST_GRP_ACCEPT_DELEGATION})
+    public void bexAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: bexAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_BEX, TEST_GRP_ACCEPT_DELEGATION})
+    public void bexAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: bexAcceptAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen
+                .fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_BEX, TEST_GRP_ACCEPT_DELEGATION})
+    public void bexCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: bexCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_BEX, TEST_GRP_REJECT_DELEGATION})
+    public void bexRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: bexRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_BEX, TEST_GRP_REJECT_DELEGATION})
+    public void bexRejectAndDeleteUserDelegation() {
+        System.out.println("Method: bexRejectAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen.fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_BEX, TEST_GRP_REJECT_DELEGATION})
+    public void bexCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: bexCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BEX);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    //-------------------------------- MT ---------------------------------
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_MT, TEST_GRP_ACCEPT_DELEGATION})
+    public void mtAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: mtAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_MT, TEST_GRP_ACCEPT_DELEGATION})
+    public void mtAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: mtAcceptAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen
+                .fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_MT, TEST_GRP_ACCEPT_DELEGATION})
+    public void mtCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: mtCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_MT, TEST_GRP_REJECT_DELEGATION})
+    public void mtRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: mtRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_MT, TEST_GRP_REJECT_DELEGATION})
+    public void mtRejectAndDeleteUserDelegation() {
+        System.out.println("Method: mtRejectAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen.fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_MT, TEST_GRP_REJECT_DELEGATION})
+    public void mtCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: mtCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_MT);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    //-------------------------------- BRS ---------------------------------
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_BRS, TEST_GRP_ACCEPT_DELEGATION})
+    public void brsAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: brsAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_BRS, TEST_GRP_ACCEPT_DELEGATION})
+    public void brsAcceptAndDeleteUserDelegation() {
+        System.out.println("Method: brsAcceptAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen
+                .fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_BRS, TEST_GRP_ACCEPT_DELEGATION})
+    public void brsCloneAcceptAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: brsCloneAcceptAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to accept the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.acceptDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_ACCEPTED),
+                SCREENSHOT_MSG_FAILED_TO_ACCEPT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_ACCEPTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION, TEST_GRP_BRS, TEST_GRP_REJECT_DELEGATION})
+    public void brsRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: brsRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen
+                .createDefaultDelegation("1", prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment),
+                FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_BRS, TEST_GRP_REJECT_DELEGATION})
+    public void brsRejectAndDeleteUserDelegation() {
+        System.out.println("Method: brsRejectAndDeleteUserDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        //The duration of the delegation cannot be for more than 1 year
+        DateFormat dateFormat = new SimpleDateFormat("dd, MMMM, yyyy");
+        String fromDate = dateFormat.format(new Date());
+        String toDate = dateFormat.format(new Date());
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationPeriodScreen delegationPeriodScreen = delegationOptionScreen.tapOnPeriodDelegation();
+        DelegationUsersCreationScreen delegationUsersCreationScreen = delegationPeriodScreen.fillInUsersForm(workflowTypeList);
+        delegationScreen = delegationUsersCreationScreen.createUsersDelegation(fromDate, toDate, prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_USER, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_USERS_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        int index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_USER,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        System.out.println("Complete");
+    }
+
+    @Test(groups = {TEST_GRP_CLONE_DELEGATION, TEST_GRP_BRS, TEST_GRP_REJECT_DELEGATION})
+    public void brsCloneRejectAndDeleteAutoOutOfOfficeDelegation() {
+        System.out.println("Method: brsCloneRejectAndDeleteAutoOutOfOfficeDelegation");
+        List<String> workflowTypeList = new ArrayList<>();
+        workflowTypeList.add(WORKFLOW_BRS);
+        String comment = MSG_ENTER_COMMENT + ". " + String.valueOf(new Date());
+        int index;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        DelegationScreen delegationScreen = overviewScreen.navigationToDelegationScreen();
+        DelegationOptionScreen delegationOptionScreen = delegationScreen.tapOnCreateDelegation();
+        DelegationAutoOutOfOfficeScreen delegationAutoOutOfOfficeScreen = delegationOptionScreen.tapOnAutoOutOfOfficeDelegation();
+        DelegationDefaultCreationScreen delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen
+                .fillInDefaultForm(workflowTypeList, DELEGATION_TYPE_USER);
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("1",
+                prop.getProperty("uat.dummyUsername"), comment);
+
+        //Clone delegation
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        delegationAutoOutOfOfficeScreen = delegationScreen.cloneAutoOutOfOfficeDelegation(index);
+        delegationDefaultCreationScreen = delegationAutoOutOfOfficeScreen.navigateToDelegationDefaultCreationScreen();
+        delegationScreen = delegationDefaultCreationScreen.createDefaultDelegation("2",
+                prop.getProperty("uat.DelegateUsername"), comment);
+        Assert.assertTrue(delegationScreen.verifyDelegation(prop.getProperty("uat.DelegateUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment), FAILED_MSG_FAILED_TO_CREATE_DEFAULT_DELEGATION);
+        delegationScreen.logout();
+
+        //-----------------------login as the Delegatee to reject the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        OthersDelegationsScreen othersDelegationsScreen = delegationScreen.navigateToOthersDelegation();
+        index = othersDelegationsScreen.getDelegationIndex(prop.getProperty("uat.DelegatorUsername"),
+                DELEGATION_TYPE_AUTO_OUT_OF_OFFICE, workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
+        othersDelegationsScreen.rejectDelegation(index);
+        Assert.assertTrue(othersDelegationsScreen.verifyDelegationStatus(index, DELEGATION_STATUS_REJECTED),
+                SCREENSHOT_MSG_FAILED_TO_REJECT_DELEGATION);
+        othersDelegationsScreen.logout();
+
+        //-----------------------login as the Delegator to delete the delegation------------------
+
+        overviewScreen = login(prop.getProperty("uat.DelegatorUsername"));
+        overviewScreen.tapOnMenuButton();
+        delegationScreen = overviewScreen.navigationToDelegationScreen();
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.DelegateUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_REJECTED);
+        delegationScreen.deleteDelegation(index);
+
+        index = delegationScreen.getDelegationIndex(prop.getProperty("uat.dummyUsername"), DELEGATION_TYPE_AUTO_OUT_OF_OFFICE,
+                workflowTypeList.get(0), comment, DELEGATION_STATUS_PENDING);
         delegationScreen.deleteDelegation(index);
 
         System.out.println("Complete");

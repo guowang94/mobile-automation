@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,9 +11,8 @@ import java.util.List;
 
 public class DelegationWorkflowTypeScreen extends BaseScreen {
 
-    private PageObjects delegationWorkflowType;
-
     String workflowType = "//XCUIElementTypeStaticText[@visible='true'][@name='$1']";
+    private PageObjects delegationWorkflowType;
 
     public DelegationWorkflowTypeScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
@@ -59,7 +58,7 @@ public class DelegationWorkflowTypeScreen extends BaseScreen {
         }
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 

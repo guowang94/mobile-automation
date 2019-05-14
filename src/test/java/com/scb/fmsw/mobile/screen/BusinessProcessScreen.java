@@ -53,7 +53,7 @@ public class BusinessProcessScreen extends BaseScreen implements WorkflowConstan
         return new LandingScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "search icon")
         WebElement searchButton;
 

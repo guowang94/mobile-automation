@@ -1,16 +1,14 @@
 package com.scb.fmsw.mobile.screen;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.scb.fmsw.mobile.base.BaseScreen;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.scb.fmsw.mobile.base.BaseScreen;
-
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectMultipleWorkflowScreen extends BaseScreen {
 
@@ -249,7 +247,7 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
         return new BookmarkScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Done")
         WebElement doneButton;
     }

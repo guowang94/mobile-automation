@@ -1,7 +1,13 @@
 package com.scb.fmsw.mobile.test;
 
 import com.scb.fmsw.mobile.base.BaseTest;
-import com.scb.fmsw.mobile.screen.*;
+import com.scb.fmsw.mobile.screen.AcknowledgeScreen;
+import com.scb.fmsw.mobile.screen.InboxDetailViewScreen;
+import com.scb.fmsw.mobile.screen.InboxScreen;
+import com.scb.fmsw.mobile.screen.OverviewScreen;
+import com.scb.fmsw.mobile.screen.delegation.DelegationAutoOutOfOfficeScreen;
+import com.scb.fmsw.mobile.screen.delegation.DelegationOptionScreen;
+import com.scb.fmsw.mobile.screen.delegation.DelegationScreen;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

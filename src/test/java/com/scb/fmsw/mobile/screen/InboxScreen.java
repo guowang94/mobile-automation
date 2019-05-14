@@ -42,7 +42,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private String cnaWorkflowList = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='CNAWorkflowID']";
     private String workflowID = "(//XCUIElementTypeStaticText[@name='WorkFlowID'])[1]";
     private String cnaWorkflowID = "(//XCUIElementTypeStaticText[@name='CNAWorkflowID'])[1]";
-    private String tabContainer = "//XCUIElementTypeCollectionView";
+    private String tableContainer = "//XCUIElementTypeTable[@visible='true']";
     private String workflowStatusTextfield = "//XCUIElementTypeStaticText[@value='$1']/preceding-sibling::XCUIElementTypeStaticText";
     private String loadMoreResultsCell = "//XCUIElementTypeButton[@name='Load More Results']/ancestor::XCUIElementTypeCell";
     private String subWorkflowIDByWorkflowID = "//XCUIElementTypeStaticText[@value='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeStaticText[@name='CNAWorkflowID']";
@@ -54,12 +54,12 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will check if Tab Container has loaded
+     * This method will check if Table Container has loaded
      *
      * @return boolean
      */
-    private boolean hasTabContainerLoaded() {
-        return waitForElementByXpath(tabContainer, true).isDisplayed();
+    private boolean hasTableContainerLoaded() {
+        return waitForElementByXpath(tableContainer, 500, true).isDisplayed();
     }
 
     /**
@@ -70,7 +70,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public String getFirstWorkflowId() {
         String workflowID;
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             try {
                 workflowID = waitForElementByXpath(this.workflowID, true).getText();
                 System.out.println("Workflow Id: " + workflowID);
@@ -92,7 +92,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public String getFirstCNAWorkflowId() {
         String workflowID;
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             try {
                 workflowID = waitForElementByXpath(cnaWorkflowID, true).getText();
                 System.out.println("Workflow Id: " + workflowID);
@@ -115,7 +115,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     public String getSubWorkflowId(String workflowID) {
         String subWorkflowID;
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             try {
                 subWorkflowID = waitForElementByXpath(subWorkflowIDByWorkflowID.replace("$1", workflowID), true).getText();
                 System.out.println("Sub Workflow Id: " + subWorkflowID);
@@ -162,7 +162,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         WebElement element;
 
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             System.out.println("Finding workflow with this id: " + workflowID);
             try {
                 //Find workflow
@@ -524,7 +524,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public void navigateToBucket(String currentBucket) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             waitForElementById(currentBucket, true).click();
             System.out.println("Navigate to " + currentBucket + " bucket");
         } else {
@@ -537,7 +537,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     private void tapOnMoreOption() {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             inboxScreen.moreOptionButton.click();
             System.out.println("Tap on more option button");
         } else {
@@ -550,7 +550,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     private void tapOnFullscreenButton() {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             inboxScreen.fullscreenButton.click();
         } else {
             throw new RuntimeException(ERROR_MSG_TAB_CONTAINER_NOT_LOADED);
@@ -566,7 +566,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         List<String> workflowIdList = new ArrayList<>();
         boolean loop = true;
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             System.out.println("Get all the workflow id in the bucket");
             while (loop) {
                 try {
@@ -601,7 +601,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         List<String> workflowIdList = new ArrayList<>();
         boolean loop = true;
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             System.out.println("Get all the workflow id in the bucket");
             while (loop) {
                 try {
@@ -773,7 +773,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return AcknowledgeScreen
      */
     public AcknowledgeScreen swipeRightAndTapOnAcknowledge(String workflowID, String workflowType) {
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeAcknowledgeButton, true).click();
             System.out.println("Navigate to Acknowledge Screen");
@@ -788,7 +788,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return SubmitScreen
      */
     public SubmitScreen swipeRightAndTapOnSubmit(String workflowID) {
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeSubmitButton, true).click();
             System.out.println("Navigate to Submit Screen");
@@ -803,7 +803,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      * @return SubmitOptionScreen
      */
     public SubmitOptionScreen swipeRightAndTapOnSubmitCE(String workflowID) {
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeSubmitButton, true).click();
             System.out.println("Navigate to Submit Option Screen");
@@ -819,7 +819,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public SubmitScreen swipeRightAndTapOnRespond(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeRespondButton, true).click();
             System.out.println("Navigate to Submit Screen");
@@ -835,7 +835,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public SubmitOptionScreen swipeRightAndTapOnRespondVE(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeRespondButton, true).click();
             System.out.println("Navigate to Submit Option Screen");
@@ -851,7 +851,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ClarificationOptionScreen swipeLeftAndTapOnClarification(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeLeft(workflowID);
             try {
                 waitForElementById(swipeClarificationButton, true).click();
@@ -871,7 +871,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ClarificationScreen swipeLeftAndTapOnClarificationForCE(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeLeft(workflowID);
             try {
                 waitForElementById(swipeClarificationButton, true).click();
@@ -891,7 +891,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ExplicitDelegationScreen swipeLeftAndTapOnDelegate(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeLeft(workflowID);
             waitForElementById(swipeDelegateButton, true).click();
             System.out.println("Navigate to Explicit Delegation Screen");
@@ -907,7 +907,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public BookmarkScreen swipeLeftAndTapOnBookmark(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeLeft(workflowID);
             waitForElementById(swipeBookmarkButton, true).click();
             System.out.println("Navigate to Bookmark Screen");
@@ -923,7 +923,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ReassignScreen swipeLeftAndTapOnReassign(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeLeft(workflowID);
             waitForElementById(swipeReassignButton, true).click();
             System.out.println("Navigate to Reassign Screen");
@@ -939,7 +939,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
      */
     public ReassignScreen swipeRightAndTapOnReassign(String workflowID) {
         hasLoadingCompleted();
-        if (hasTabContainerLoaded()) {
+        if (hasTableContainerLoaded()) {
             swipeRight(workflowID);
             waitForElementById(swipeReassignButton, true).click();
             System.out.println("Navigate to Reassign Screen");
@@ -978,6 +978,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     private void swipeRight(String workflowID) {
         WebElement workflowCellElement = findElementByXpath(workflowCell.replace("$1", workflowID), true);
         scrollDownUntilElementIsDisplayed(findElementByXpath(workflowStatusTextfield.replace("$1", workflowID), true));
+
         //Logging purpose
 //        System.out.println("Trying to swipe from x:" + getElementLocationX(workflowCellElement)
 //                + " y:" + getElementLocationY(workflowCellElement)
@@ -1082,7 +1083,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         System.out.println("Navigate to For Review & Action Tab");
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Load More Results")
         WebElement loadMoreResultsButton;
 

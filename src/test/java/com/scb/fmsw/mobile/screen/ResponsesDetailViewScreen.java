@@ -67,7 +67,7 @@ public class ResponsesDetailViewScreen extends BaseScreen implements WorkflowCon
         return new InboxResponsesGridScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='Workflow Status']/following-sibling::XCUIElementTypeStaticText")
         WebElement workflowStatusValue;
 

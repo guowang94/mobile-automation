@@ -1,13 +1,11 @@
 package com.scb.fmsw.mobile.screen;
 
+import com.scb.fmsw.mobile.base.BaseScreen;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.scb.fmsw.mobile.base.BaseScreen;
-
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 
 public class LandingScreen extends BaseScreen {
 
@@ -73,7 +71,7 @@ public class LandingScreen extends BaseScreen {
         return new DashboardScreen(iosDriver);
     }
 
-    class PageObjects {
+    private class PageObjects {
         @FindBy(id = "Dashboard")
         WebElement supervisoryDashboardButton;
 

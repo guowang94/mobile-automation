@@ -24,6 +24,7 @@ public interface WorkflowConstants {
     String TEST_GRP_BOOKMARK_ALL = "BOOKMARK ALL";
     String TEST_GRP_AUTO_OUT_OF_OFFICE_DELEGATION = "AUTO OUT OF OFFICE DELEGATION";
     String TEST_GRP_PERIOD_DELEGATION = "PERIOD DELEGATION";
+    String TEST_GRP_CLONE_DELEGATION = "CLONE DELEGATION";
     String TEST_GRP_CNA = "CNA";
     String TEST_GRP_IPV_FVA = "IPV/FVA";
     String TEST_GRP_PNL = "PNL";
@@ -32,7 +33,10 @@ public interface WorkflowConstants {
     String TEST_GRP_CE = "CE";
     String TEST_GRP_VE = "VE";
     String TEST_GRP_TM = "TM";
-    String TEST_GRP_MULTIPLE_WORKFLOW = "MULTIPLE WORKFLOW";
+    String TEST_GRP_AFO = "AFO";
+    String TEST_GRP_BEX = "BEST EX";
+    String TEST_GRP_MT = "MT";
+    String TEST_GRP_BRS = "BRS";
     String TEST_GRP_CLARIFICATION_OTHERS = "OTHERS";
     String TEST_GRP_CLARIFICATION_PERFORMER = "PERFORMER";
     String TEST_GRP_CLARIFICATION_LM = "LM";
@@ -204,6 +208,7 @@ public interface WorkflowConstants {
     String ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW = "Failed to verify workflow";
     String ERROR_MSG_CLARIFICATION_OPTION_NOT_MATCHED = "None of the Clarification option are matched";
     String ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION = "Failed to verify Clarification Options";
+    String ERROR_MSG_FAILED_TO_VERIFY_DEFAULT_SELECTION_FOR_DELEGATION = "Failed to verify default selection for delegation";
 
     //Screenshot Message
     String SCREENSHOT_MSG_NO_WORKFLOW_FOUND = "No Workflow found";
@@ -316,16 +321,9 @@ public interface WorkflowConstants {
     String DELEGATION_TYPE_USER = "User";
     String DELEGATION_TYPE_HIERARCHY = "Hierarchy";
     String DELEGATION_TYPE_DESK_OR_COUNTRY = "Desk/Country";
-    String DELEGATION_TYPE_CE_VE_USER = "User";
     String DELEGATION_TYPE_PORTFOLIO = "Portfolio";
     String DELEGATION_TYPE_REPORT_LABEL = "Report Label";
     String DELEGATION_OPTION_ALL = "ALL";
-    String DELEGATION_OPTION_FX = "FX";
-    String DELEGATION_OPTION_FX_CASH = "FX Cash";
-    String DELEGATION_OPTION_FX_ASA = "FX ASA";
-    String DELEGATION_OPTION_CMS = "CMS";
-    String DELEGATION_OPTION_ABS_STRUCTURED = "ABS - Structured";
-    String DELEGATION_OPTION_ABS_STRUCTERED_MTM = "ABS - Structured - MTM";
     String DELEGATION_OPTION_Y = "Y";
     String DELEGATION_OPTION_N = "";
 
@@ -354,6 +352,10 @@ public interface WorkflowConstants {
     String WORKFLOW_CE = "Credit Excess";
     String WORKFLOW_VE = "Volcker RENTD Excess";
     String WORKFLOW_TM = "Trader Mandate";
+    String WORKFLOW_AFO = "Against Fix Orders";
+    String WORKFLOW_BEX = "Best Ex Alerts";
+    String WORKFLOW_MT = "Missed Trade";
+    String WORKFLOW_BRS = "Benchmark Rate";
 
     //------------------- Action Screen --------------------------------
 
@@ -368,7 +370,6 @@ public interface WorkflowConstants {
     String ACKNOWLEDGEMENT_CODE_HRR_DEAL = "HRR Deal";
 
     //PC Group
-
     String PC_GRP_PC_ALM = "PC ALM - Treasury";
     String PC_GRP_PC_GBS = "PC GBS";
 
@@ -442,7 +443,6 @@ public interface WorkflowConstants {
     String CAPABILITY_NAME_UDID = "udid";
     String CAPABILITY_NAME_AUTOMATION_NAME = "automationName";
     String CAPABILITY_NAME_LAUNCH_TIMEOUT = "launchTimeout";
-    String CAPABILITY_NAME_APP = "app";
     String CAPABILITY_NAME_NEW_COMMAND_TIMEOUT = "newCommandTimeout";
     String CAPABILITY_NAME_BUNDLE_ID = "bundleId";
     String CAPABILITY_NAME_USE_NEW_WDA = "useNewWDA";
@@ -456,10 +456,7 @@ public interface WorkflowConstants {
     String CAPABILITY_VALUE_UDID_IPHONE7_NEW = "453c0f8d6c435754717bb056e5fe46220c2e7ef0";
     String CAPABILITY_VALUE_AUTOMATION_NAME = "XCUITest";
     String CAPABILITY_VALUE_LAUNCH_TIMEOUT = "100000";
-    String CAPABILITY_VALUE_APP_UAT = "/Users/optimum/Desktop/UAT Build/FMDashboard.app";
-    String CAPABILITY_VALUE_APP_SIT = "/Users/optimum/Desktop/SIT Build/FMDashboard.app";
     int CAPABILITY_VALUE_NEW_COMMAND_TIMEOUT = 100000;
     String CAPABILITY_VALUE_BUNDLE_ID = "com.ops.ios.supervisorydashboard";
-    String CAPABILITY_VALUE_BUNDLE_ID_TEMP = "com.ops.ios.supervisorydashboard1";
     boolean CAPABILITY_VALUE_USE_NEW_WDA = false; // so that it wont reinstall WDA every time
 }

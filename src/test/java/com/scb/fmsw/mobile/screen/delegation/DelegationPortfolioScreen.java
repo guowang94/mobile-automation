@@ -1,4 +1,4 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
 import io.appium.java_client.ios.IOSDriver;
@@ -30,6 +30,7 @@ public class DelegationPortfolioScreen extends BaseScreen {
 
     /**
      * This method will tap on Select button
+     *
      * @param isDeskOrCountry if false, select portfolio based on count
      * @param count
      * @return
@@ -57,7 +58,25 @@ public class DelegationPortfolioScreen extends BaseScreen {
         return new DelegationDefaultCreationScreen(iosDriver);
     }
 
-    class PageObjects {
+    /**
+     * This method will click on Select button if it is available
+     *
+     * @return DelegationDefaultCreationScreen
+     */
+    public DelegationDefaultCreationScreen selectPortfolioForClone() {
+        hasLoadingCompleted();
+        if (hasTableContainerLoaded()) {
+            if (delegationPortfolioScreen.selectButton.isDisplayed()) {
+                delegationPortfolioScreen.selectButton.click();
+                System.out.println("Navigate to Auto Out of Office Delegation Creation Screen");
+            }
+        } else {
+            throw new RuntimeException(ERROR_MSG_TABLE_CONTAINER_NOT_LOADED);
+        }
+        return new DelegationDefaultCreationScreen(iosDriver);
+    }
+
+    private class PageObjects {
         @FindBy(xpath = "//XCUIElementTypeTable[@visible='true']")
         WebElement tableContainer;
 

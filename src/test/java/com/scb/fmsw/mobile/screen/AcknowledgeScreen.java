@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
 
     private PageObjects acknowledgeScreen;
-    private String lateCode = "//XCUIElementTypeStaticText[@name='$1']";
+    private String lateCode = "//XCUIElementTypeStaticText[@name=\"$1\"]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 
     public AcknowledgeScreen(IOSDriver<IOSElement> testDriver) {
@@ -155,6 +155,48 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
+     * This method will Justify BEX Workflow
+     *
+     * @param lateCode
+     * @param justificationCode
+     * @param workflowCount
+     * @return InboxScreen
+     */
+    public InboxScreen justifyWorkflow(String lateCode, String justificationCode, int workflowCount) {
+        hasLoadingCompleted();
+        if (hasFormContainerLoaded()) {
+            selectJustificationCodes(FORM_LABEL_JUSTIFICATION_CODE, justificationCode);
+            enterComments(FORM_LABEL_JUSTIFICATION_COMMENTS, MSG_ENTER_JUSTIFICATION_COMMENTS);
+            selectLateResponseCode(lateCode, WORKFLOW_BEX);
+
+            tapOnFormDoneButton();
+            verifyAcknowledgeStatus(WORKFLOW_BEX, workflowCount);
+        }
+        return new InboxScreen(iosDriver);
+    }
+
+    /**
+     * This method will Review BEX Workflow
+     *
+     * @param lateCode
+     * @param supervisorAction
+     * @param workflowCount
+     * @return InboxScreen
+     */
+    public InboxScreen reviewWorkflow(String lateCode, String supervisorAction, int workflowCount) {
+        hasLoadingCompleted();
+        if (hasFormContainerLoaded()) {
+            enterComments(FORM_LABEL_SUPERVISOR_COMMENTS_COMPULSARY, MSG_ENTER_SUPERVISOR_COMMENTS);
+            selectPickerValue(FORM_LABEL_SUPERVISOR_ACTION, supervisorAction);
+            selectLateResponseCode(lateCode, WORKFLOW_BEX);
+
+            tapOnFormDoneButton();
+            verifyAcknowledgeStatus(WORKFLOW_BEX, workflowCount);
+        }
+        return new InboxScreen(iosDriver);
+    }
+
+    /**
      * This method will verify the status of the Acknowledgement.
      *
      * @param workflowType
@@ -223,6 +265,18 @@ public class AcknowledgeScreen extends BaseScreen implements WorkflowConstants {
         acknowledgeScreen.dayPickerWheel.sendKeys(day);
         acknowledgeScreen.monthPickerWheel.sendKeys(month);
         acknowledgeScreen.yearPickerWheel.sendKeys(year);
+        acknowledgeScreen.pickerDoneButton.click();
+    }
+
+    /**
+     * This method will select Justification Code for BEX Workflow
+     *
+     * @param multiSelectLabel
+     * @param value
+     */
+    private void selectJustificationCodes(String multiSelectLabel, String value) {
+        findElementByXpath(super.formButtonXpath.replace("$1", multiSelectLabel), true).click();
+        findElementById(value, true).click();
         acknowledgeScreen.pickerDoneButton.click();
     }
 

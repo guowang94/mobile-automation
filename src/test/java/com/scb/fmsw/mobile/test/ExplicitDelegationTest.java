@@ -20,9 +20,9 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
@@ -50,9 +50,9 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ExplicitDelegationScreen explicitDelegationScreen = inboxScreen.swipeLeftAndTapOnDelegate(workflowID);
@@ -72,8 +72,7 @@ public class ExplicitDelegationTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_DELEGATE_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_CNA},
-            dependsOnMethods = {"delegateCNAWorkflowDetailViewTest", "swipeToDelegateCNAWorkflowTest"})
+    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_CNA})
     public void delegateSelectedCNAWorkflowTest() {
         System.out.println("Method: delegateSelectedCNAWorkflowTest()");
         int count = 1;
@@ -82,9 +81,9 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(count, BUCKET_TO_REVIEW, MORE_OPTION_DELEGATE_SELECTED);
@@ -146,8 +145,8 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen inboxDetailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
@@ -161,9 +160,9 @@ public class ExplicitDelegationTest extends BaseTest {
         //---------Login as Delegate user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_REVIEW),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_DELEGATE_WORKFLOW.replace("$1", workflowID));
     }
 
@@ -174,8 +173,8 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         ExplicitDelegationScreen explicitDelegationScreen = inboxScreen.swipeLeftAndTapOnDelegate(workflowID);
@@ -188,14 +187,13 @@ public class ExplicitDelegationTest extends BaseTest {
         //---------Login as Delegate user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
-        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_REVIEW),
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_TO_DO),
                 FAILED_MSG_FAILED_TO_DELEGATE_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_TRR},
-            dependsOnMethods = {"swipeToDelegateTRRWorkflowTest", "delegateTRRWorkflowDetailViewTest"})
+    @Test(groups = {TEST_GRP_EXPLICIT_DELEGATION_SELECTED, TEST_GRP_TRR})
     public void delegateSelectedTRRWorkflowTest() {
         System.out.println("Method: delegateSelectedTRRWorkflowTest()");
         int count = 1;
@@ -204,8 +202,8 @@ public class ExplicitDelegationTest extends BaseTest {
 
         //--------------Explicit Delegation-------------
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(count, BUCKET_TO_DO, MORE_OPTION_DELEGATE_SELECTED);
@@ -220,7 +218,7 @@ public class ExplicitDelegationTest extends BaseTest {
         //---------Login as Delegate user to check if workflow is there-------
 
         overviewScreen = login(prop.getProperty("uat.DelegateUsername"));
-        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         allWorkflowIDList = inboxScreen.getAllCNAWorkflowId();
         Assert.assertTrue(compareLists(allWorkflowIDList, workflowIDList), FAILED_MSG_FAILED_TO_DELEGATE_SELECTED_WORKFLOW);

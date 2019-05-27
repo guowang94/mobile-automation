@@ -15,10 +15,10 @@ public class SelectMultipleWorkflowScreen extends BaseScreen {
     private PageObjects selectMultipleWorkflowScreen;
 
     //xpath
-    private String workflow = "//XCUIElementTypeStaticText[@value='$1']";
+    private String workflow = "//XCUIElementTypeStaticText[@value=\"$1\"]";
     private String workflowID = "(//XCUIElementTypeStaticText[@name='WorkflowId'])[$1]";
     private String cnaWorkflowID = "(//XCUIElementTypeStaticText[@name='CNAWorkflowId'])[$1]";
-    private String cnaWorkflowIDValue = "(//XCUIElementTypeStaticText[@name='CNAWorkflowId'])[@value='$1']";
+    private String cnaWorkflowIDValue = "(//XCUIElementTypeStaticText[@name='CNAWorkflowId'])[@value=\"$1\"]";
     private String tableContainer = "//XCUIElementTypeTable[@visible='true']";
 
     public SelectMultipleWorkflowScreen(IOSDriver<IOSElement> testDriver) {

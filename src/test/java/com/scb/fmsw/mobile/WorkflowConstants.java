@@ -82,6 +82,8 @@ public interface WorkflowConstants {
     String WORKFLOW_STATUS_PENDING_COMPLIANCE_CLARIFICATION_UT = "Pending Compliance Clarification - UT";
     String WORKFLOW_STATUS_PENDING_COMPLIANCE_ACTION_UT = "Pending Compliance Action - UT";
     String WORKFLOW_STATUS_PENDING_COMPLIANCE_ACTION_POST_CLARIFICATION_UT = "Pending Compliance Action Post Clarification - UT";
+    String WORKFLOW_STATUS_PENDING_REVIEW = "Pending Review";
+    String WORKFLOW_STATUS_REVIEWED_AND_CLOSED = "Reviewed & Closed";
 
     //GMR Workflow
     String WORKFLOW_STATUS_APPROVED = "Approved";
@@ -142,6 +144,8 @@ public interface WorkflowConstants {
     String MSG_ENTER_PREVENT_RECURRENCE_COMMENT_EDIT = "Mobile Automation Testing, Prevent Recurrence Comment Edited";
     String MSG_ENTER_VDO_COMMENT_EDIT = "Mobile Automation Testing, VDO Comment Edited";
     String MSG_ENTER_REMEDIATION_ACTION_COMMENT_EDIT = "Mobile Automation Testing, Remediation Action Comment Edited";
+    String MSG_ENTER_JUSTIFICATION_COMMENTS = "Mobile Automation Testing, Justification Comment";
+    String MSG_ENTER_SUPERVISOR_COMMENTS = "Mobile Automation Testing, Supervisor Comment";
 
     //Success Message
     String SUCCESS_MSG_SUCCESSFULLY_ACKNOWLEDGE_WORKFLOW = "Successfully Acknowledge Workflow";
@@ -279,7 +283,9 @@ public interface WorkflowConstants {
     String INBOX_DETAIL_COMPLIANCE_COMMENTS_CELL = "Compliance Comments";
     String INBOX_DETAIL_VDO_COMMENTS_CELL = "VDO Comments";
     String INBOX_DETAIL_MRO_OR_MTCR_UPLOADER_COMMENTS_CELL = "MRO/MTCR Uploader Comments";
-    String INBOX_DETAIL_CURR_ACTOR_TYPE = "Curr Actor Type";
+    String INBOX_DETAIL_CURR_ACTOR_TYPE_CELL = "Curr Actor Type";
+    String INBOX_DETAIL_JUSTIFICATION_COMMENTS_CELL = "Justification Comments";
+    String INBOX_DETAIL_SUPERVISOR_REVIEW_COMMENTS_CELL = "Supervisor's Review Comments";
 
     //-------- CE Workflow ----------
     //MTCR User
@@ -367,6 +373,9 @@ public interface WorkflowConstants {
     String CE_LATE_CODE_OTHERS = "OTHERS";
     String VE_DISCIPLINARY_ACTION_COACHING_OR_COUNSELING = "Coaching / Counseling";
     String VE_LATE_CODE_INVESTIGATION_WITH_HR = "Investigation with HR";
+    String VE_JUSTIFICATION_CODE = "Funding Cost of Hedge";
+    String VE_SUPERVISOR_ACTION_APPROVE = "Approve";
+    String VE_SUPERVISOR_ACTION_ESCALATE = "Escalate to Compliance";
     String ACKNOWLEDGEMENT_CODE_HRR_DEAL = "HRR Deal";
 
     //PC Group
@@ -407,6 +416,10 @@ public interface WorkflowConstants {
     String FORM_LABEL_ESCALATE = "Escalate";
     String FORM_LABEL_DISPUTE = "Dispute";
     String FORM_LABEL_TO_GROUP = "To Group";
+    String FORM_LABEL_JUSTIFICATION_CODE = "Justification Code*(Maximum of 3 Justification codes are allowed)";
+    String FORM_LABEL_JUSTIFICATION_COMMENTS = "Justification Comments*";
+    String FORM_LABEL_SUPERVISOR_COMMENTS_COMPULSARY = "Supervisor Comments*";
+    String FORM_LABEL_SUPERVISOR_ACTION = "Supervisor's Action*";
 
     //------------------ Clarification Option Screen ----------------
 

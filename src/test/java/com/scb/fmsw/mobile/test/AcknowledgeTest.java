@@ -16,9 +16,9 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: acknowledgeCNAWorkflowDetailViewTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
@@ -37,9 +37,9 @@ public class AcknowledgeTest extends BaseTest {
         System.out.println("Method: swipeToAcknowledgeCNAWorkflowTest()");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         AcknowledgeScreen acknowledgeScreen = inboxScreen.swipeRightAndTapOnAcknowledge(workflowID, WORKFLOW_CNA);
@@ -59,9 +59,9 @@ public class AcknowledgeTest extends BaseTest {
         List<String> workflowIDList;
         List<String> workflowIDInClosedBucket;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_REVIEW, MORE_OPTION_ACKNOWLEDGE_SELECTED);
@@ -1075,4 +1075,42 @@ public class AcknowledgeTest extends BaseTest {
 
         System.out.println("Complete!");
     }*/
+
+    //-------------------------------- BEX ---------------------------------
+
+    @Test(groups = {TEST_GRP_ACKNOWLEDGE, TEST_GRP_BEX})
+    public void reviewBEXWorkflowDetailViewTest() {
+        System.out.println("Method: reviewBEXWorkflowDetailViewTest()");
+        String workflowID;
+
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.VEFOUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_BEX, STATUS_OPEN);
+        inboxScreen.tapOnForJustificationOrClarificationSubTab();
+        workflowID = inboxScreen.getFirstWorkflowId();
+        InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+        AcknowledgeScreen acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButtonForBEX();
+        inboxScreen = acknowledgeScreen.justifyWorkflow(null, VE_JUSTIFICATION_CODE, 1);
+        inboxScreen.navigateToBucket(BUCKET_IN_PROGRESS);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_IN_PROGRESS),
+                FAILED_MSG_FAILED_TO_ACKNOWLEDGE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_PENDING_REVIEW, WORKFLOW_BEX, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+        inboxScreen.logout();
+
+        //----------- Login as FO Supervisor --------------
+
+        overviewScreen = login(prop.getProperty("uat.VEFOSupervisorUsername"));
+        inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_BEX, STATUS_OPEN);
+        inboxScreen.tapOnForReviewSubTab();
+        detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
+        acknowledgeScreen = detailViewScreen.tapOnAcknowledgeButton();
+        inboxScreen = acknowledgeScreen.reviewWorkflow(null, VE_SUPERVISOR_ACTION_APPROVE, 1);
+        inboxScreen.navigateToBucket(BUCKET_CLOSED);
+        Assert.assertTrue(inboxScreen.verifyWorkflowInBucket(workflowID, 1, BUCKET_CLOSED),
+                FAILED_MSG_FAILED_TO_APPROVE_WORKFLOW.replace("$1", workflowID));
+        Assert.assertTrue(inboxScreen.verifyDetailsPostActionPerformed(WORKFLOW_STATUS_REVIEWED_AND_CLOSED, WORKFLOW_BEX, workflowID),
+                FAILED_MSG_FAILED_TO_MATCH_COMMENTS_OR_WORKFLOW_STATUS.replace("$1", workflowID));
+
+        System.out.println("Complete!");
+    }
 }

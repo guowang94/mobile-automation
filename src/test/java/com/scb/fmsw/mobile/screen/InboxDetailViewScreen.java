@@ -19,8 +19,8 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     private String workflowEventStatusValue = "//XCUIElementTypeStaticText[@name='Workflow Event Status']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String currActorTypeValue = "//XCUIElementTypeStaticText[@name='Curr Actor Type']/preceding-sibling::XCUIElementTypeStaticText[1]";
     private String currActorGroupValue = "//XCUIElementTypeStaticText[@name='Curr Actor Group']/preceding-sibling::XCUIElementTypeStaticText[1]";
-    private String cellValue = "//XCUIElementTypeStaticText[@name='$1']/preceding-sibling::XCUIElementTypeStaticText[@value='$2']";
-    private String tableCell = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell";
+    private String cellValue = "//XCUIElementTypeStaticText[@name=\"$1\"]/preceding-sibling::XCUIElementTypeStaticText[@value='$2']";
+    private String tableCell = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell";
 
     public InboxDetailViewScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
@@ -46,6 +46,22 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
             inboxDetailViewScreen.acknowledgeButton.click();
+            System.out.println("Navigate to Acknowledge Screen");
+        } else {
+            throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
+        }
+        return new AcknowledgeScreen(iosDriver);
+    }
+
+    /**
+     * This method will tap on Acknowledge button for BEX
+     *
+     * @return AcknowledgeScreen
+     */
+    public AcknowledgeScreen tapOnAcknowledgeButtonForBEX() {
+        hasLoadingCompleted();
+        if (hasButtonContainerLoaded()) {
+            inboxDetailViewScreen.newSubmitButton.click();
             System.out.println("Navigate to Acknowledge Screen");
         } else {
             throw new RuntimeException(ERROR_MSG_BUTTON_CONTAINER_NOT_LOADED);
@@ -134,9 +150,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
             try {
-                inboxDetailViewScreen.submitButton.click();
-            } catch (Exception e) {
                 inboxDetailViewScreen.newSubmitButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.submitButton.click();
             }
             System.out.println("Navigate to Submit Screen");
         } else {
@@ -154,9 +170,9 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
         hasLoadingCompleted();
         if (hasButtonContainerLoaded()) {
             try {
-                inboxDetailViewScreen.submitButton.click();
-            } catch (Exception e) {
                 inboxDetailViewScreen.newSubmitButton.click();
+            } catch (Exception e) {
+                inboxDetailViewScreen.submitButton.click();
             }
             System.out.println("Navigate to Submit Option Screen");
         } else {
@@ -274,6 +290,7 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     /**
      * This method compare Comment
      *
+     * @param columnName
      * @return boolean
      */
     public boolean compareComment(String columnName) {
@@ -293,8 +310,52 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
     }
 
     /**
+     * This method compare Justification Comments
+     *
+     * @return boolean
+     */
+    public boolean compareJustificationComment() {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", INBOX_DETAIL_JUSTIFICATION_COMMENTS_CELL), true));
+            if (MSG_ENTER_JUSTIFICATION_COMMENTS.equals(waitForElementByXpath(cellValue.replace("$1", INBOX_DETAIL_JUSTIFICATION_COMMENTS_CELL)
+                    .replace("$2", MSG_ENTER_JUSTIFICATION_COMMENTS), true).getText())) {
+                System.out.println("Verified " + INBOX_DETAIL_JUSTIFICATION_COMMENTS_CELL);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_COMMENT_ELEMENT.replace("$1", INBOX_DETAIL_JUSTIFICATION_COMMENTS_CELL));
+        }
+        return false;
+    }
+
+    /**
+     * This method compare Supervisor Review Comments
+     *
+     * @return boolean
+     */
+    public boolean compareSupervisorReviewComment() {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", INBOX_DETAIL_SUPERVISOR_REVIEW_COMMENTS_CELL), true));
+            if (MSG_ENTER_SUPERVISOR_COMMENTS.equals(waitForElementByXpath(cellValue.replace("$1", INBOX_DETAIL_SUPERVISOR_REVIEW_COMMENTS_CELL)
+                    .replace("$2", MSG_ENTER_SUPERVISOR_COMMENTS), true).getText())) {
+                System.out.println("Verified " + INBOX_DETAIL_SUPERVISOR_REVIEW_COMMENTS_CELL);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_COMMENT_ELEMENT.replace("$1", INBOX_DETAIL_SUPERVISOR_REVIEW_COMMENTS_CELL));
+        }
+        return false;
+    }
+
+    /**
      * This method compare Comment
      *
+     * @param columnName
+     * @param comment
      * @return boolean
      */
     public boolean compareComment(String columnName, String comment) {
@@ -369,6 +430,27 @@ public class InboxDetailViewScreen extends BaseScreen implements WorkflowConstan
             if (workflowStatus.equals(waitForElementByXpath(cellValue.replace("$1", "Sub Workflow Status")
                     .replace("$2", workflowStatus), true).getText().trim())) {
                 System.out.println("Verified Sub Workflow Status");
+                return true;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(ERROR_MSG_UNABLE_TO_FIND_WORKFLOW_STATUS_ELEMENT);
+        }
+        return false;
+    }
+
+    /**
+     * This method compare Sub Workflow Status
+     *
+     * @param workflowStatus
+     * @return boolean
+     */
+    public boolean compareCNASubWorkflowStatus(String workflowStatus) {
+        scrollToTop();
+        try {
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(tableCell.replace("$1", "SubWorkflow Status"), true));
+            if (workflowStatus.equals(waitForElementByXpath(cellValue.replace("$1", "SubWorkflow Status")
+                    .replace("$2", workflowStatus), true).getText().trim())) {
+                System.out.println("Verified SubWorkflow Status");
                 return true;
             }
         } catch (Exception e) {

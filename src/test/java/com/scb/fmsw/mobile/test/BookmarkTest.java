@@ -18,9 +18,9 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: cnaBookmarkDetailViewTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
@@ -36,9 +36,9 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: cnaSwipeBookmarkTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
@@ -48,16 +48,15 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_CNA},
-            dependsOnMethods = {"cnaSwipeBookmarkTest", "cnaBookmarkDetailViewTest"})
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_CNA})
     public void cnaBookmarkSelectedTest() {
         System.out.println("Method: cnaBookmarkSelectedTest");
         List<String> workflowIDList;
         int workflowCount = 1;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername01"));
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername03"));
         InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_CNA, STATUS_OPEN);
-        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
+//        inboxScreen.navigateToBucket(BUCKET_TO_REVIEW);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_REVIEW,
@@ -100,8 +99,8 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: TRRBookmarkDetailViewTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         InboxDetailViewScreen detailViewScreen = inboxScreen.tapOnWorkflow(workflowID, true);
@@ -117,8 +116,8 @@ public class BookmarkTest extends BaseTest {
         System.out.println("Method: TRRSwipeBookmarkTest");
         String workflowID;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         workflowID = inboxScreen.getFirstCNAWorkflowId();
         BookmarkScreen bookmarkScreen = inboxScreen.swipeLeftAndTapOnBookmark(workflowID);
@@ -128,15 +127,14 @@ public class BookmarkTest extends BaseTest {
                 FAILED_MSG_FAILED_TO_BOOKMARK_WORKFLOW.replace("$1", workflowID));
     }
 
-    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_TRR},
-            dependsOnMethods = {"TRRSwipeBookmarkTest", "TRRBookmarkDetailViewTest"})
+    @Test(groups = {TEST_GRP_BOOKMARK_SELECTED, TEST_GRP_TRR})
     public void TRRBookmarkSelectedTest() {
         System.out.println("Method: TRRBookmarkSelectedTest");
         List<String> workflowIDList;
         int workflowCount = 1;
 
-        OverviewScreen overviewScreen = login(prop.getProperty("uat.FOUsername02"));
-        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OVERDUE);
+        OverviewScreen overviewScreen = login(prop.getProperty("uat.TRRLMUsername"));
+        InboxScreen inboxScreen = overviewScreen.tapOnWorkflowCount(WORKFLOW_TRR, STATUS_OPEN);
         inboxScreen.tapOnForAcknowledgementSubTab();
         SelectMultipleWorkflowScreen selectMultipleWorkflowScreen = inboxScreen
                 .navigateToSelectMultipleWorkflowScreen(workflowCount, BUCKET_TO_DO,

@@ -195,14 +195,14 @@
         </classes>
     </test>
 
-    <test name="Test Regression" enabled="true">
+    <test name="Delegation Regression" enabled="true">
         <groups>
             <run>
                 <!--Workflow Type-->
                 <!--<exclude name="MULTIPLE WORKFLOW"/>-->
                 <include name="REJECT DELEGATION"/>
                 <include name="ACCEPT DELEGATION"/>
-                <exclude name="USERS DELEGATION"/>
+                <include name="USERS DELEGATION"/>
                 <include name="AUTO OUT OF OFFICE DELEGATION"/>
                 <!--<exclude name="CNA"/>-->
                 <!--<exclude name="TRR"/>-->
@@ -210,7 +210,11 @@
                 <!--<exclude name="GT/GMR"/>-->
                 <!--<exclude name="IPV/FVA"/>-->
                 <!--<exclude name="CE"/>-->
-                <!--<include name="VE"/>-->
+                <!--<exclude name="VE"/>-->
+                <!--<exclude name="AFO"/>-->
+                <!--<exclude name="BEX"/>-->
+                <!--<include name="MT"/>-->
+                <!--<exclude name="BRS"/>-->
 
             </run>
         </groups>

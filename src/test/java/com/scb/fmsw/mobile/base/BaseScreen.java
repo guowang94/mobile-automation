@@ -36,11 +36,11 @@ public class BaseScreen implements WorkflowConstants {
     }
 
     //xpath
-    private String inboxSpecificButton = "//XCUIElementTypeStaticText[@name='$1']";
-    private String formSwitchXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeSwitch";
-    private String formTextViewXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextView";
-    private String formTextFieldXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextField";
-    private String formButtonXpath = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeButton";
+    private String inboxSpecificButton = "//XCUIElementTypeStaticText[@name=\"$1\"]";
+    private String formSwitchXpath = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeSwitch";
+    private String formTextViewXpath = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextView";
+    private String formTextFieldXpath = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeTextField";
+    public String formButtonXpath = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeButton";
     private String pickerDoneButtonXpath = "//XCUIElementTypePickerWheel/ancestor::XCUIElementTypePicker/preceding-sibling::XCUIElementTypeButton[@name='Done']";
     private String pickerWheelXpath = "//XCUIElementTypePickerWheel";
     private String formDoneButtonXpath = "//XCUIElementTypeNavigationBar/XCUIElementTypeButton[2]";
@@ -231,7 +231,29 @@ public class BaseScreen implements WorkflowConstants {
      */
     public void tapOnMenuButton() {
         hasLoadingCompleted();
-        waitForElementById(menuButton, true).click();
+        //sometimes the menu drawer does not slide out after clicking on the menu button
+//        waitForElementById(menuButton, true).click();
+
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Dimension size = iosDriver.manage().window().getSize();
+        int startX = 0;
+        int endX = (int) (size.width * 0.5);
+        int startY = (int) (size.height * 0.3);
+
+        //For logging purpose
+//        System.out.println("Trying to swipe from x:" + startX + " y:" + startY + ", to x:" + endX + " y:" + startY);
+
+        new TouchAction(iosDriver)
+                .press(PointOption.point(startX, startY))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                .moveTo(PointOption.point(endX, startY)).release().perform();
+
+        System.out.println("Swipe right on the screen");
     }
 
     /**

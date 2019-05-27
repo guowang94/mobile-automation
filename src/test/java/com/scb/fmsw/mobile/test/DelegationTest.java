@@ -1829,7 +1829,7 @@ public class DelegationTest extends BaseTest {
 
     @Test(groups = {TEST_GRP_PERIOD_DELEGATION, TEST_GRP_IPV_FVA, TEST_GRP_ACCEPT_DELEGATION})
     public void fvaAcceptAndDeleteUserDelegation() {
-        System.out.println("Method: cnaAcceptAndDeleteUserDelegation");
+        System.out.println("Method: fvaAcceptAndDeleteUserDelegation");
         List<String> workflowTypeList = new ArrayList<>();
         workflowTypeList.add(WORKFLOW_FVA);
         //The duration of the delegation cannot be for more than 1 year

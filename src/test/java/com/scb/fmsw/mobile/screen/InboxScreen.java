@@ -33,19 +33,19 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
 
 
     //xpath
-    private String workflow = "//XCUIElementTypeStaticText[@value='$1']";
-    private String workflowCell = "//XCUIElementTypeStaticText[@value='$1']/ancestor::XCUIElementTypeCell";
-    private String bucketCount = "//XCUIElementTypeStaticText[@name='$1']/following-sibling::XCUIElementTypeStaticText";
-    private String options = "//XCUIElementTypeStaticText[@name='$1']";
-    private String optionsCell = "//XCUIElementTypeStaticText[@name='$1']/ancestor::XCUIElementTypeCell";
+    private String workflow = "//XCUIElementTypeStaticText[@value=\"$1\"]";
+    private String workflowCell = "//XCUIElementTypeStaticText[@value=\"$1\"]/ancestor::XCUIElementTypeCell";
+    private String bucketCount = "//XCUIElementTypeStaticText[@name=\"$1\"]/following-sibling::XCUIElementTypeStaticText";
+    private String options = "//XCUIElementTypeStaticText[@name=\"$1\"]";
+    private String optionsCell = "//XCUIElementTypeStaticText[@name=\"$1\"]/ancestor::XCUIElementTypeCell";
     private String workflowList = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='WorkFlowID']";
     private String cnaWorkflowList = "//XCUIElementTypeTable[@visible='true']//XCUIElementTypeStaticText[@name='CNAWorkflowID']";
     private String workflowID = "(//XCUIElementTypeStaticText[@name='WorkFlowID'])[1]";
     private String cnaWorkflowID = "(//XCUIElementTypeStaticText[@name='CNAWorkflowID'])[1]";
     private String tableContainer = "//XCUIElementTypeTable[@visible='true']";
-    private String workflowStatusTextfield = "//XCUIElementTypeStaticText[@value='$1']/preceding-sibling::XCUIElementTypeStaticText";
+    private String workflowStatusTextfield = "//XCUIElementTypeStaticText[@value=\"$1\"]/preceding-sibling::XCUIElementTypeStaticText";
     private String loadMoreResultsCell = "//XCUIElementTypeButton[@name='Load More Results']/ancestor::XCUIElementTypeCell";
-    private String subWorkflowIDByWorkflowID = "//XCUIElementTypeStaticText[@value='$1']/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeStaticText[@name='CNAWorkflowID']";
+    private String subWorkflowIDByWorkflowID = "//XCUIElementTypeStaticText[@value=\"$1\"]/ancestor::XCUIElementTypeCell/descendant::XCUIElementTypeStaticText[@name='CNAWorkflowID']";
 
     public InboxScreen(IOSDriver<IOSElement> testDriver) {
         iosDriver = testDriver;
@@ -63,7 +63,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will return the workflowID of the first workflow
+     * This method will return the workflowID of the first workflow (Top left value of the Cell)
      *
      * @return String
      */
@@ -85,7 +85,7 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
-     * This method will return the Workflow ID of the first CNA workflow
+     * This method will return the Workflow ID of the first CNA workflow (Top right value of the Cell)
      *
      * @return String
      */
@@ -320,6 +320,24 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                 throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
             }
         }
+        //----------------------------- BEX WORKFLOW ------------------------------------
+        else if (workflowType.equals(WORKFLOW_BEX)) {
+            if (WORKFLOW_STATUS_PENDING_REVIEW.equals(workflowStatus)) {
+                if (inboxDetailViewScreen.compareJustificationComment() &&
+                        inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
+                    return true;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            } else if (WORKFLOW_STATUS_REVIEWED_AND_CLOSED.equals(workflowStatus)) {
+                if (inboxDetailViewScreen.compareSupervisorReviewComment() &&
+                        inboxDetailViewScreen.compareWorkflowEventStatus(workflowStatus)) {
+                    return true;
+                } else {
+                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_WORKFLOW);
+                }
+            }
+        }
         //------------------------------ OTHERS WORKFLOW ------------------------------
         else if (!workflowStatus.equals(WORKFLOW_STATUS_ACKNOWLEDGED) &&
                 !workflowStatus.equals(WORKFLOW_STATUS_APPROVED)) {
@@ -451,12 +469,13 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
                                          String workflowType) {
         boolean result;
         //TODO need to find out which workflow type also does not have Response Grid
-        if (workflowType.equalsIgnoreCase(WORKFLOW_CNA) || workflowType.equalsIgnoreCase(WORKFLOW_PNL) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_VE) || workflowType.equalsIgnoreCase(WORKFLOW_CE) ||
-                workflowType.equalsIgnoreCase(WORKFLOW_TM)) {
+        if (workflowType.equalsIgnoreCase(WORKFLOW_TM) || workflowType.equalsIgnoreCase(WORKFLOW_PNL) ||
+                workflowType.equalsIgnoreCase(WORKFLOW_VE) || workflowType.equalsIgnoreCase(WORKFLOW_CE)) {
             result = inboxDetailViewScreen.compareWorkflowStatus(workflowStatus);
         } else if (workflowType.equalsIgnoreCase(WORKFLOW_TRR)) {
             result = inboxDetailViewScreen.compareSubWorkflowStatus(workflowStatus);
+        } else if (workflowType.equalsIgnoreCase(WORKFLOW_CNA)) {
+            result = inboxDetailViewScreen.compareCNASubWorkflowStatus(workflowStatus);
         } else {
             //Navigate to Response Grid Screen and validate Workflow Status
             InboxDetailsOptionScreen inboxDetailsOptionScreen = inboxDetailViewScreen.navigateToInboxDetailsOptionScreen();
@@ -642,7 +661,8 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
         if (numbersOfWorkflowToBeSelected <= Integer.parseInt(waitForElementByXpath(
                 bucketCount.replace("$1", currentBucket), true).getText())) {
             tapOnMoreOption();
-            scrollDownUntilElementIsDisplayed(waitForElementByXpath(options.replace("$1", action), true)).click();
+            scrollDownUntilElementIsDisplayed(waitForElementByXpath(optionsCell.replace("$1", action), true));
+            waitForElementByXpath(options.replace("$1", action), true).click();
             System.out.println("Navigate to Select Multiple Workflow Screen");
         } else {
             screenshot(ERROR_MSG_NOT_ENOUGH_WORKFLOW);
@@ -1048,6 +1068,15 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
     }
 
     /**
+     * This method will tap on For Justification/Clarification Sub Tab
+     */
+    public void tapOnForJustificationOrClarificationSubTab() {
+        hasLoadingCompleted();
+        inboxScreen.forJustificationOrClarificationSubTab.click();
+        System.out.println("Navigate to For Justification/Clarification Tab");
+    }
+
+    /**
      * This method will tap on For Verification Sub Tab
      */
     public void tapOnForVerificationSubTab() {
@@ -1122,6 +1151,9 @@ public class InboxScreen extends BaseScreen implements WorkflowConstants {
 
         @FindBy(id = "FOR REVIEW")
         WebElement forReviewSubTab;
+
+        @FindBy(id = "FOR JUSTIFICATION/CLARIFICATION")
+        WebElement forJustificationOrClarificationSubTab;
 
         @FindBy(xpath = "(//XCUIElementTypeCollectionView[@visible='true'])[2]/XCUIElementTypeCell[1]")
         WebElement forReviewAndAssessmentSubTab;

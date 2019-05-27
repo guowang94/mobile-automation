@@ -29,7 +29,7 @@ public class BaseDriver implements WorkflowConstants {
             capabilities.setCapability(CAPABILITY_NAME_DEVICE_NAME, CAPABILITY_VALUE_DEVICE_NAME);
             capabilities.setCapability(CAPABILITY_NAME_PLATFORM_NAME, CAPABILITY_VALUE_PLATFORM_NAME);
             capabilities.setCapability(CAPABILITY_NAME_PLATFORM_VERSION, CAPABILITY_VALUE_PLATFORM_VERSION);
-            capabilities.setCapability(CAPABILITY_NAME_UDID, CAPABILITY_VALUE_UDID_IPHONE7_NEW);
+            capabilities.setCapability(CAPABILITY_NAME_UDID, CAPABILITY_VALUE_UDID_IPHONE6);
             capabilities.setCapability(CAPABILITY_NAME_AUTOMATION_NAME, CAPABILITY_VALUE_AUTOMATION_NAME);
             capabilities.setCapability(CAPABILITY_NAME_LAUNCH_TIMEOUT, CAPABILITY_VALUE_LAUNCH_TIMEOUT);
             capabilities.setCapability(CAPABILITY_NAME_NEW_COMMAND_TIMEOUT, CAPABILITY_VALUE_NEW_COMMAND_TIMEOUT);

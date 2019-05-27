@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class RecallScreen extends BaseScreen {
 
     private PageObjects recallScreen;
-    private String recallType = "//XCUIElementTypeStaticText[@name='$1']";
+    private String recallType = "//XCUIElementTypeStaticText[@name=\"$1\"]";
     private String container = "(//XCUIElementTypeImage[@name='Rectangle 4'])[2]";
     private String alertTitle = "//XCUIElementTypeAlert//XCUIElementTypeStaticText[1]";
 

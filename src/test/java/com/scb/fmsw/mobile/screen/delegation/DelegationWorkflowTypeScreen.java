@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DelegationWorkflowTypeScreen extends BaseScreen {
 
-    String workflowType = "//XCUIElementTypeStaticText[@visible='true'][@name='$1']";
+    String workflowType = "//XCUIElementTypeStaticText[@visible='true'][@name=\"$1\"]";
     private PageObjects delegationWorkflowType;
 
     public DelegationWorkflowTypeScreen(IOSDriver<IOSElement> testDriver) {

@@ -82,19 +82,6 @@ public class ClarificationOptionScreen extends BaseScreen implements WorkflowCon
                     break;
                 }
             case WORKFLOW_FVA:
-                //TODO need to delete element is not null when the bug is fixed - FMSW-8791
-                if (waitForElementById(CLARIFICATION_OPTION_VALUATION_CONTROL_USER, false) != null &&
-                        waitForElementById(CLARIFICATION_OPTION_VALUATION_CONTROL_USER, true).isDisplayed() &&
-                        waitForElementById(CLARIFICATION_OPTION_SEND_TO, true).isDisplayed()) {
-                    System.out.println(MSG_VERIFIED_CLARIFICATION_OPTIONS);
-                    break;
-                } else {
-                    screenshot(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
-                    //TODO need to uncomment when they have fixed the clarification option bug - FMSW-8791
-//                    throw new RuntimeException(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
-                    System.out.println(ERROR_MSG_FAILED_TO_VERIFY_CLARIFICATION_OPTION);
-                    break;
-                }
             case WORKFLOW_IPV:
                 //TODO need to delete element is not null when the bug is fixed - FMSW-8791
                 if (waitForElementById(CLARIFICATION_OPTION_VALUATION_CONTROL_USER, false) != null &&

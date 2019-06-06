@@ -1,7 +1,7 @@
 package com.scb.fmsw.mobile.test;
 
 import com.scb.fmsw.mobile.base.BaseTest;
-import com.scb.fmsw.mobile.screen.OthersDelegationsScreen;
+import com.scb.fmsw.mobile.screen.delegation.OthersDelegationsScreen;
 import com.scb.fmsw.mobile.screen.OverviewScreen;
 import com.scb.fmsw.mobile.screen.delegation.*;
 import org.testng.Assert;

@@ -1,7 +1,6 @@
-package com.scb.fmsw.mobile.screen;
+package com.scb.fmsw.mobile.screen.delegation;
 
 import com.scb.fmsw.mobile.base.BaseScreen;
-import com.scb.fmsw.mobile.screen.delegation.DelegationDetailScreen;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
